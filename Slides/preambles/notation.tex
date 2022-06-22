@@ -1,80 +1,80 @@
 % Probability
-\renewcommand{\P}{\mathop{}\!\textnormal{P}}
-\newcommand{\E}{\mathop{}\!\textnormal{E}}
-\newcommand{\sE}{\mathop{}\!\mathbb{E}}
-\newcommand{\Cov}{\mathop{}\!\textnormal{Cov}}
-\newcommand{\sCov}{\mathop{}\!\mathbb{C}\textnormal{ov}}
-\newcommand{\Var}{\mathop{}\!\textnormal{Var}}
-\newcommand{\sVar}{\mathop{}\!\mathbb{V}\textnormal{ar}}
-\newcommand{\N}{\mathcal{N}}
-\newcommand{\sN}{\N(0,1)}
-
-\newcommand{\bracks}[1]{\left[#1\right]}
-\newcommand{\expe}[1]{\mathbb{E}\bracks{#1}}
-\newcommand{\expestar}[1]{\mathbb{E}^*\bracks{#1}}
-\newcommand{\expesub}[2]{\mathbb{E}_{#1}\bracks{#2}}
-
-\newcommand{\var}[1]{\mathbb{V}\text{ar}\bracks{#1}}
-\newcommand{\parens}[1]{\left(#1\right)}
-  \newcommand{\squared}[1]{\parens{#1}^2}
-  \newcommand{\tothepow}[2]{\parens{#1}^{#2}}
-  \newcommand{\prob}[1]{\mathbb{P}\parens{#1}}
-  \newcommand{\probsub}[2]{\mathbb{P}_{#1}\parens{#2}}
+	\renewcommand{\P}{\mathop{}\!\textnormal{P}}
+	\newcommand{\E}{\mathop{}\!\textnormal{E}}
+	\newcommand{\sE}{\mathop{}\!\mathbb{E}}
+	\newcommand{\Cov}{\mathop{}\!\textnormal{Cov}}
+	\newcommand{\sCov}{\mathop{}\!\mathbb{C}\textnormal{ov}}
+	\newcommand{\Var}{\mathop{}\!\textnormal{Var}}
+	\newcommand{\sVar}{\mathop{}\!\mathbb{V}\textnormal{ar}}
+	\newcommand{\N}{\mathcal{N}}
+	\newcommand{\sN}{\N(0,1)}
+	
+	\newcommand{\bracks}[1]{\left[#1\right]}
+	\newcommand{\expe}[1]{\mathbb{E}\bracks{#1}}
+	\newcommand{\expestar}[1]{\mathbb{E}^*\bracks{#1}}
+	\newcommand{\expesub}[2]{\mathbb{E}_{#1}\bracks{#2}}
+	
+	\newcommand{\var}[1]{\mathbb{V}\text{ar}\bracks{#1}}
+	\newcommand{\parens}[1]{\left(#1\right)}
+    \newcommand{\squared}[1]{\parens{#1}^2}
+    \newcommand{\tothepow}[2]{\parens{#1}^{#2}}
+    \newcommand{\prob}[1]{\mathbb{P}\parens{#1}}
+    \newcommand{\probsub}[2]{\mathbb{P}_{#1}\parens{#2}}
 
 % Convergence
-\newcommand{\Oh}{\mathop{}\!\mathcal{O}}
-\newcommand{\oh}{\mathop{}\!{o}}
-\newcommand{\convd}{\stackrel{d}{\longrightarrow}}
-\newcommand{\convp}{\stackrel{p}{\longrightarrow}}
-\newcommand{\conv}{\stackrel{}{\longrightarrow}}
-
+	\newcommand{\Oh}{\mathop{}\!\mathcal{O}}
+	\newcommand{\oh}{\mathop{}\!{o}}
+	\newcommand{\convd}{\stackrel{d}{\longrightarrow}}
+	\newcommand{\convp}{\stackrel{p}{\longrightarrow}}
+	\newcommand{\conv}{\stackrel{}{\longrightarrow}}
+	
 % Basic matrices and vectors
-\newcommand{\0}{\mathbf{0}}
-\newcommand{\1}{\mathbf{1}}
-\newcommand{\I}{\mathbb{I}}
-\renewcommand{\O}{\mathbb{O}}
+	\newcommand{\0}{\mathbf{0}}
+	\newcommand{\1}{\mathbf{1}}
+	\newcommand{\I}{\mathbb{I}}
+	\renewcommand{\O}{\mathbb{O}}
 
 % Basic maths
-\newcommand{\R}{\mathbb{R}}
-\DeclareMathOperator*{\argmin}{arg\,min}
-\DeclareMathOperator*{\argmax}{arg\,max}
-\newcommand{\Ind}{\mathbbm{1}}  % Indicator
-\newcommand{\reals}{\mathbb{R}}
+	\newcommand{\R}{\mathbb{R}}
+	\DeclareMathOperator*{\argmin}{arg\,min}
+	\DeclareMathOperator*{\argmax}{arg\,max}
+	\newcommand{\Ind}{\mathbbm{1}}  % Indicator
+	\newcommand{\reals}{\mathbb{R}}
 % Estimation specifics
-  \newcommand{\Ih}{\widehat{I}}
-  \newcommand{\Is}{\mathcal{I}}
-  
+    \newcommand{\Ih}{\widehat{I}}
+    \newcommand{\Is}{\mathcal{I}}
+    
 % Independence
-  \newcommand{\orth}{\perp}
-  \renewcommand{\given}{\: | \:}
-  
+    \newcommand{\orth}{\perp}
+    \renewcommand{\given}{\: | \:}
+    
 % Prediction
-\newcommand{\X}{\mathcal{X}}  % Covariate space
-\newcommand{\W}{\mathcal{W}}  % Transformed covariate space
-\newcommand{\Y}{\mathcal{Y}}  % Outcome space
-\newcommand{\err}{\varepsilon}  % Outcome error
-\newcommand{\g}{g}  % Truth (conditional expectation/optimal predictor)
-\newcommand{\F}{\mathcal{F}}  % Function class
-\renewcommand{\S}{\ensuremath{S}}  % Sample
-\newcommand{\T}{\ensuremath{T}}  % Training sample
-\renewcommand{\H}{\ensuremath{H}}  % Hold-out sample
-\newcommand{\f}{f}  % Prediction function
-\newcommand{\fh}{\ensuremath{\widehat{f}}}  % Empirical prediction
-\newcommand{\yhat}{\ensuremath{\widehat{y}}}	
-\newcommand{\betahat}{\ensuremath{\widehat{\beta}}}
-\newcommand{\betatilde}{\ensuremath{\tilde{\beta}}}
-\newcommand{\deltatilde}{\ensuremath{\tilde{\delta}}}
-\newcommand{\xtilde}{\ensuremath{\tilde{x}}}
-\newcommand{\Xtilde}{\ensuremath{\tilde{X}}}
+	\newcommand{\X}{\mathcal{X}}  % Covariate space
+	\newcommand{\W}{\mathcal{W}}  % Transformed covariate space
+	\newcommand{\Y}{\mathcal{Y}}  % Outcome space
+	\newcommand{\err}{\varepsilon}  % Outcome error
+	\newcommand{\g}{g}  % Truth (conditional expectation/optimal predictor)
+	\newcommand{\F}{\mathcal{F}}  % Function class
+	\renewcommand{\S}{\ensuremath{S}}  % Sample
+	\newcommand{\T}{\ensuremath{T}}  % Training sample
+	\renewcommand{\H}{\ensuremath{H}}  % Hold-out sample
+	\newcommand{\f}{f}  % Prediction function
+	\newcommand{\fh}{\ensuremath{\widehat{f}}}  % Empirical prediction
+	\newcommand{\yhat}{\ensuremath{\widehat{y}}}	
+	\newcommand{\betahat}{\ensuremath{\widehat{\beta}}}
+	\newcommand{\betatilde}{\ensuremath{\tilde{\beta}}}
+	\newcommand{\deltatilde}{\ensuremath{\tilde{\delta}}}
+	\newcommand{\xtilde}{\ensuremath{\tilde{x}}}
+	\newcommand{\Xtilde}{\ensuremath{\tilde{X}}}
 
-\newcommand{\al}{\ensuremath{\mathcal{L}}}
-\newcommand{\OLS}{\textnormal{OLS}}  % Sendhil does not know how to spell this
-\newcommand{\lh}{\widehat{\lambda}}
-  \newcommand{\Z}{\mathcal{Z}}
-  \renewcommand{\th}{\widehat{\theta}}
-\newcommand{\Sigmahat}{\ensuremath{\widehat{\Sigma}}}
-\newcommand{\sigmahat}{\ensuremath{\widehat{\sigma}}}
-
+	\newcommand{\al}{\ensuremath{\mathcal{L}}}
+	\newcommand{\OLS}{\textnormal{OLS}}  % Sendhil does not know how to spell this
+	\newcommand{\lh}{\widehat{\lambda}}
+    \newcommand{\Z}{\mathcal{Z}}
+    \renewcommand{\th}{\widehat{\theta}}
+	\newcommand{\Sigmahat}{\ensuremath{\widehat{\Sigma}}}
+	\newcommand{\sigmahat}{\ensuremath{\widehat{\sigma}}}
+	
 %Distributions
 \newcommand{\logistic}[2]{\mathrm{Logistic}\parens{#1,\,#2}}
 \newcommand{\bernoulli}[1]{\mathrm{Bernoulli}\parens{#1}}

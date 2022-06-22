@@ -1,49 +1,13 @@
-\documentclass[usenames, dvipsnames, aspectratio = 169, 13pt]{beamer}
+\documentclass[aspectratio = 169, 13pt]{beamer}
 
-\usepackage{color}
-\input{Preambles/header_beamer.tex}
-\input{Preambles/notation.tex}
-\usepackage{wasysym}
-
-\setbeamertemplate{frametitle}[default][center]
-\setbeamertemplate{itemize items}[default]
-\usetheme{Boadilla}
-
-%Create function to stop slidenumbering before appendix
-\newcommand{\backupbegin}{
-	\newcounter{finalframe}
-	\setcounter{finalframe}{\value{framenumber}}
-}
-
-\newcommand{\backupend}{
-   \setcounter{framenumber}{\value{finalframe}}
-}
-
-\setbeamersize{text margin left=1em,text margin right=1em} 
-\newenvironment{wideitemize}{\itemize\addtolength{\itemsep}{10pt}}{\enditemize}
-\newenvironment{wideitemizeshort}{\itemize}{\enditemize}
-
-\setbeamertemplate{theorems}[numbered]
-
+\input{preambles/preamble.tex}
+\input{preambles/notation.tex}
 \author{Jonathan Roth}
-
-\title[Advanced DiD Mixtape Workshop]{Advanced DiD Mixtape Workshop \\ Violations of Parallel Trends}
-
-
-\newif\ifshowtoc
-\showtocfalse% toggles to show the toc
-
-\AtBeginSection{%
-\ifshowtoc
-\begin{frame}
-    \tableofcontents[currentsection, subsectionstyle=show/show/hide]
-\end{frame}
-\fi
-}
+\title[Advanced DiD Mixtape Workshop]{Advanced DiD Mixtape Workshop \\ Introduction}
 
 \begin{document}
 
-\maketitle
+\imageframe{figures/cover_violations.png}
 
 
 \begin{frame}{Staggered Timing}
@@ -134,7 +98,7 @@ I will focus on the latter two, (somewhat selfishly) focusing mainly on my own w
 
 \begin{frame}{Issue 1 - Low Power}
 {\centering
-\includegraphics<1>[width = .65\textwidth]{Figures/HeAndWangAnimations/HeAndWang-base.png}
+\includegraphics<1>[width = .65\textwidth]{figures/HeAndWangAnimations/HeAndWang-base.png}
 }
 
 \begin{itemize}
@@ -149,12 +113,12 @@ I will focus on the latter two, (somewhat selfishly) focusing mainly on my own w
 \end{frame}
 \begin{frame}{Issue 1 - Low Power}
 {\centering
-\includegraphics<1>[width = .65\textwidth]{Figures/HeAndWangAnimations/HeAndWang-base.png}   
-\includegraphics<2>[width = .65\textwidth]{Figures/HeAndWangAnimations/HeAndWang-ZeroDots.png} 
-\includegraphics<3>[width = .65\textwidth]{Figures/HeAndWangAnimations/HeAndWang-RedDots.png} 
-\includegraphics<4>[width = .65\textwidth]{Figures/HeAndWangAnimations/HeAndWang-RedTrend.png} 
-\includegraphics<5>[width = .65\textwidth]{Figures/HeAndWangAnimations/HeAndWang-BlueDots.png}
-\includegraphics<6->[width = .65\textwidth]{Figures/HeAndWangAnimations/HeAndWang-BlueTrend.png}
+\includegraphics<1>[width = .65\textwidth]{figures/HeAndWangAnimations/HeAndWang-base.png}   
+\includegraphics<2>[width = .65\textwidth]{figures/HeAndWangAnimations/HeAndWang-ZeroDots.png} 
+\includegraphics<3>[width = .65\textwidth]{figures/HeAndWangAnimations/HeAndWang-RedDots.png} 
+\includegraphics<4>[width = .65\textwidth]{figures/HeAndWangAnimations/HeAndWang-RedTrend.png} 
+\includegraphics<5>[width = .65\textwidth]{figures/HeAndWangAnimations/HeAndWang-BlueDots.png}
+\includegraphics<6->[width = .65\textwidth]{figures/HeAndWangAnimations/HeAndWang-BlueTrend.png}
 }  
 
 \begin{onlyenv}<1>
@@ -269,19 +233,19 @@ Analyzing this selected sample introduces additional statistical issues, and can
 
 \begin{frame}
 \centering
-\includegraphics<1>[width = .8\columnwidth]{Figures/IntuitionPlots/PopulationMeans.png}
+\includegraphics<1>[width = .8\columnwidth]{figures/IntuitionPlots/PopulationMeans.png}
 
-\includegraphics<2>[width = .8\columnwidth]{Figures/IntuitionPlots/DataDraws_Unhighlighted.png}
+\includegraphics<2>[width = .8\columnwidth]{figures/IntuitionPlots/DataDraws_Unhighlighted.png}
 
-\includegraphics<3-4>[width = .8\columnwidth]{Figures/IntuitionPlots/DataDraws_Highlighted.png}
+\includegraphics<3-4>[width = .8\columnwidth]{figures/IntuitionPlots/DataDraws_Highlighted.png}
 
-\includegraphics<5>[width = .8\columnwidth]{Figures/IntuitionPlots/PopulationMeans_PopulationAndInsignificant_Annotated.png}
-
-
-% \includegraphics<6>[width = \columnwidth]{Figures/IntuitionPlots/DistributionDeltaY0_PopulationAndInsiginificant.png}
+\includegraphics<5>[width = .8\columnwidth]{figures/IntuitionPlots/PopulationMeans_PopulationAndInsignificant_Annotated.png}
 
 
-% \includegraphics<6>[width = \columnwidth]{Figures/IntuitionPlots/Distributions_PopulationAndInsiginificant.png}
+% \includegraphics<6>[width = \columnwidth]{figures/IntuitionPlots/DistributionDeltaY0_PopulationAndInsiginificant.png}
+
+
+% \includegraphics<6>[width = \columnwidth]{figures/IntuitionPlots/Distributions_PopulationAndInsiginificant.png}
 
 
 
@@ -404,7 +368,7 @@ Intuitively, counterfactual trend can't be too different from pre-trend
 \end{wideitemize}
 
 \centering
-\includegraphics[width = 0.7\textwidth]{Figures/IntuitionPlots/Delta-Examples/deltaSD.png}
+\includegraphics[width = 0.7\textwidth]{figures/IntuitionPlots/Delta-Examples/deltaSD.png}
 
 \end{frame}
 
@@ -437,12 +401,12 @@ We focus on impact on profits in first year after reform.
 
 \begin{frame}{Event-study coefficients for log profits}
     \centering
-    \includegraphics[width = 0.8 \textwidth]{Figures/Benzarti-Carloni/profits-event-study.png}
+    \includegraphics[width = 0.8 \textwidth]{figures/Benzarti-Carloni/profits-event-study.png}
 \end{frame}
 
 \begin{frame}
 {\centering
-\includegraphics[width = 0.4\linewidth]{Figures/Benzarti-Carloni/sensitivity-MB-profits.png}
+\includegraphics[width = 0.4\linewidth]{figures/Benzarti-Carloni/sensitivity-MB-profits.png}
 }
 
 \begin{itemize}
@@ -552,12 +516,12 @@ A ``low-touch'' intervention is to evaluate the likely power/distortions from pr
 
 \begin{frame}
 \centering
-\includegraphics[height = 0.9 \textheight]{Figures/Shiny-Mockup-Graph-Only.png}   
+\includegraphics[height = 0.9 \textheight]{figures/Shiny-Mockup-Graph-Only.png}   
 \end{frame}
 
 \begin{frame}
 \centering
-\includegraphics[width = 0.7 \textwidth]{Figures/Shiny-Mockup-Power-Only.png} 
+\includegraphics[width = 0.7 \textwidth]{figures/Shiny-Mockup-Power-Only.png} 
 \begin{wideitemize}
 \item
 \textbf{Power.} Chance find significant pre-trend under hypothesized trend.
@@ -599,8 +563,10 @@ A ``low-touch'' intervention is to evaluate the likely power/distortions from pr
 
 
 
-
-\bibliography{Bibliography.bib}
+\backupbegin
+\begin{frame}[allowframebreaks]{References}
+  \bibliography{Bibliography.bib}
+\end{frame}
 \backupend
 
 \end{document} 
