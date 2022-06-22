@@ -353,25 +353,24 @@
 \end{frame}
 
 \begin{frame}{Comparisons of new estimators}
-  Several other estimators have been proposed based on related ideas:
-
   \begin{wideitemize}
     \item
     Callaway and Sant'Anna also propose an analogous estimator using \textit{not-yet-treated} rather than never-treated units.
 
+    \vspace{-3mm}
     \item
     \citet{sun_estimating_2020} propose a similar estimator but with different comparisons groups (e.g. using last-to-be treated rather than not-yet-treated)
 
+    \vspace{-3mm}
     \item
     \citet{borusyak_revisiting_2021}, \citet{Wooldridge2021a}, \citet{gardner_two-stage_2021} propose ``imputation'' estimators that estimate the counterfactual $\hat{Y}_{it}(0)$ using a TWFE model that is fit using only pre-treatment data
     \begin{itemize}
-      \item
-            Main difference from C\&S is that this uses more pre-treatment periods, not just period $g-1$
+      \item Main difference from C\&S is that this uses more pre-treatment periods, not just period $g-1$
 
-      \item
-            This can sometimes be more efficient (if outcome not too serially correlated), but also relies on a stronger PT assumption that may be more susceptible to bias
+      \item This can sometimes be more efficient (if outcome not too serially correlated), but also relies on a stronger PT assumption that may be more susceptible to bias
     \end{itemize}
 
+    \vspace{-3mm}
     \item \citet{roth_efficient_2021} show that you can get even more precise estimates if you're willing to assume treatment timing is ``as good as random''
 
   \end{wideitemize}
