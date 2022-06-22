@@ -1,0 +1,160 @@
+---
+title: "Mixtape-Exercises-Staggered"
+output: html_document
+date: '2022-06-22'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = F)
+```
+
+## Introduction
+
+This exercise will help you learn about the recent DiD literature on settings with multiple periods and staggered treatment timing. We will examine the effects of Medicaid expansions on insurance coverage using publicly-available data from the ACS. This analysis is similar in spirit to that in [Carey, Miller, and Wherry (2020)](https://www.dropbox.com/s/mgunjcebpgnb939/Carey-et-al.pdf?dl=0), although they use confidential data.
+
+## Data
+
+The provided datasets *ehec_data.dta* (for Stata) and *ehec_data.csv* (for R) contain a state-level panel dataset on health insurance coverage and Medicaid expansion. The variable *dins* shows the share of low-income childless adults with health insurance in the state. The variable *yexp2* gives the year that a state expanded Medicaid coverage under the Affordable Care Act, and is missing if the state never expanded. The variable *year* gives the year of the observation and the variable *stfips* is a state identifier. (The variable *W* is the sum of person-weights for the state in the ACS; for simplicity, we will treat all states equally and ignore the weights, although if you'd like an additional challenge feel free to re-do everything incorporating the population weights!)
+
+1.   **Load the data**
+
+Use the *readRDS()* or *use* commands in R and Stata, respectively, to load the relevant dataset.
+
+```{r}
+library(here)
+library(dplyr)
+library(did)
+library(haven)
+df <- read_dta(here("Exercises/Data/ehec_data.dta"))
+```
+
+2.  **Estimate the ATT(g,t) using Callaway and Sant'Anna's estimator**
+
+Use the attgt function in the did package (R) or the XX function in the csdid package (Stata) to estimate the group-time specific ATTs for the outcome *dins*. I recommend using the control group "notyettreated", which uses as a comparison group all units who are not-yet-treated at a given period (including never-treated units). [For fun, you're welcome to also try out using "nevertreated" units as the control]. Hint: for R users, you will need to replace missing values of *yexp2* to some large number (say, 3000) for the the did package to incorporate the never-treated units.
+
+```{r}
+cs_results <- att_gt(yname = "dins",
+                     tname = "year",
+                     idname = "stfips", 
+                     gname = "yexp2", 
+                     data = df %>% mutate(yexp2 = ifelse(is.na(yexp2),3000,yexp2 )),
+                     control_group = "notyettreated")
+```
+
+For R users, apply the *summary* command to the results from the *att_gt* command. For Stata users. This should give a table with estimates of the ATT(g,t) -- that is, average treatment effects for a given "cohort" first-treated in period g at each time t. For example, ATT(2014,2015) gives the treatment effect in 2015 for the cohort first treated in 2014.
+
+```{r}
+summary(cs_results)
+```
+
+3.  **Compare to DiD estimates calculated by hand**
+
+To understand how these ATT(g,t) estimates are constructed, we will manually compute one of them by hand. For simplicity, let's focus on ATT(2014, 2014), the treatment effect for the first treated cohort (2014) in the year that they're treated (2014). Create an indicator variable D for whether a unit is first-treated in 2014. Calculate the conditional mean of *dins* for the years 2013 and 2014 for units with D=1 and units with D=0 (i.e. calculate 4 means, for each combination of year and D). Manually compute the 2x2 DiD between D=1 and D=0 and 2013 and 2014. If you did it right, this should line up exactly with the ATT(g,t) estimate you got from the CS package! [Bonus: If you're feeling ambitious, you can verify by hand that the other ATT(g,t) estimates from the CS package also correspond with simple 2x2 DiDs that you can compute by hand]
+
+```{r}
+#Compute the ATT(2014,2014) by hand
+ytable <-
+df %>%
+  filter(year %in% c(2013,2014)) %>%
+  mutate(treated = case_when(yexp2 == 2014 ~ 1,
+                             is.na(yexp2) | yexp2 > 2014 ~ 0) ) %>%
+  group_by(treated, year) %>%
+  summarise(dins = mean(dins))
+
+ATT_2014_2014_by_hand <- 
+  (ytable[ytable$year ==2014 & ytable$treated == 1, "dins"]-   ytable[ytable$year ==2013 & ytable$treated == 1, "dins"]) -
+  (ytable[ytable$year ==2014 & ytable$treated == 0, "dins"]-  ytable[ytable$year ==2013 & ytable$treated == 0, "dins"])
+
+ATT_2014_2014_by_hand
+```
+
+4.  **Aggregate the ATT(g,t)**
+
+We are often interested in a summary of the ATT(g,t)'s. In R, use the *aggte* command with option *type = "dynamic"* to compute "event-study" parameters. These are averages of the ATT(g,t) for cohorts at a given lag from treatment --- for example, the estimate for event-time 3 gives an average of parameters of the form ATT(g,g+3), i.e. treatment effects 3 periods after units were first treated. You can use the *ggdid* command to plot the relevant event-study.
+
+```{r}
+es <- aggte(cs_results, type = "dynamic", 
+            min_e = -5, max_e = 5)
+
+ggdid(es)
+
+```
+
+You can also calculate overall summary parameters. E.g, using the option *type = "simple"* takes a simple weighted average of the ATT(g,t), weighting proportional to cohort sizes.
+
+```{r}
+aggte(cs_results, type = "simple")
+```
+
+5.  **Compare to TWFE estimates (part 1)**
+
+Estimate the OLS regression specification $Y_{it} = \alpha_i + \lambda_t + D_{it} \beta +\epsilon_{it}$ where $D_{it}$ is an indicator for whether unit $i$ was treated in period $t$. How does the estimated coefficient $\hat{\beta}$ compare to the simple weighted average you got from Callaway and Sant'Anna? (Don't forget to cluster your SEs at the state level!)\
+\
+
+```{r}
+library(fixest)
+#Create a post-treatment indicator
+df <- df %>% mutate(postTreated = !is.na(yexp2) & year >= yexp2 )
+
+#Run static TWFE, with SEs clustered at the state level
+twfe_static <- feols(dins ~ postTreated | stfips + year, data =df, cluster = "stfips" )
+summary(twfe_static)
+
+```
+
+6.  **Explain this result using the Bacon decomposition**
+
+You probably noticed that the static TWFE estimate and the simple-weighted average from C&S were fairly similar. The reason for that is that in this example, there are a fairly large number of never-treated units, and so TWFE mainly puts weight on "clean comparisons". We can see this by using the *Bacon decomposition*, which shows how much weight static TWFE is putting on clean versus forbidden comparisons. In R, use the *bacon()* command to estimate the weights that TWFE puts on each of the types of comparisons. The first data-frame returned by the command shows how much weight OLS put on the three types of comparisons. How much weight is put on forbidden comparisons here (i.e. comparisons of 'Later vs Earlier')?
+
+```{r}
+library(bacondecomp)
+bacon(dins ~ postTreated,
+      data = df,
+      id_var = "stfips",
+      time_var = "year")
+
+```
+
+7.  **Compare to TWFE estimates (part 2)**
+
+To see a situation where negative weights can matter more, drop from your dataset all the observations that are never-treated. Re-run the Callaway and Sant'Anna and TWFE estimates like you did before on this modified data-set. How does the TWFE estimate compare to the simple weighted average (or the average of the event-study coefficients) now?
+
+```{r}
+## Re-run the CS results dropping never-treated units
+cs_results <- att_gt(yname = "dins",
+                     tname = "year",
+                     idname = "stfips", 
+                     gname = "yexp2", 
+                     data = df %>% filter(!is.na(yexp2)),
+                     control_group = "notyettreated")
+
+aggte(cs_results, type = "simple")
+
+es <- aggte(cs_results, type = "dynamic", 
+            min_e = -5, max_e = 5)
+
+ggdid(es)
+
+```
+
+```{r}
+#Re-run TWFE dropping the never-treated units
+twfe_static <- feols(dins ~ postTreated | stfips + year,
+                     data =df %>% filter(!is.na(yexp2)), 
+                     cluster = "stfips" )
+summary(twfe_static)
+
+
+```
+
+8.  **Run the Bacon decomposition (part 2)**
+
+Re-run the Bacon decomposition on the modified dataset. How much weight is put on "forbidden comparisons" now? Does this help explain the larger gap between the Callaway and Sant'Anna and TWFE estimates.
+
+```{r}
+bacon(dins ~ postTreated,
+      data = df %>% filter(!is.na(yexp2)),
+      id_var = "stfips",
+      time_var = "year")
+
+```
