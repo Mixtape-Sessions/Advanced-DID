@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99d (TeX Live 2021)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: 02-staggered.aux
+The style file: aer.bst
+A level-1 auxiliary file: bu.aux
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: Bibliography.bib
+You've used 5 entries,
+            2984 wiz_defined-function locations,
+            677 strings with 5105 characters,
+and the built_in function-call counts, 3790 in all, are:
+= -- 581
+> -- 216
+< -- 56
++ -- 63
+- -- 36
+* -- 221
+:= -- 898
+add.period$ -- 5
+call.type$ -- 5
+change.case$ -- 35
+chr.to.int$ -- 5
+cite$ -- 5
+duplicate$ -- 56
+empty$ -- 110
+format.name$ -- 111
+if$ -- 915
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 5
+newline$ -- 22
+num.names$ -- 60
+pop$ -- 68
+preamble$ -- 2
+purify$ -- 40
+quote$ -- 0
+skip$ -- 0
+stack$ -- 0
+substring$ -- 99
+swap$ -- 20
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 20
+warning$ -- 0
+while$ -- 55
+width$ -- 0
+write$ -- 80
