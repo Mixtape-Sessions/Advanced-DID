@@ -1,0 +1,13 @@
+ \newcommand{\noop}[1]{}
+\ifx\undefined\bysame
+\newcommand{\bysame}{\leavevmode\hbox to\leftmargin{\hrulefill\,\,}}
+\fi
+\begin{thebibliography}{xx}
+
+\harvarditem[Currie et al.]{Currie, Kleven and
+  Zwiers}{2020}{currie_technology_2020}
+{\bf Currie, Janet, Henrik Kleven, and Esmée Zwiers}, ``Technology and {Big}
+  {Data} {Are} {Changing} {Economics}: {Mining} {Text} to {Track} {Methods},''
+  {\it AEA Papers and Proceedings}, May 2020, {\it 110}, 42--48.
+
+\end{thebibliography}

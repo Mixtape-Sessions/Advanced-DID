@@ -1,0 +1,52 @@
+ \newcommand{\noop}[1]{}
+\ifx\undefined\bysame
+\newcommand{\bysame}{\leavevmode\hbox to\leftmargin{\hrulefill\,\,}}
+\fi
+\begin{thebibliography}{xx}
+
+\harvarditem[Bilinski and Hatfield]{Bilinski and
+  Hatfield}{2018a}{bilinski_no_2018}
+{\bf Bilinski, Alyssa and Laura~A. Hatfield}, ``No {Free} {Lunch}: {A}
+  non-inferiority approach to model assumption tests,'' {\it arXiv:1805.03273
+  [stat]}, April 2018.
+
+\harvarditem[Bilinski and Hatfield]{Bilinski and
+  Hatfield}{2018b}{bilinski_seeking_2018}
+{\bf \bysame{} and \bysame{}}, ``Seeking evidence of absence: {Reconsidering}
+  tests of model assumptions,'' {\it arXiv:1805.03273 [stat]}, May 2018.
+
+\harvarditem[Dette and Schumann]{Dette and
+  Schumann}{2020}{dette_difference--differences_2020}
+{\bf Dette, Holger and Martin Schumann}, ``Difference-in-{Differences}
+  {Estimation} {Under} {Non}-{Parallel} {Trends},'' {\it Working Paper}, 2020.
+
+\harvarditem[Freyaldenhoven et al.]{Freyaldenhoven, Hansen and
+  Shapiro}{2019}{freyaldenhoven_pre-event_2019}
+{\bf Freyaldenhoven, Simon, Christian Hansen, and Jesse~M. Shapiro},
+  ``Pre-event {Trends} in the {Panel} {Event}-{Study} {Design},'' {\it American
+  Economic Review}, 2019, {\it 109} (9), 3307--3338.
+
+\harvarditem[Kahn-Lang and Lang]{Kahn-Lang and
+  Lang}{2020}{kahn-lang_promise_2020}
+{\bf Kahn-Lang, Ariella and Kevin Lang}, ``The {Promise} and {Pitfalls} of
+  {Differences}-in-{Differences}: {Reflections} on 16 and {Pregnant} and
+  {Other} {Applications},'' {\it Journal of Business \& Economic Statistics},
+  2020, {\it 38} (3), 613--620.
+
+\harvarditem[Manski and Pepper]{Manski and Pepper}{2018}{manski_how_2017}
+{\bf Manski, Charles~F. and John~V. Pepper}, ``How {Do} {Right}-to-{Carry}
+  {Laws} {Affect} {Crime} {Rates}? {Coping} with {Ambiguity} {Using}
+  {Bounded}-{Variation} {Assumptions},'' {\it The Review of Economics and
+  Statistics}, 2018, {\it 100} (2), 232--244.
+
+\harvarditem[Roth]{Roth}{\noop{2022}Forthcoming}{roth_pre-test_2021}
+{\bf Roth, Jonathan}, ``Pre-test with {Caution}: {Event}-study {Estimates}
+  {After} {Testing} for {Parallel} {Trends},'' {\it American Economic Review:
+  Insights}, \noop{2022}Forthcoming.
+
+\harvarditem[Ye et al.]{Ye, Keele, Hasegawa and Small}{2021}{ye_negative_2021}
+{\bf Ye, Ting, Luke Keele, Raiden Hasegawa, and Dylan~S. Small}, ``A {Negative}
+  {Correlation} {Strategy} for {Bracketing} in {Difference}-in-{Differences},''
+  {\it arXiv:2006.02423 [econ, stat]}, 2021.
+
+\end{thebibliography}

@@ -1,0 +1,88 @@
+% Typesetting
+	\usepackage{amsfonts}
+	\usepackage{amssymb}
+	\usepackage{amsmath}
+
+	\usepackage{subfig}
+
+	\usepackage{graphicx}
+    
+    \usepackage{multicol}
+    \usepackage{tikz}
+    \usetikzlibrary{calc,intersections}
+    
+    \usepackage{dcolumn}
+    
+    \usepackage{accents}
+    \usepackage{adjustbox}
+
+% Bibliography
+    % \usepackage[style=authoryear-comp,natbib=true,backend=biber]{biblatex}
+    % \addbibresource{Bibliography.bib}
+    % \usepackage{csquotes}
+	\usepackage{natbib}
+ 	%\bibliographystyle{apalike}
+ 	\bibliographystyle{aer}
+	
+	\usepackage{bibunits}
+	\defaultbibliography{Bibliography.bib}  
+	%\defaultbibliographystyle{apalike}
+	\defaultbibliographystyle{aer}
+
+	
+% Links
+	\usepackage{hyperref}
+	\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=blue,
+    citecolor = black
+}
+	\usepackage{cleveref}
+
+% Todonotes
+	\usepackage[framemethod=tikz]{mdframed}
+	\usepackage{todonotes}
+	\presetkeys{todonotes}{color=black!5,inline}{} % noline
+
+% Boxes
+    \usepackage{tcolorbox}
+    \newtcbox{\feedback}{nobeforeafter,colframe=black,colback=white,boxrule=0.5pt,arc=2pt,
+      boxsep=0pt,left=2pt,right=2pt,top=2pt,bottom=2pt,tcbox raise base}
+      
+% Theorems
+    \usepackage{amsthm}
+     
+    \newtheorem{thm}{Theorem}
+    \newtheorem{asm}{Assumption}
+    \newtheorem{con}{Conjecture}
+    \newtheorem{prop}{Proposition}
+    \newtheorem{lem}{Lemma}
+    \newtheorem{cor}{Corollary}
+    \newtheorem{rem}{Remark}
+    \newtheorem{defn}{Definition}
+
+%Packages and commands for column widths in tables
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%Turn off toolbar
+\setbeamertemplate{navigation symbols}[default]
+\beamertemplatenavigationsymbolsempty  
+
+
+%Macro for wrapping text in underbrace
+\usepackage{ragged2e}
+\newlength\ubwidth
+\newcommand\wrapunderbrace[2]{\settowidth\ubwidth{$#1$}\underbrace{#1}_{\parbox{\ubwidth}{\scriptsize\RaggedRight#2}}}
+
+
+%This makes citations smaller
+\makeatletter
+\DeclareRobustCommand\citep
+{\begingroup\footnotesize\NAT@swatrue\let\NAT@ctype\z@\NAT@partrue
+    \@ifstar{\NAT@fulltrue\NAT@citetp}{\NAT@fullfalse\NAT@citetp}}
+\makeatother
