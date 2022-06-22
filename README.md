@@ -35,7 +35,7 @@ I'll start by telling you a little about myself and the logistics of the course.
 
 <b>Slides</b>
 
-<a href="https://raw.githubusercontent.com/Mixtape-Sessions/Advanced-DID/main/Slides/01-introduction.pdf">Slides.pdf</a>
+[Slides](Slides/01-introduction.pdf)
 
 
 
