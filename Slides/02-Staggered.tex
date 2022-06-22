@@ -1,0 +1,412 @@
+\documentclass[aspectratio = 169, 13pt]{beamer}
+
+\input{preambles/preamble.tex}
+\input{preambles/notation.tex}
+\author{Jonathan Roth}
+\title[Advanced DiD Mixtape Workshop]{Advanced DiD Mixtape Workshop \\ Introduction}
+
+\begin{document}
+
+\imageframe{figures/cover_staggered.png}
+
+\begin{frame}{Staggered Timing}
+  \begin{wideitemize}
+    \item
+    Remember that in the canonical DiD model we had:
+
+    \begin{itemize}
+      \item
+            Two periods and a common treatment date
+
+      \item
+            Identification from parallel trends and no anticipation
+
+      \item
+            A large number of clusters for inference
+    \end{itemize}
+
+    \item
+    A very active recent literature has focused on relaxing the first assumption: \textbf{what if there are multiple periods and units adopt treatment at different times?}
+
+    \item
+    This literature typically maintains the remaining ingredients: parallel trends and many clusters
+
+  \end{wideitemize}
+
+\end{frame}
+
+
+\begin{frame}{Overview of Staggered Timing Literature}
+
+  \begin{enumerate}
+    \item
+          Negative results: TWFE OLS doesn't give us what we want with treatment effect heterogeneity
+
+    \item
+          New estimators: perform better under treatment effect heterogeneity
+  \end{enumerate}
+
+
+\end{frame}
+
+\begin{frame}{Staggered timing set-up}
+  \begin{wideitemize}
+
+    \item
+    Suppose units adopt a binary treatment at different dates $G_i \in \{1,...,T \} \cup \infty$ (where $G_i = \infty$ means ``never-treated'')
+    \begin{itemize}
+      \item
+            Literature is now starting to consider cases with continuous treatment \& treatments that turn on/off -- that lit is still developing (see Section 3.4 of review paper)
+    \end{itemize}
+
+    \item
+    Potential outcomes $Y_{it}(g)$ -- depend on time and time you were first-treated
+
+  \end{wideitemize}
+\end{frame}
+
+
+\begin{frame}{Extending the Identifying Assumptions}
+  \begin{wideitemize}
+    \item
+    The key identifying assumptions from the canonical model are extended in the natural way
+
+    \item
+    \textbf{Parallel trends:} Intuitively, says that if treatment hadn't happened, all ``adoption cohorts'' would have parallel average outcomes in all periods
+
+    $$ E[ Y_{it}(\infty) - Y_{i,t-1}(\infty) | G_i = g ] = E[ Y_{it}(\infty) - Y_{i,t-1}(\infty) | G_i = g' ] \text{ for all } g,t,t' $$
+
+
+    Note: can impose slightly weaker versions (e.g. only require PT post-treatment)
+
+    \item
+    \textbf{No anticipation:} Intuitively, says that treatment has no impact before it is implemented
+
+    $$Y_{it}(g) = Y_{it}(\infty) \text{ for all } t<g$$
+  \end{wideitemize}
+\end{frame}
+
+
+\begin{frame}{Negative results}
+  \begin{wideitemize}
+    \item
+    Suppose we again run the regression
+    \vspace{-3mm}
+    $$Y_{it} = \alpha_i + \phi_t + D_{it} \beta  + \epsilon_{it}, $$
+    \noindent where $D_{it} = 1[t \geq G_i]$ is a treatment indicator. Suppose we're willing to assume no anticipation and  parallel trends across all adoption cohorts as described above
+
+    \pause
+    \vspace{-3mm}
+    \item
+    Good news: if treatment effects are constant across time and units, $Y_{it}(g) - Y_{it}(\infty) \equiv \tau$, then $\beta = \tau$
+
+    \pause
+    \vspace{-3mm}
+    \item
+    Bad news: if treatment effects are not constant across time/units, then $\beta$ may put negative weights on treatment effects for some units and time periods
+    \begin{itemize}
+      \item
+            E.g., if treatment effect depends on time since treatment, $Y_{it}(t-r) - Y_{it}(\infty) = \tau_{r}$, then some $\tau_r$s may get negative weight
+    \end{itemize}
+  \end{wideitemize}
+\end{frame}
+
+\begin{frame}{Where do these negative results come from?}
+  \begin{wideitemize}
+    \item
+    The intuition for these negative results is that the TWFE OLS specification combines two sources of comparisons:
+
+    \medskip
+
+    \begin{enumerate}
+      {\normalsize
+      \item
+            \textbf{Clean comparisons:} DiD's between treated and not-yet-treated units
+
+            \medskip
+
+      \item
+            \textbf{Forbidden comparisons:} DiD's between two sets of already-treated units (who began treatment at different times)
+            }
+    \end{enumerate}
+
+    \item
+    These forbidden comparisons can lead to negative weights: the ``control group'' is already treated, so we run into problems if their treatment effects change over time
+  \end{wideitemize}
+\end{frame}
+
+\begin{frame}{Some intuition for forbidden comparisons}
+  \begin{wideitemize}
+    \item
+    Consider the two period model, except suppose now that our two groups are \textbf{always-treated} units (treated in both periods) and \textbf{switchers} (treated only in period 2)
+
+    \item
+    The TWFE OLS specification
+
+    $$ Y_{it} = \alpha_i + \phi_t + D_{it} \beta  + \epsilon_{it},$$
+
+    is still identified, with
+
+    $$\hat\beta =  \underbrace{ \left(\bar{Y}_{Switchers, 2} - \bar{Y}_{Switchers, 1} \right) }_{\text{Change for switchers}} - \underbrace{ \left(\bar{Y}_{AT, 2} - \bar{Y}_{AT, 1} \right) }_{\text{Change for always treated}}  $$
+
+    \item
+    Problem: if the treatment effect for the always-treated grows over time, that will enter $\hat\beta$ negatively!
+
+    \item
+    With multiple periods/staggered timing, $\hat\beta$ includes both this type of comparisons and clean comparisons
+  \end{wideitemize}
+\end{frame}
+
+\begin{frame}{Not just negative but weird...}
+  The literature has placed a lot of emphasis on the fact that some treatment effects may get negative weights
+  \begin{wideitemize}
+    \item
+    But even if the weights are non-negative, they might not give us the most intuitive parameter
+
+    \item
+    For example, suppose each unit $i$ has treatment effect $\tau_i$ in every period if they are treated (no dynamics). Then $\beta$ gives a weighted average of the $\tau_i$ where the weights are largest for units treated closest to the middle of the panel
+
+    \item
+    It is not obvious that these weights are relevant for policy, even if they are all non-negative!
+  \end{wideitemize}
+\end{frame}
+
+\begin{frame}{Issues with dynamic TWFE}
+  \begin{wideitemize}
+    \item
+    \citet{sun_estimating_2020} show that similar issues arise with dynamic TWFE specifications:
+
+    \begin{equation*}
+      Y_{i,t} = \alpha_i + \lambda_t +  \sum_{k \neq 0} \sun{ \gamma_k D_{i,t}^{k}} + \varepsilon_{i,t},
+    \end{equation*}
+    where $D_{i,t}^{k} = 1\left\{t-G_{i}=k\right\}$ are ``event-time'' dummies.
+
+    \item
+    Like for the static spec, $\sun{\gamma_k}$ may put negative weight on treatment effects after $k$ periods for some units
+
+    \item
+    SA also show that $\sun{\gamma_k}$ may be ``contaminated'' by treatment effects at lags $k' \neq k$
+
+
+  \end{wideitemize}
+
+\end{frame}
+
+
+\begin{frame}{Dynamic TWFE - Continued}
+
+  \begin{wideitemize}
+
+    \item
+    The results in SA suggest that interpreting the $\sun{\hat\gamma_k}$ for $k=1,2,...$ as estimates of the dynamic effects of treatment may be misleading
+
+
+    \item
+    These results also imply that pre-trends tests of the $\gamma_k$ for $k<0$ may be misleading -- could be non-zero even if parallel trends holds, since they may be ``contaminated'' by post-treatment effects!
+    \pause
+
+    \item
+    The issues discussed in SA arise if dynamic path of treatment effects is heterogeneous across adoption cohorts
+    \begin{itemize}
+      \item
+            Biases may be less severe than for ``static'' specs if dynamic patterns are similar across cohorts
+    \end{itemize}
+
+
+  \end{wideitemize}
+
+\end{frame}
+
+\begin{frame}{New estimators (and estimands!)}
+  \begin{wideitemize}
+    \item
+    Several new (closely-related) estimators have been proposed to try to address these negative weighting issues
+
+    \item
+    The key components of all of these are:
+
+    \begin{enumerate}
+      {\normalsize
+      \item
+            Be precise about the target parameter (estimand) -- i.e., how do we want to aggregate treatment effects across time/units
+            \bigskip
+
+      \item
+            Estimate the target parameter using only ``clean-comparisons''
+            }
+    \end{enumerate}
+  \end{wideitemize}
+\end{frame}
+
+\begin{frame}{Example -- Callaway and Sant'Anna (2020)}
+  \begin{wideitemize}
+    \item
+    Define $ATT(g,t)$ to be ATT in period $t$ for units first treated at period $g$,
+
+    $$ATT(g,t) = E[ Y_{it}(g) - Y_{it}(\infty) | G_i = g] $$
+
+    \pause
+    \item
+    Under PT and No Anticipation, $ATT(g,t)$ is identified as
+    $$ATT(g,t) = \underbrace{E[ Y_{it} - Y_{i,g-1}| G_i = g]}_{\text{Change for cohort g}} -  \underbrace{E[ Y_{it} - Y_{i,g-1}| G_i = \infty]}_{\text{Change for never-treated units}} $$
+
+    \item
+    Why? \pause{} This is a two-group two-period comparison, so the argument is the same as in the canonical case!
+
+  \end{wideitemize}
+\end{frame}
+
+\begin{frame}{Proof of Identification Argument}
+  \begin{itemize}
+    \item
+          Start with
+          \vspace{-3mm}
+          $$E[Y_{it}- Y_{i,g-1}| G_i =g] - E[Y_{ig} - Y_{i,g-1}| G_i = \infty]$$
+          
+          \pause
+    \vspace{-3mm}
+    \item
+          Apply definition of POs to obtain:
+          \vspace{-3mm}
+          $$E[Y_{it}(g) - Y_{i,g-1}(g) | G_i =g] - E[Y_{ig}(\infty) - Y_{i,g-1}(\infty) | G_i = \infty]$$
+          
+          \pause
+    \vspace{-3mm}
+    \item
+          Use No Anticipation to substitute $Y_{i,g-1}(\infty)$ for $Y_{i,g-1}(g)$:
+          \vspace{-3mm}
+          $$E[Y_{it}(g) - Y_{i,g-1}(\infty) | G_i =g] - E[Y_{ig}(\infty) - Y_{i,g-1}(\infty) | G_i = \infty]$$
+          
+          
+          \pause
+    \vspace{-3mm}
+    \item
+          Add and subtract $E[ Y_{it}(\infty) | G_i =g] $ to obtain:
+          \begin{align*}
+              & \electricViolet{E[ Y_{it}(g) - Y_{it}(\infty) | G_i =g]} +                                                                                           \\
+              & \hspace{1cm} \sun{\left[ E[Y_{it}(\infty) - Y_{i,g-1}(\infty) | G_i =g] - E[Y_{ig}(\infty) - Y_{i,g-1}(\infty) | G_i = \infty] \right]}
+          \end{align*}
+
+          \pause
+          \vspace{-3mm}
+    \item
+          Cancel the \sun{last term} using PT to get $\electricViolet{E[Y_{it}(g) - Y_{it}(\infty) | G_i = g] = ATT(g,t)}$
+  \end{itemize}
+
+
+\end{frame}
+\begin{frame}{Example -- Callaway and Sant'Anna (2020)}
+  \begin{wideitemize}
+    \item
+    Define $ATT(g,t)$ to be ATT in period $t$ for units first treated at period $g$,
+
+    $$ATT(g,t) = E[ Y_{it}(g) - Y_{it}(\infty) | G_i = g] $$
+    
+    \pause
+    \vspace{-3mm}
+    \item
+    Under PT and No Anticipation,
+    $$ATT(g,t) = \underbrace{E[ Y_{it} - Y_{i,g-1}| G_i = g]}_{\text{Change for cohort g}} -  \underbrace{E[ Y_{it} - Y_{i,g-1}| G_i = \infty]}_{\text{Change for never-treated}} $$
+    
+    \pause
+    \vspace{-3mm}
+    \item
+    We can then estimate this with sample analogs:
+    $$\widehat{ATT}(g,t)= \underbrace{\widehat{E}[ Y_{it} - Y_{i,g-1} | G_i = g]}_{\text{Sample change for cohort g}} -  \underbrace{\widehat{E}[ Y_{it} - Y_{i,g-1} | G_i = \infty]}_{\text{Sample change for never-treated}} $$
+    
+    \vspace{-3mm}
+    where $\hat{E}$ denotes sample means.
+
+  \end{wideitemize}
+\end{frame}
+
+\begin{frame}{Aggregation schemes}
+  \begin{wideitemize}
+    \item
+    If have a large number of observations and relatively few groups/periods, can report $\widehat{ATT}(g,t)$'s directly.
+
+    \item
+    If there are many groups/periods, the $\widehat{ATT}(g,t)$ may be very imprecisely estimated and/or too numerous to report concisely
+
+  \end{wideitemize}
+\end{frame}
+
+\begin{frame}{Aggregation schemes}
+  \begin{wideitemize}
+    \item
+    In these cases, it is often desirable to report sensible averages of the $\widehat{ATT}(g,t)$'s.
+
+    \pause
+    \item
+    One of the most useful is to report event-study parameters which aggregate $\widehat{ATT}(g,t)$'s at a particular lag since treatment
+    \begin{itemize}
+      \item E.g. $\hat{\theta}_k = \sum_g \widehat{ATT}(g, t+k)$ aggregates effects for cohorts in the $k$th period after treatment
+
+      \item Can also construct for $k<0$ to estimate ``pre-trends''
+    \end{itemize}
+
+    \pause
+    \item
+    C\&S discuss other sensible aggregations too -- e.g., if interested in whether treatment effects differ across good/bad economies, may want to ``calendar averages'' that pool the $\widehat{ATT}(t,g)$ for the same year
+  \end{wideitemize}
+
+\end{frame}
+
+\begin{frame}{Comparisons of new estimators}
+  \begin{wideitemize}
+    \item
+    Callaway and Sant'Anna also propose an analogous estimator using \textit{not-yet-treated} rather than never-treated units.
+
+    \vspace{-3mm}
+    \item
+    \citet{sun_estimating_2020} propose a similar estimator but with different comparisons groups (e.g. using last-to-be treated rather than not-yet-treated)
+
+    \vspace{-3mm}
+    \item
+    \citet{borusyak_revisiting_2021}, \citet{Wooldridge2021a}, \citet{gardner_two-stage_2021} propose ``imputation'' estimators that estimate the counterfactual $\hat{Y}_{it}(0)$ using a TWFE model that is fit using only pre-treatment data
+    \begin{itemize}
+      \item Main difference from C\&S is that this uses more pre-treatment periods, not just period $g-1$
+
+      \item This can sometimes be more efficient (if outcome not too serially correlated), but also relies on a stronger PT assumption that may be more susceptible to bias
+    \end{itemize}
+
+    \vspace{-3mm}
+    \item \citet{roth_efficient_2021} show that you can get even more precise estimates if you're willing to assume treatment timing is ``as good as random''
+
+  \end{wideitemize}
+\end{frame}
+
+\begin{frame}{Personal advice}
+  \begin{wideitemize}
+    \item
+    Don't freak out about this new literature!
+
+    \pause
+    \item
+    In most cases, using the ``new'' DiD methods will not lead to a big change in your results (empirically, TE heterogeneity is not \textit{that} large in most cases)
+    \begin{itemize}
+      \item
+            The exceptions are cases where there are many periods with very few treated units -- this is when ``forbidden comparisons'' get the most weight
+    \end{itemize}
+
+    \pause
+    \item
+    The most important thing is to be precise about who you want the comparison group to be and to choose a method that only uses these ``clean comparisons''
+
+    \pause
+    \item
+    In my experience, the difference between the new estimators is typically not that large -- can report multiple new methods for robustness (to make your referees happy!)
+  \end{wideitemize}
+\end{frame}
+
+
+
+
+
+
+\backupbegin
+\begin{frame}[allowframebreaks]{References}
+  \bibliography{Bibliography.bib}
+\end{frame}
+\backupend
+\end{document}
