@@ -35,7 +35,39 @@ I'll start by telling you a little about myself and the logistics of the course.
 
 <b>Slides</b>
 
-[Slides](Slides/01-introduction.pdf)
+[Introduction.pdf](Slides/01-introduction.pdf)
+
+
+
+</details><br />
+
+
+<details><summary><b>Staggered treatment timing</b></summary><br/>
+
+<b>About</b>
+
+We'll next discuss a very active recent literature on DiD settings with multiple periods and staggered treatment timing. We'll first discuss issues with two-way fixed effects estimators in these settings. We'll then discuss recently-introduced estimators that have been developed to fix these problems. The discussion will be based on Section 3 of [Roth et al (2022)](https://jonathandroth.github.io/assets/files/DiD_Review_Paper.pdf) 
+
+
+<b>Slides</b>
+
+[Staggered.pdf](Slides/02-staggered.pdf)
+
+
+
+</details><br />
+
+
+<details><summary><b>Violations of parallel trends</b></summary><br/>
+
+<b>About</b>
+
+We'll next discuss the strand of the literature that has considered the possibility that the parallel trends assumption may not hold exactly. We'll discuss the intuitive practice of testing for "pre-trends," as well as its limitations. We'll also discuss solutions to these issues, including power analyses and the sensitivity analysis proposed by [Rambachan and Roth (2022)](https://jonathandroth.github.io/assets/files/HonestParallelTrends_Main.pdf). The discussion will be based on Section 4 of [Roth et al (2022)](https://jonathandroth.github.io/assets/files/DiD_Review_Paper.pdf) 
+
+
+<b>Slides</b>
+
+[Violations.pdf](Slides/03-violations.pdf)
 
 
 
