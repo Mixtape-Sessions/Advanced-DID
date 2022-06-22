@@ -4,7 +4,7 @@
 <img src="img/readme_about.png" alt="Mixtape Sessions Banner" width="100%">
 <br/>
 
-This one-day workshop will cover advanced topics from the recent difference-in-differences literature. One question of particular focus will be, "what should I do if I'm not 100% sure about the validity of the parallel trends assumption?" We will cover a variety of relaxations to the parallel trends assumption, and new tools for power calculations and sensitivity analysis. The workshop will focus not just on the theory, but also on practical implementation in statistical software such as R and Stata. 
+This one-day workshop will cover advanced topics from the recent difference-in-differences (DiD) literature. The structure of the course is loosely based on my review paper, [What's Trending in Differences-in-Differences? A Synthesis of the Recent Econometrics Literature](https://jonathandroth.github.io/assets/files/DiD_Review_Paper.pdf), particularly Sections 3 and 4. We will start by briefly reviewing the canonical DiD model. We will then cover two strands of the literature that have deviated from this basic model in different ways. The first strand considers settings with multiple periods and staggered treatment timing. The second strand considers the fact that the parallel trends assumption may not hold exactly. The workshop will focus not just on the theory, but also on practical implementation in statistical software such as R and Stata. 
 
 <br/>
 
