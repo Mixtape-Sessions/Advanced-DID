@@ -16,7 +16,7 @@ This exercise will help you learn about the recent DiD literature on settings wi
 
 The provided datasets *ehec_data.dta* (for Stata) and *ehec_data.csv* (for R) contain a state-level panel dataset on health insurance coverage and Medicaid expansion. The variable *dins* shows the share of low-income childless adults with health insurance in the state. The variable *yexp2* gives the year that a state expanded Medicaid coverage under the Affordable Care Act, and is missing if the state never expanded. The variable *year* gives the year of the observation and the variable *stfips* is a state identifier. (The variable *W* is the sum of person-weights for the state in the ACS; for simplicity, we will treat all states equally and ignore the weights, although if you'd like an additional challenge feel free to re-do everything incorporating the population weights!)
 
-1.   **Load the data**
+1.  **Load the data**
 
 Use the *readRDS()* or *use* commands in R and Stata, respectively, to load the relevant dataset.
 
@@ -117,7 +117,7 @@ bacon(dins ~ postTreated,
 
 7.  **Compare to TWFE estimates (part 2)**
 
-To see a situation where negative weights can matter more, drop from your dataset all the observations that are never-treated. Re-run the Callaway and Sant'Anna and TWFE estimates like you did before on this modified data-set. How does the TWFE estimate compare to the simple weighted average (or the average of the event-study coefficients) now?
+To see a situation where negative weights can matter (somewhat) more, drop from your dataset all the observations that are never-treated. Re-run the Callaway and Sant'Anna and TWFE estimates like you did before on this modified data-set. How does the TWFE estimate compare to the simple weighted average (or the average of the event-study coefficients) now?
 
 ```{r}
 ## Re-run the CS results dropping never-treated units
@@ -149,11 +149,60 @@ summary(twfe_static)
 
 8.  **Run the Bacon decomposition (part 2)**
 
-Re-run the Bacon decomposition on the modified dataset. How much weight is put on "forbidden comparisons" now? Does this help explain the larger gap between the Callaway and Sant'Anna and TWFE estimates.
+Re-run the Bacon decomposition on the modified dataset. How much weight is put on "forbidden comparisons" now?
 
 ```{r}
 bacon(dins ~ postTreated,
       data = df %>% filter(!is.na(yexp2)),
+      id_var = "stfips",
+      time_var = "year")
+
+```
+
+9.  **Even bigger TWFE problems**
+
+In the last question, you saw an example where TWFE put a lot of weight on "forbidden comparisons". However, the estimates from the forbidden comparisons were not so bad because the treatment effects were relatively stable over time (the post-treatment event-study coefficients are fairly flat). To see how dynamic treatment effects can make the problem worse, create a variable *relativeTime* that gives the number of periods since a unit has been treated. Create a new outcome variable *dins2* that adds 0.01 times *relativeTime* to *dins* for observations that have already been treated (i.e., we add in some dynamic treatment effects that increase by 0.01 in each period after a unit is treated). Re-run the Callaway & Sant'Anna and TWFE estimates and the Bacon decomp using the dataset from the previous question and the *dins*2 variable. How do the differences between C&S and TWFE compare to before?
+
+```{r}
+## Re-run the CS results dropping never-treated units and adding dynamic TEs
+cs_results <- att_gt(yname = "dins2",
+                     tname = "year",
+                     idname = "stfips", 
+                     gname = "yexp2", 
+                     data = df %>% 
+                            filter(!is.na(yexp2)) %>%
+                            mutate(relativeTime = year - yexp2) %>%
+                            mutate(dins2 = dins + pmax(relativeTime, 0)*0.01),
+                     control_group = "notyettreated")
+
+aggte(cs_results, type = "simple")
+
+es <- aggte(cs_results, type = "dynamic", 
+            min_e = -5, max_e = 5)
+
+ggdid(es)
+
+```
+
+```{r}
+#Re-run TWFE dropping the never-treated units and adding dynamic TEs
+twfe_static <- feols(dins ~ postTreated | stfips + year,
+                     data = df %>% 
+                            filter(!is.na(yexp2)) %>%
+                            mutate(relativeTime = year - yexp2) %>%
+                            mutate(dins2 = dins + pmax(relativeTime, 0)*0.01), 
+                     cluster = "stfips" )
+summary(twfe_static)
+
+
+```
+
+```{r}
+bacon(dins ~ postTreated,
+      data = df %>% 
+                            filter(!is.na(yexp2)) %>%
+                            mutate(relativeTime = year - yexp2) %>%
+                            mutate(dins2 = dins + pmax(relativeTime, 0)*0.01),
       id_var = "stfips",
       time_var = "year")
 
