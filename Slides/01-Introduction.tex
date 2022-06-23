@@ -86,7 +86,19 @@
 
 
 \begin{frame}{(Approximate) Schedule for the day}
-  XX
+\begin{itemize}
+	\item 9-9:45 Preliminaries \& The Canonical DiD Model
+	\item 9:45-10 Break
+	\item 10-11:15 Staggered treatment timing and heterogeneous treatment effects
+	\item 11:15-11:30 Break
+	\item 11:30-12:30 Coding Exercise
+	\item 12:30-1:30 Lunch
+	\item 1:30-2:45 Violations of Parallel Trends
+	\item 2:45-3 Break
+	\item 3-4 Coding Exercise
+	\item 4-4:15 Break
+	\item 4:15-5:15 Open "Office Hour" for your DiD questions
+\end{itemize}
 \end{frame}
 
 
@@ -270,15 +282,12 @@
   \begin{wideitemize}
     \item
     The most conceptually simple estimator replaces population means with sample analogs:
-
     $$\hat{\tau}_{DiD} = (\bar{Y}_{12} - \bar{Y}_{11}) - (\bar{Y}_{02} - \bar{Y}_{01}) $$
-
     \noindent where $\bar{Y}_{dt}$ is sample mean for group $d$ in period $t$
 
     \pause
     \item
     Conveniently, $\hat\tau_{DID}$ is algebraically equal to OLS coefficient $\hat\beta$ from
-
     \begin{equation}
       Y_{it} = \alpha_i + \phi_t + D_{it} \beta  + \epsilon_{it}, \label{eqn: TWFE-2-periods}
     \end{equation}
