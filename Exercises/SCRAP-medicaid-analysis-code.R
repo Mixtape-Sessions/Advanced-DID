@@ -8,8 +8,6 @@ library(bacondecomp)
 
 df <- read_dta(here("Exercises/Data/ehec_data.dta"))
 
-df$yexp2
-
 #Impose data restrictions:
   # Restrict to 2015 or earlier
   # Remove states treated in 2015
