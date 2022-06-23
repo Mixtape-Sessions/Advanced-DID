@@ -80,7 +80,7 @@ csdid dins, ivar(stfips) time(year) gvar(yexp2) notyet
 
 qui: estat event
 csdid_plot
-graph export "es_plot.png"
+graph export "es_plot.png", replace
 
 estat simple
 ```
@@ -106,7 +106,7 @@ xtset stfips year
 ```
 ```{stata bacon-decomp, echo = -2}
 bacondecomp dins postTreated
-graph export "bacon_decomp.png"
+graph export "bacon_decomp.png", replace
 ```
 
 ![Bacon Decomposition plot](bacon_decomp.png)
@@ -117,13 +117,13 @@ To see a situation where negative weights can matter (somewhat) more, drop from 
 
 ```{stata drop-never-treated, collectcode = TRUE}
 drop if yexp2 == 3000
-csdid dins, ivar(stfips) time(year) gvar(yexp2) notyet
+qui: csdid dins, ivar(stfips) time(year) gvar(yexp2) notyet
 ```
 
 ```{stata cs-es-no-never, echo = -3}
 qui: estat event
 csdid_plot
-graph export "es_plot_no_nevertreated.png"
+graph export "es_plot_no_nevertreated.png", replace
 ```
 
 ![Event Study plot with no never treated](es_plot_no_nevertreated.png)
@@ -140,7 +140,7 @@ Re-run the Bacon decomposition on the modified dataset. How much weight is put o
 
 ```{stata bacon-decomp-no-nevertreated, echo = -2}
 bacondecomp dins postTreated
-graph export "bacon_decomp_no_nevertreated.png"
+graph export "bacon_decomp_no_nevertreated.png", replace
 ```
 
 ![Bacon Decomposition with no never treated](bacon_decomp_no_nevertreated.png)
@@ -156,12 +156,12 @@ gen dins2 = dins + (relativeTime>0) * relativeTime * 0.01
 ```
 
 ```{stata cs-dynamics, echo = -6}
-csdid dins2, ivar(stfips) time(year) gvar(yexp2) notyet
-qui: estat simple
+qui: csdid dins2, ivar(stfips) time(year) gvar(yexp2) notyet
+estat simple
 
 qui: estat event
 csdid_plot
-graph export "es_plot_dynamic.png"
+graph export "es_plot_dynamic.png", replace
 ```
 
 ![Event study plot with dynamics added](es_plot_dynamic.png)
@@ -172,5 +172,5 @@ reghdfe dins i.postTreated, absorb(stfips year) vce(cluster stfips)
 
 ```{stata bacon-dynamics, echo = -2}
 bacondecomp dins postTreated
-graph export "bacon_decomposition_dynamic.png"
+graph export "bacon_decomposition_dynamic.png", replace
 ```

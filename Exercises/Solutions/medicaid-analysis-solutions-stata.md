@@ -329,12 +329,6 @@ estat simple
     See Callaway and Sant'Anna (2021) for details
 
 
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
     (note:  named style % 40 not found in class color, default attributes used)
     (note:  named style % 40 not found in class color, default attributes used)
     (note:  named style % 40 not found in class color, default attributes used)
@@ -346,11 +340,14 @@ estat simple
     (note:  named style % 40 not found in class color, default attributes used)
     (note:  named style % 40 not found in class color, default attributes used)
 
-    file es_plot.png already exists
-    r(602);
+    (file es_plot.png written in PNG format)
 
-    end of do-file
-    r(602);
+    Average Treatment Effect on Treated
+    ------------------------------------------------------------------------------
+                 |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+    -------------+----------------------------------------------------------------
+             ATT |   .0679833   .0078313     8.68   0.000     .0526342    .0833323
+    ------------------------------------------------------------------------------
 
 ![Event Study plot](es_plot.png)
 
@@ -439,18 +436,8 @@ bacondecomp dins postTreated
     |        Timing_groups |  .0628173141   .2073768906 |
     |       Never_v_timing |  .0722838002   .7926231094 |
     +---------------------------------------------------+
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
 
-    file bacon_decomp.png already exists
-    r(602);
-
-    end of do-file
-    r(602);
+    (file bacon_decomp.png written in PNG format)
 
 ![Bacon Decomposition plot](bacon_decomp.png)
 
@@ -465,101 +452,16 @@ now?
 
 ``` stata
 drop if yexp2 == 3000
-csdid dins, ivar(stfips) time(year) gvar(yexp2) notyet
+qui: csdid dins, ivar(stfips) time(year) gvar(yexp2) notyet
 ```
 
     (192 observations deleted)
-
-    ..........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    xxxxx
-    Difference-in-difference with Multiple Time Periods
-
-                                                    Number of obs     =        310
-    Outcome model  : weighted least squares
-    Treatment model: inverse probability tilting
-    ------------------------------------------------------------------------------
-                 |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
-    -------------+----------------------------------------------------------------
-    g2014        |
-     t_2008_2009 |  -.0121793   .0059348    -2.05   0.040    -.0238114   -.0005473
-     t_2009_2010 |   .0105715   .0120512     0.88   0.380    -.0130484    .0341915
-     t_2010_2011 |   .0135896   .0103365     1.31   0.189    -.0066696    .0338488
-     t_2011_2012 |   .0046009   .0125923     0.37   0.715    -.0200796    .0292814
-     t_2012_2013 |  -.0097872   .0137354    -0.71   0.476     -.036708    .0171336
-     t_2013_2014 |    .055427    .013729     4.04   0.000     .0285186    .0823354
-     t_2013_2015 |   .0707832   .0145556     4.86   0.000     .0422547    .0993116
-     t_2013_2016 |   .0835045    .022461     3.72   0.000     .0394818    .1275272
-     t_2013_2017 |   .0875875   .0093465     9.37   0.000     .0692686    .1059063
-     t_2013_2018 |   .0833885   .0116442     7.16   0.000     .0605664    .1062107
-     t_2013_2019 |          0  (omitted)
-    -------------+----------------------------------------------------------------
-    g2015        |
-     t_2008_2009 |          0  (omitted)
-     t_2009_2010 |          0  (omitted)
-     t_2010_2011 |          0  (omitted)
-     t_2011_2012 |          0  (omitted)
-     t_2012_2013 |          0  (omitted)
-     t_2013_2014 |          0  (omitted)
-     t_2014_2015 |          0  (omitted)
-     t_2014_2016 |          0  (omitted)
-     t_2014_2017 |          0  (omitted)
-     t_2014_2018 |          0  (omitted)
-     t_2014_2019 |          0  (omitted)
-    -------------+----------------------------------------------------------------
-    g2016        |
-     t_2008_2009 |          0  (omitted)
-     t_2009_2010 |          0  (omitted)
-     t_2010_2011 |          0  (omitted)
-     t_2011_2012 |          0  (omitted)
-     t_2012_2013 |          0  (omitted)
-     t_2013_2014 |          0  (omitted)
-     t_2014_2015 |          0  (omitted)
-     t_2015_2016 |          0  (omitted)
-     t_2015_2017 |          0  (omitted)
-     t_2015_2018 |          0  (omitted)
-     t_2015_2019 |          0  (omitted)
-    -------------+----------------------------------------------------------------
-    g2017        |
-     t_2008_2009 |          0  (omitted)
-     t_2009_2010 |          0  (omitted)
-     t_2010_2011 |          0  (omitted)
-     t_2011_2012 |          0  (omitted)
-     t_2012_2013 |          0  (omitted)
-     t_2013_2014 |          0  (omitted)
-     t_2014_2015 |          0  (omitted)
-     t_2015_2016 |          0  (omitted)
-     t_2016_2017 |          0  (omitted)
-     t_2016_2018 |          0  (omitted)
-     t_2016_2019 |          0  (omitted)
-    -------------+----------------------------------------------------------------
-    g2019        |
-     t_2008_2009 |          0  (omitted)
-     t_2009_2010 |          0  (omitted)
-     t_2010_2011 |          0  (omitted)
-     t_2011_2012 |          0  (omitted)
-     t_2012_2013 |          0  (omitted)
-     t_2013_2014 |          0  (omitted)
-     t_2014_2015 |          0  (omitted)
-     t_2015_2016 |          0  (omitted)
-     t_2016_2017 |          0  (omitted)
-     t_2017_2018 |          0  (omitted)
-     t_2018_2019 |          0  (omitted)
-    ------------------------------------------------------------------------------
-    Control: Not yet Treated
-
-    See Callaway and Sant'Anna (2021) for details
 
 ``` stata
 qui: estat event
 csdid_plot
 ```
 
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
     (note:  named style % 40 not found in class color, default attributes used)
     (note:  named style % 40 not found in class color, default attributes used)
     (note:  named style % 40 not found in class color, default attributes used)
@@ -571,11 +473,7 @@ csdid_plot
     (note:  named style % 40 not found in class color, default attributes used)
     (note:  named style % 40 not found in class color, default attributes used)
 
-    file es_plot_no_nevertreated.png already exists
-    r(602);
-
-    end of do-file
-    r(602);
+    (file es_plot_no_nevertreated.png written in PNG format)
 
 ![Event Study plot with no never treated](es_plot_no_nevertreated.png)
 
@@ -643,18 +541,8 @@ bacondecomp dins postTreated
     |----------------------+----------------------------|
     |        Timing_groups |  .0628173146             1 |
     +---------------------------------------------------+
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
 
-    file bacon_decomp_no_nevertreated.png already exists
-    r(602);
-
-    end of do-file
-    r(602);
+    (file bacon_decomp_no_nevertreated.png written in PNG format)
 
 ![Bacon Decomposition with no never
 treated](bacon_decomp_no_nevertreated.png)
@@ -684,100 +572,21 @@ gen dins2 = dins + (relativeTime>0) * relativeTime * 0.01
     (0 real changes made)
 
 ``` stata
-csdid dins2, ivar(stfips) time(year) gvar(yexp2) notyet
-qui: estat simple
+qui: csdid dins2, ivar(stfips) time(year) gvar(yexp2) notyet
+estat simple
 
 qui: estat event
 csdid_plot
 ```
 
-    ..........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    xxxxx
-    Difference-in-difference with Multiple Time Periods
-
-                                                    Number of obs     =        310
-    Outcome model  : weighted least squares
-    Treatment model: inverse probability tilting
+    Average Treatment Effect on Treated
     ------------------------------------------------------------------------------
                  |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
     -------------+----------------------------------------------------------------
-    g2014        |
-     t_2008_2009 |  -.0121793   .0059348    -2.05   0.040    -.0238114   -.0005473
-     t_2009_2010 |   .0105715   .0120512     0.88   0.380    -.0130484    .0341915
-     t_2010_2011 |   .0135896   .0103365     1.31   0.189    -.0066696    .0338488
-     t_2011_2012 |   .0046009   .0125923     0.37   0.715    -.0200796    .0292814
-     t_2012_2013 |  -.0097872   .0137354    -0.71   0.476     -.036708    .0171336
-     t_2013_2014 |    .055427    .013729     4.04   0.000     .0285186    .0823354
-     t_2013_2015 |   .0807832   .0145556     5.55   0.000     .0522547    .1093116
-     t_2013_2016 |   .1035045    .022461     4.61   0.000     .0594818    .1475271
-     t_2013_2017 |   .1175874   .0093465    12.58   0.000     .0992686    .1359063
-     t_2013_2018 |   .1233886   .0116442    10.60   0.000     .1005664    .1462107
-     t_2013_2019 |          0  (omitted)
-    -------------+----------------------------------------------------------------
-    g2015        |
-     t_2008_2009 |          0  (omitted)
-     t_2009_2010 |          0  (omitted)
-     t_2010_2011 |          0  (omitted)
-     t_2011_2012 |          0  (omitted)
-     t_2012_2013 |          0  (omitted)
-     t_2013_2014 |          0  (omitted)
-     t_2014_2015 |          0  (omitted)
-     t_2014_2016 |          0  (omitted)
-     t_2014_2017 |          0  (omitted)
-     t_2014_2018 |          0  (omitted)
-     t_2014_2019 |          0  (omitted)
-    -------------+----------------------------------------------------------------
-    g2016        |
-     t_2008_2009 |          0  (omitted)
-     t_2009_2010 |          0  (omitted)
-     t_2010_2011 |          0  (omitted)
-     t_2011_2012 |          0  (omitted)
-     t_2012_2013 |          0  (omitted)
-     t_2013_2014 |          0  (omitted)
-     t_2014_2015 |          0  (omitted)
-     t_2015_2016 |          0  (omitted)
-     t_2015_2017 |          0  (omitted)
-     t_2015_2018 |          0  (omitted)
-     t_2015_2019 |          0  (omitted)
-    -------------+----------------------------------------------------------------
-    g2017        |
-     t_2008_2009 |          0  (omitted)
-     t_2009_2010 |          0  (omitted)
-     t_2010_2011 |          0  (omitted)
-     t_2011_2012 |          0  (omitted)
-     t_2012_2013 |          0  (omitted)
-     t_2013_2014 |          0  (omitted)
-     t_2014_2015 |          0  (omitted)
-     t_2015_2016 |          0  (omitted)
-     t_2016_2017 |          0  (omitted)
-     t_2016_2018 |          0  (omitted)
-     t_2016_2019 |          0  (omitted)
-    -------------+----------------------------------------------------------------
-    g2019        |
-     t_2008_2009 |          0  (omitted)
-     t_2009_2010 |          0  (omitted)
-     t_2010_2011 |          0  (omitted)
-     t_2011_2012 |          0  (omitted)
-     t_2012_2013 |          0  (omitted)
-     t_2013_2014 |          0  (omitted)
-     t_2014_2015 |          0  (omitted)
-     t_2015_2016 |          0  (omitted)
-     t_2016_2017 |          0  (omitted)
-     t_2017_2018 |          0  (omitted)
-     t_2018_2019 |          0  (omitted)
+             ATT |   .0961381   .0107013     8.98   0.000      .075164    .1171123
     ------------------------------------------------------------------------------
-    Control: Not yet Treated
-
-    See Callaway and Sant'Anna (2021) for details
 
 
-
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
     (note:  named style % 40 not found in class color, default attributes used)
     (note:  named style % 40 not found in class color, default attributes used)
     (note:  named style % 40 not found in class color, default attributes used)
@@ -843,11 +652,5 @@ bacondecomp dins postTreated
     |----------------------+----------------------------|
     |        Timing_groups |  .0628173146             1 |
     +---------------------------------------------------+
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
-    (note:  named style red * 1.2 not found in class color, default attributes used)
 
     (file bacon_decomposition_dynamic.png written in PNG format)

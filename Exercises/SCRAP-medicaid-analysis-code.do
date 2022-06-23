@@ -46,7 +46,7 @@
   
   qui: estat event
   csdid_plot
-  graph export "es_plot.png"
+  graph export "es_plot.png", replace
 
   estat simple
 
@@ -60,7 +60,7 @@
   xtset stfips year
   bacondecomp dins postTreated
 
-  graph export "bacon_decomp.png"
+  graph export "bacon_decomp.png", replace
 
 
 *-> 7. **Compare to TWFE estimates (part 2)**
@@ -68,20 +68,21 @@
   preserve
   drop if yexp2 == 3000
 
-  csdid dins, ivar(stfips) time(year) gvar(yexp2) notyet
+  qui: csdid dins, ivar(stfips) time(year) gvar(yexp2) notyet
   
+  estat simple
+
   qui: estat event
   csdid_plot
-  graph export "es_plot_no_nevertreated.png"
+  graph export "es_plot_no_nevertreated.png", replace
 
-  estat simple
 
   reghdfe dins i.postTreated, absorb(stfips year) vce(cluster stfips)
 
 *-> 8. **Run the Bacon decomposition (part 2)**
 
   bacondecomp dins postTreated
-  graph export "bacon_decomp_no_nevertreated.png"
+  graph export "bacon_decomp_no_nevertreated.png", replace
 
 
 *-> 9. **Even bigger TWFE problems**
@@ -89,14 +90,14 @@
   replace relativeTime = . if yexp2 == 3000
   gen dins2 = dins + (relativeTime>0) * relativeTime * 0.01
 
-  csdid dins2, ivar(stfips) time(year) gvar(yexp2) notyet
+  qui: csdid dins2, ivar(stfips) time(year) gvar(yexp2) notyet
 
-  qui: estat simple
+  estat simple
 
   qui: estat event
   csdid_plot
-  graph export "es_plot_dynamic.png"
+  graph export "es_plot_dynamic.png", replace
 
   reghdfe dins i.postTreated, absorb(stfips year) vce(cluster stfips)
   bacondecomp dins postTreated
-  graph export "bacon_decomposition_dynamic.png"
+  graph export "bacon_decomposition_dynamic.png", replace
