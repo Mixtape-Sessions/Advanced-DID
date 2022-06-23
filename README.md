@@ -18,13 +18,13 @@ All times Eastern Time.
 - 9:45-10 **Break**
 - 10-11:15 **Staggered treatment timing and heterogeneous treatment effects**
 - 11:15-11:30 **Break**
-- 11:30-12:15 **Coding Exercise**
-- 12:15-1:15 **Lunch**
-- 1:15-2:30 **Violations of Parallel Trends**
-- 2:30-2:45 **Break**
-- 2:45-3:30 **Coding Exercise**
-- 3:30-3:45 **Break**
-- 3:45-5 **Open "Office Hour" for your DiD questions**
+- 11:30-12:30 **Coding Exercise**
+- 12:30-1:30 **Lunch**
+- 1:30-2:45 **Violations of Parallel Trends**
+- 2:45-3 **Break**
+- 3-4 **Coding Exercise**
+- 4-4:15 **Break**
+- 4:15-5:15 **Open "Office Hour" for your DiD questions**
 
 <details><summary><b>Preliminaries & The Canonical DiD Model</b></summary><br/>
 
