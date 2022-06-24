@@ -35,7 +35,7 @@ library(did)
 library(haven)
 library(ggplot2)
 library(HonestDiD)
-df <- read_dta(here("Exercises/Data/ehec_data.dta"))
+df <- read_dta("https://raw.githubusercontent.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Data/ehec_data.dta")
 
 #Keep years before 2016. Drop the 2016 cohort
 df_nonstaggered <- df %>% filter(year < 2016 & 
