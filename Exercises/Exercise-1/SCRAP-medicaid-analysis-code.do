@@ -58,10 +58,9 @@
 *-> 6. **Explain this result using the Bacon decomposition**
 
   xtset stfips year
-  bacondecomp dins postTreated
-
+  * bacondecomp is weird
+  bacondecomp dins postTreated 
   graph export "bacon_decomp.png", replace
-
 
 *-> 7. **Compare to TWFE estimates (part 2)**
   
