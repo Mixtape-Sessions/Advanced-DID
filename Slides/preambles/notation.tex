@@ -1,0 +1,237 @@
+% Probability
+	\renewcommand{\P}{\mathop{}\!\textnormal{P}}
+	\newcommand{\E}{\mathop{}\!\textnormal{E}}
+	\newcommand{\sE}{\mathop{}\!\mathbb{E}}
+	\newcommand{\Cov}{\mathop{}\!\textnormal{Cov}}
+	\newcommand{\sCov}{\mathop{}\!\mathbb{C}\textnormal{ov}}
+	\newcommand{\Var}{\mathop{}\!\textnormal{Var}}
+	\newcommand{\sVar}{\mathop{}\!\mathbb{V}\textnormal{ar}}
+	\newcommand{\N}{\mathcal{N}}
+	\newcommand{\sN}{\N(0,1)}
+	
+	\newcommand{\bracks}[1]{\left[#1\right]}
+	\newcommand{\expe}[1]{\mathbb{E}\bracks{#1}}
+	\newcommand{\expestar}[1]{\mathbb{E}^*\bracks{#1}}
+	\newcommand{\expesub}[2]{\mathbb{E}_{#1}\bracks{#2}}
+	
+	\newcommand{\var}[1]{\mathbb{V}\text{ar}\bracks{#1}}
+	\newcommand{\parens}[1]{\left(#1\right)}
+    \newcommand{\squared}[1]{\parens{#1}^2}
+    \newcommand{\tothepow}[2]{\parens{#1}^{#2}}
+    \newcommand{\prob}[1]{\mathbb{P}\parens{#1}}
+    \newcommand{\probsub}[2]{\mathbb{P}_{#1}\parens{#2}}
+
+% Convergence
+	\newcommand{\Oh}{\mathop{}\!\mathcal{O}}
+	\newcommand{\oh}{\mathop{}\!{o}}
+	\newcommand{\convd}{\stackrel{d}{\longrightarrow}}
+	\newcommand{\convp}{\stackrel{p}{\longrightarrow}}
+	\newcommand{\conv}{\stackrel{}{\longrightarrow}}
+	
+% Basic matrices and vectors
+	\newcommand{\0}{\mathbf{0}}
+	\newcommand{\1}{\mathbf{1}}
+	\newcommand{\I}{\mathbb{I}}
+	\renewcommand{\O}{\mathbb{O}}
+
+% Basic maths
+	\newcommand{\R}{\mathbb{R}}
+	\DeclareMathOperator*{\argmin}{arg\,min}
+	\DeclareMathOperator*{\argmax}{arg\,max}
+	\newcommand{\Ind}{\mathbbm{1}}  % Indicator
+	\newcommand{\reals}{\mathbb{R}}
+% Estimation specifics
+    \newcommand{\Ih}{\widehat{I}}
+    \newcommand{\Is}{\mathcal{I}}
+    
+% Independence
+    \newcommand{\orth}{\perp}
+    \renewcommand{\given}{\: | \:}
+    
+% Prediction
+	\newcommand{\X}{\mathcal{X}}  % Covariate space
+	\newcommand{\W}{\mathcal{W}}  % Transformed covariate space
+	\newcommand{\Y}{\mathcal{Y}}  % Outcome space
+	\newcommand{\err}{\varepsilon}  % Outcome error
+	\newcommand{\g}{g}  % Truth (conditional expectation/optimal predictor)
+	\newcommand{\F}{\mathcal{F}}  % Function class
+	\renewcommand{\S}{\ensuremath{S}}  % Sample
+	\newcommand{\T}{\ensuremath{T}}  % Training sample
+	\renewcommand{\H}{\ensuremath{H}}  % Hold-out sample
+	\newcommand{\f}{f}  % Prediction function
+	\newcommand{\fh}{\ensuremath{\widehat{f}}}  % Empirical prediction
+	\newcommand{\yhat}{\ensuremath{\widehat{y}}}	
+	\newcommand{\betahat}{\ensuremath{\widehat{\beta}}}
+	\newcommand{\betatilde}{\ensuremath{\tilde{\beta}}}
+	\newcommand{\deltatilde}{\ensuremath{\tilde{\delta}}}
+	\newcommand{\xtilde}{\ensuremath{\tilde{x}}}
+	\newcommand{\Xtilde}{\ensuremath{\tilde{X}}}
+
+	\newcommand{\al}{\ensuremath{\mathcal{L}}}
+	\newcommand{\OLS}{\textnormal{OLS}}  % Sendhil does not know how to spell this
+	\newcommand{\lh}{\widehat{\lambda}}
+    \newcommand{\Z}{\mathcal{Z}}
+    \renewcommand{\th}{\widehat{\theta}}
+	\newcommand{\Sigmahat}{\ensuremath{\widehat{\Sigma}}}
+	\newcommand{\sigmahat}{\ensuremath{\widehat{\sigma}}}
+	
+%Distributions
+\newcommand{\logistic}[2]{\mathrm{Logistic}\parens{#1,\,#2}}
+\newcommand{\bernoulli}[1]{\mathrm{Bernoulli}\parens{#1}}
+\newcommand{\betanot}[2]{\mathrm{Beta}\parens{#1,\,#2}}
+\newcommand{\stdbetanot}{\betanot{\alpha}{\beta}}
+\newcommand{\multnormnot}[3]{\mathcal{N}_{#1}\parens{#2,\,#3}}
+\newcommand{\normnot}[2]{\mathcal{N}\parens{#1,\,#2}}
+\newcommand{\classicnormnot}{\normnot{\mu}{\sigsq}}
+\newcommand{\stdnormnot}{\normnot{0}{1}}
+\newcommand{\uniform}[2]{\mathrm{U}\parens{#1,\,#2}}
+\newcommand{\stduniform}{\uniform{0}{1}}
+\newcommand{\exponential}[1]{\mathrm{Exp}\parens{#1}}
+\newcommand{\stdexponential}{\mathrm{Exp}\parens{1}}
+\newcommand{\gammadist}[2]{\mathrm{Gamma}\parens{#1, #2}}
+\newcommand{\poisson}[1]{\mathrm{Poisson}\parens{#1}}
+\newcommand{\geometric}[1]{\mathrm{Geometric}\parens{#1}}
+\newcommand{\binomial}[2]{\mathrm{Binomial}\parens{#1,\,#2}}
+\newcommand{\rayleigh}[1]{\mathrm{Rayleigh}\parens{#1}}
+\newcommand{\multinomial}[2]{\mathrm{Multinomial}\parens{#1,\,#2}}
+\newcommand{\gammanot}[2]{\mathrm{Gamma}\parens{#1,\,#2}}
+\newcommand{\cauchynot}[2]{\text{Cauchy}\parens{#1,\,#2}}
+\newcommand{\invchisqnot}[1]{\text{Inv}\chisq{#1}}
+\newcommand{\invscaledchisqnot}[2]{\text{ScaledInv}\ncchisq{#1}{#2}}
+\newcommand{\invgammanot}[2]{\text{InvGamma}\parens{#1,\,#2}}
+\newcommand{\chisq}[1]{\chi^2_{#1}}
+\newcommand{\ncchisq}[2]{\chi^2_{#1}\parens{#2}}
+\newcommand{\ncF}[3]{F_{#1,#2}\parens{#3}}
+\newcommand{\Fnot}[2]{F\parens{#1, #2}}
+
+
+
+%shortcuts for Linear Algebra stuff (i.e. vectors and matrices)
+\newcommand{\twovec}[2]{\parens{\begin{array}{c} #1 \\ #2 \end{array}}}
+\newcommand{\threevec}[3]{\parens{\begin{array}{c} #1 \\ #2 \\ #3 \end{array}}}
+\newcommand{\fivevec}[5]{\parens{\begin{array}{c} #1 \\ #2 \\ #3 \\ #4 \\ #5 \end{array}}}
+\newcommand{\twobytwomat}[4]{\parens{\begin{array}{cc} #1 & #2 \\ #3 & #4 \end{array}}}
+\newcommand{\threebytwomat}[6]{\parens{\begin{array}{cc} #1 & #2 \\ #3 & #4 \\ #5 & #6 \end{array}}}
+\newcommand{\fourvec}[4]{\parens{\begin{array}{c} #1 \\ #2 \\ #3 \\ #4\end{array}}}
+\newcommand{\threebythreemat}[9]{\parens{\begin{array}{ccc} #1 & #2 & #3 \\  #4 & #5 & #6 \\ #7 & #8 & #9 \end{array}}}
+
+%Sign
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\sign}{sign}
+
+% Project specific notation
+\newcommand{\betahatpost}{\betahat_{post}}
+\newcommand{\betahatpostTN}{\betahat_{post}^{TN}}
+\newcommand{\betahatpre}{\betahat_{pre}}
+\newcommand{\betatildepost}{\betatilde_{post}}
+\newcommand{\betatildepre}{\betatilde_{pre}}
+\newcommand{\betapost}{\beta_{post}}
+\newcommand{\gammapost}{\gamma_{post}}
+\newcommand{\gammahat}{\widehat{\gamma}}
+\newcommand{\gammaopt}{\gamma_{*}}
+\newcommand{\gammaoptsub}[1]{\gamma_{*#1}}
+
+\newcommand{\gammabar}{\bar{\gamma}}
+\newcommand{\gammahatpost}{\widehat{\gamma}_{post}}
+\newcommand{\gammahatpostTN}{\widehat{\gamma}_{post}^{TN}}
+\newcommand{\gammatilde}{\ensuremath{\tilde{\gamma}}}
+
+\newcommand{\etahat}{\widehat{\eta}}
+
+\newcommand{\deltahat}{\widehat{\delta}}
+\newcommand{\deltahatpost}{\deltahat_{post}}
+\newcommand{\deltahatpre}{\deltahat_{pre}}
+\newcommand{\deltapost}{\delta_{post}}
+\newcommand{\deltapre}{\delta_{pre}}
+
+\newcommand{\taupost}{\tau_{post}}
+\newcommand{\taupre}{\tau_{pre}}
+\newcommand{\taubarone}{\bar{\tau}_1}
+
+\newcommand{\thetabar}{\bar{\theta}}
+
+\newcommand{\Sigmapre}{\Sigma_{pre}}
+\newcommand{\Xpre}{X_{pre}}
+
+
+\newcommand{\CITNbeta}{CI^{TN}_{\beta}}
+\newcommand{\CITNgamma}{CI^{TN}_{\gamma}}
+\newcommand{\CITrad}{CI^{Trad}}
+\newcommand{\betapre}{\beta_{pre}}
+\newcommand{\ybar}{\bar{y}}
+\newcommand{\xt}{x^t}
+
+\newcommand{\boldy}{\boldsymbol{y}}
+\newcommand{\boldytilde}{\boldsymbol{\tilde{y}}}
+\newcommand{\boldx}{\boldsymbol{x}}
+\newcommand{\boldalpha}{\boldsymbol{\alpha}}
+\newcommand{\boldbeta}{\boldsymbol{\beta}}
+
+%\newcommand{\prob}[1]{P\left( #1 \right)}
+
+\newcommand{\tildegammaone}{\tilde{\gamma}_1}
+\newcommand{\tildegammamain}{\tilde{\gamma}_{main}}
+
+\newcommand{\taubar}{\bar{\tau}}
+\newcommand{\tautilde}{\tilde{\tau}}
+\newcommand{\tildetau}{\tautilde}
+
+
+%\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+%\newcommand{\ubar}[1]{\underline{$#1$}}
+
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+
+\newcommand{\Tau}{\mathrm{T}}
+
+\newcommand{\Bcal}{\mathcal{B}}
+
+\newcommand{\Atilde}{\tilde{A}} 
+\newcommand{\Atildeone}{\tilde{A}_{(\cdot,1)}} 
+\newcommand{\Atildeminus}{\tilde{A}_{(\cdot,-1)}} 
+\newcommand{\Atildebone}{\Atilde_{(B,1)}}
+\newcommand{\Atildeminusbone}{\Atilde_{(-B,1)}}
+\newcommand{\Atildebminus}{\Atilde_{(B,-1)}}
+\newcommand{\Atildeminusbminus}{\Atilde_{(-B,1)}}
+
+\newcommand{\sigmatilde}{\tilde{\sigma}}
+\newcommand{\Sigmatilde}{\tilde{\Sigma}}
+\newcommand{\Ytilde}{\tilde{Y}}
+\newcommand{\mutilde}{\tilde{\mu}}
+\newcommand{\alphatilde}{ \tilde{\alpha} }
+\newcommand{\deltatildepre}{ \tilde{\delta}_{pre} }
+\newcommand{\deltatildepost}{ \tilde{\delta}_{post} }
+
+\newcommand{\deltabar}{ \bar{\delta} }
+\newcommand{\deltabarpre}{ \bar{\delta}_{pre} }
+\newcommand{\Deltapre}{\Delta_{pre}}
+
+\newcommand{\mubar}{\bar{\mu}}
+\newcommand{\Yhat}{\widehat{Y}}
+
+% Tests and CIs
+\newcommand{\condtest}[1]{\psi^{C}_{#1}}
+\newcommand{\condci}{\mathcal{C}^{C}_{\alpha, n}}
+\newcommand{\condteststar}{\psi^{C}_{*, \alpha}}
+
+\newcommand{\MPtest}[1]{\psi^{MP}_{#1}}
+\newcommand{\LFtestcustomalpha}[1]{\psi^{LF}_{#1}}
+
+\newcommand{\condLFtest}{\psi^{C \mhyphen LF}_{\kappa, \alpha}}
+\newcommand{\condLFteststar}{\psi^{C \mhyphen LF}_{*, \kappa, \alpha}}
+\newcommand{\condLFci}{\mathcal{C}^{C \mhyphen LF}_{\kappa, \alpha, n}}
+
+\newcommand{\condFLCItest}{\psi^{C \mhyphen FLCI}_{\kappa,\alpha}}
+\newcommand{\condFLCIci}{\mathcal{C}^{C \mhyphen FLCI}_{\kappa, \alpha, n}}
+
+\newcommand{\FLCInon}[1]{\mathcal{C}^{FLCI}_{#1}}
+\newcommand{\FLCI}[1]{\mathcal{C}^{FLCI}_{#1, n}}
+\newcommand{\LFtest}{\psi^{LF}_{\kappa}}
+
+\newcommand{\scaledv}{v}
+\newcommand{\unscaledv}{\breve{v}}
+\newcommand{\scaleda}{a}
+\newcommand{\unscaleda}{\breve{a}}
+\newcommand{\scaledchi}{\chi}
+\newcommand{\unscaledchi}{\breve{\chi}}
+
