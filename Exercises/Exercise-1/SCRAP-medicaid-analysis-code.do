@@ -59,8 +59,10 @@
 
   xtset stfips year
   * bacondecomp is weird
-  bacondecomp dins postTreated 
+  bacondecomp dins postTreated, ddetail stub(Bacon_)
   graph export "bacon_decomp.png", replace
+  bys Bacon_cgroup: sum Bacon_B
+  drop Bacon_*
 
 *-> 7. **Compare to TWFE estimates (part 2)**
   
