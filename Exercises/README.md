@@ -36,7 +36,14 @@ You can also calculate overall summary parameters. E.g, in R, using `aggte` with
 
 5.  **Compare to TWFE estimates (part 1)**
 
-Estimate the OLS regression specification $Y_{it} = \alpha_i + \lambda_t + D_{it} \beta +\epsilon_{it}$, where $D_{it}$ is an indicator for whether unit $i$ was treated in period $t$. How does the estimated coefficient $\hat{\beta}$ compare to the simple weighted average you got from Callaway and Sant'Anna? (Don't forget to cluster your SEs at the state level!)
+Estimate the OLS regression specification 
+
+$$
+Y_{it} = \alpha_i + \lambda_t + D_{it} \beta +\epsilon_{it},
+$$
+
+where  $D_{it}$  is an indicator for whether unit $i$ was treated in period $t$. How does the estimate for
+$\hat{\beta}$ compare to the simple weighted average you got from Callaway and Sant'Anna? (Don't forget to cluster your SEs at the state level!)
 
 6.  **Explain this result using the Bacon decomposition**
 
