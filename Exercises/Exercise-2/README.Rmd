@@ -1,5 +1,5 @@
 ---
-title: "README"
+title: "Exercise 2: Violations of Parallel Trends"
 output: github_document
 date: '2022-06-24'
 ---

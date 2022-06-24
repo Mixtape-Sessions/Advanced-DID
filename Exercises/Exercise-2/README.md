@@ -1,4 +1,4 @@
-README
+Exercise 2: Violations of Parallel Trends
 ================
 2022-06-24
 
