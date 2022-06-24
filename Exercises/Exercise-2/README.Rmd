@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This exercise will walk you through using the HonestDiD R package to conduct sensitivity analysis for possible violations of parallel trends, using the methods proposed in [Rambachan and Roth (2022)](https://jonathandroth.github.io/assets/files/HonestParallelTrends_Main.pdf). The package is currently only available in R, although there is a Stata package being developed as we speak! 
 
-If you are not familiar with R, I suggest you download the solutions notebook written in RMarkdown. If you open the file in RStudio, you can then follow along and run the solutions code line-by-line. Alternatively, if you just want to read the sample code, you can view the solution here. 
+If you are not familiar with R, you have two options. First, you can download the solutions notebook written in RMarkdown. To do that, [click here](https://raw.githubusercontent.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Exercise-2/Solutions/medicaid-analysis-pt-violations-solutions.Rmd), then right-click and choose 'Save as', then save the file. If you open the saved file in RStudio, you can then follow along and run the solutions code line-by-line. Alternatively, if you just want to read the answers without running the code, you can view the [solutions here](https://raw.githack.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Exercise-2/Solutions/medicaid-analysis-pt-violations-solutions.html). 
 
 ## 0. Install packages if needed 
 
