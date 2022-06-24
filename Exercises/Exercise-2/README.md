@@ -143,3 +143,13 @@ Callaway and Sant’Anna event-study using the full Medicaid data, and
 then apply the HonestDiD sensitivity. \[Hint: I recommend using *min_e =
 -5* and *max_e = 5* in the *aggte* command, since the earlier pre-trends
 coefficients are very noisy.\]
+
+## Solutions
+
+You can view an HTML file with worked out solutions
+[here](https://raw.githack.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Exercise-2/Solutions/medicaid-analysis-pt-violations-solutions.html).
+
+If you want to download an RMarkdown notebook with solutions that you
+can run in RStudio, [click
+here](https://raw.githubusercontent.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Exercise-2/Solutions/medicaid-analysis-pt-violations-solutions.Rmd),
+then right-click and choose ‘Save as’, then save the file.
