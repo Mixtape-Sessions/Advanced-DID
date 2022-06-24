@@ -10,13 +10,23 @@ For R, you will need the following packages: `did`, `dplyr`, `fixest`, `bacondec
 
 ## Data
 
-The provided datasets `ehec_data.dta` (for Stata) and `ehec_data.csv` (for R) contain a state-level panel dataset on health insurance coverage and Medicaid expansion. The variable `dins` shows the share of low-income childless adults with health insurance in the state. The variable `yexp2` gives the year that a state expanded Medicaid coverage under the Affordable Care Act, and is missing if the state never expanded. The variable `year` gives the year of the observation and the variable `stfips` is a state identifier. (The variable `W` is the sum of person-weights for the state in the ACS; for simplicity, we will treat all states equally and ignore the weights, although if you'd like an additional challenge feel free to re-do everything incorporating the population weights!)
+The provided datasets `ehec_data.dta` contains a state-level panel dataset on health insurance coverage and Medicaid expansion. The variable `dins` shows the share of low-income childless adults with health insurance in the state. The variable `yexp2` gives the year that a state expanded Medicaid coverage under the Affordable Care Act, and is missing if the state never expanded. The variable `year` gives the year of the observation and the variable `stfips` is a state identifier. (The variable `W` is the sum of person-weights for the state in the ACS; for simplicity, we will treat all states equally and ignore the weights, although if you'd like an additional challenge feel free to re-do everything incorporating the population weights!)
 
 ## Questions
 
 1.  **Load the data**
 
-Use the `haven::read_dta()` in R or `use` commands in Stata, respectively, to load the relevant dataset.
+The easiest way to load the data is to run
+```
+df <- haven::read_dta("https://raw.githubusercontent.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Data/ehec_data.dta")
+```
+in R, or 
+```
+use "https://raw.githubusercontent.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Data/ehec_data.dta"
+```
+in Stata.
+
+If you'd like to have a local copy of the data, you can also download it [here](https://raw.githubusercontent.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Data/ehec_data.dta).
 
 
 2.  **Estimate the ATT(g,t) using Callaway and Sant'Anna's estimator**
@@ -54,7 +64,7 @@ $\hat{\beta}$ compare to the simple weighted average you got from Callaway and S
 
 6.  **Explain this result using the Bacon decomposition**
 
-You probably noticed that the static TWFE estimate and the simple-weighted average from C&S were fairly similar. The reason for that is that in this example, there are a fairly large number of never-treated units, and so TWFE mainly puts weight on "clean comparisons". We can see this by using the `Bacon decomposition`, which shows how much weight static TWFE is putting on clean versus forbidden comparisons. In R, use the `bacon()` command to estimate the weights that TWFE puts on each of the types of comparisons. The first data-frame returned by the command shows how much weight OLS put on the three types of comparisons. In Stata, use the command `bacondecomp` (Note that you should use the `ddetail` and `stub()` options in the command but the weights that the Stata version produce are wrong). How much weight is put on forbidden comparisons here (i.e. comparisons of 'Later vs Earlier')?
+You probably noticed that the static TWFE estimate and the simple-weighted average from C&S were fairly similar. The reason for that is that in this example, there are a fairly large number of never-treated units, and so TWFE mainly puts weight on "clean comparisons". We can see this by using the `Bacon decomposition`, which shows how much weight static TWFE is putting on clean versus forbidden comparisons. In R, use the `bacon()` command to estimate the weights that TWFE puts on each of the types of comparisons. The first data-frame returned by the command shows how much weight OLS put on the three types of comparisons. How much weight is put on forbidden comparisons here (i.e. comparisons of 'Later vs Earlier')? In Stata, use the command `bacondecomp`. Unfortunately, Stata does not cleanly report weights by the three types of comparisons, but if you use the `ddetail` and `stub()` options in the command you should be able to see weights by different types of comparison to get a sense for whether there are many forbidden comparisons. (It also appears the weights returned by the Stata package may not be exactly right...another reason to use R!). 
 
 
 

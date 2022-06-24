@@ -6,7 +6,7 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = F)
 # devtools::install_github("Hemken/Statamarkdown")
-library(Statamarkdown)
+#library(Statamarkdown)
 ```
 
 ## Introduction
@@ -15,7 +15,7 @@ This exercise will help you learn about the recent DiD literature on settings wi
 
 ## Package Setup 
 
-For R, you will need the following packages: `did`, `dplyr`, `fixest`, `bacondecomp`, `here`, and `haven`. For Stata, you will need `csdid`, `drdid`, `reghdfe`, and `bacondecomp`.
+For R, you will need the following packages: `did`, `dplyr`, `fixest`, `bacondecomp`, and `haven`. For Stata, you will need `csdid`, `drdid`, `reghdfe`, and `bacondecomp`.
 
 
 ## Data
@@ -29,11 +29,10 @@ The provided datasets `ehec_data.dta` (for Stata) and `ehec_data.csv` (for R) co
 Use the `haven::read_dta()` in R or `use` commands in Stata, respectively, to load the relevant dataset.
 
 ```{r load-data}
-library(here)
 library(dplyr)
 library(did)
 library(haven)
-df <- read_dta(here("Exercises/Data/ehec_data.dta"))
+df <- haven::read_dta("https://raw.githubusercontent.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Data/ehec_data.dta")
 ```
 
 
