@@ -3,7 +3,7 @@
 \input{preambles/preamble.tex}
 \input{preambles/notation.tex}
 \author{Jonathan Roth}
-\title[Advanced DiD Mixtape Workshop]{Advanced DiD Mixtape Workshop \\ Introduction}
+\title[Advanced DiD Mixtape Workshop]{Advanced DiD Mixtape Workshop \\ Multiple Periods and Staggered Treatment Timing}
 
 \begin{document}
 
@@ -51,6 +51,8 @@
 
 \begin{frame}{Staggered timing set-up}
   \begin{wideitemize}
+	\item
+	Panel of observations for periods $t = 1,...,T$
 
     \item
     Suppose units adopt a binary treatment at different dates $G_i \in \{1,...,T \} \cup \infty$ (where $G_i = \infty$ means ``never-treated'')
@@ -74,7 +76,7 @@
     \item
     \textbf{Parallel trends:} Intuitively, says that if treatment hadn't happened, all ``adoption cohorts'' would have parallel average outcomes in all periods
 
-    $$ E[ Y_{it}(\infty) - Y_{i,t-1}(\infty) | G_i = g ] = E[ Y_{it}(\infty) - Y_{i,t-1}(\infty) | G_i = g' ] \text{ for all } g,t,t' $$
+    $$ E[ Y_{it}(\infty) - Y_{i,t-1}(\infty) | G_i = g ] = E[ Y_{it}(\infty) - Y_{i,t-1}(\infty) | G_i = g' ] \text{ for all } g,g',t,t' $$
 
 
     Note: can impose slightly weaker versions (e.g. only require PT post-treatment)
@@ -93,7 +95,10 @@
     Suppose we again run the regression
     \vspace{-3mm}
     $$Y_{it} = \alpha_i + \phi_t + D_{it} \beta  + \epsilon_{it}, $$
-    \noindent where $D_{it} = 1[t \geq G_i]$ is a treatment indicator. Suppose we're willing to assume no anticipation and  parallel trends across all adoption cohorts as described above
+    \noindent where $D_{it} = 1[t \geq G_i]$ is a treatment indicator. 
+    
+    \item
+    Suppose we're willing to assume no anticipation and  parallel trends across all adoption cohorts as described above
 
     \pause
     \vspace{-3mm}
@@ -261,7 +266,7 @@
     \item
           Start with
           \vspace{-3mm}
-          $$E[Y_{it}- Y_{i,g-1}| G_i =g] - E[Y_{ig} - Y_{i,g-1}| G_i = \infty]$$
+          $$E[Y_{it}- Y_{i,g-1}| G_i =g] - E[Y_{it} - Y_{i,g-1}| G_i = \infty]$$
           
           \pause
     \vspace{-3mm}

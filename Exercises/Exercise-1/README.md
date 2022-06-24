@@ -14,10 +14,10 @@ Use the `readRDS()` or `use` commands in R and Stata, respectively, to load the 
 
 2.  **Estimate the ATT(g,t) using Callaway and Sant'Anna's estimator**
 
-Use the attgt function in the did package (R) or the XX function in the csdid package (Stata) to estimate the group-time specific ATTs for the outcome `dins`. I recommend using the control group "notyettreated", which uses as a comparison group all units who are not-yet-treated at a given period (including never-treated units). [For fun, you're welcome to also try out using "nevertreated" units as the control]. Hint: for R users, you will need to replace missing values of `yexp2` to some large number (say, 3000) for the the did package to incorporate the never-treated units.
+Use the `attgt` function in the did package (R) or the `csdid` function in the csdid package (Stata) to estimate the group-time specific ATTs for the outcome `dins`. In R, I recommend using the control group option "notyettreated", which uses as a comparison group all units who are not-yet-treated at a given period (including never-treated units). In Stata, use the option `, notyet`. [For fun, you're welcome to also try out using "nevertreated" units as the control]. Hint: replace missing values of `yexp2` to some large number (say, 3000) for the the did package to incorporate the never-treated units as controls.
 
 
-For R users, apply the `summary` command to the results from the `att_gt` command. For Stata users. This should give a table with estimates of the ATT(g,t) -- that is, average treatment effects for a given "cohort" first-treated in period g at each time t. For example, ATT(2014,2015) gives the treatment effect in 2015 for the cohort first treated in 2014.
+For R users, apply the `summary` command to the results from the `att_gt` command. For Stata users, this should already be reported as a result of `csdid` command. After applying the correct command, you should have a table with estimates of the ATT(g,t) -- that is, average treatment effects for a given "cohort" first-treated in period g at each time t. For example, ATT(2014,2015) gives the treatment effect in 2015 for the cohort first treated in 2014.
 
 
 3.  **Compare to DiD estimates calculated by hand**
@@ -26,17 +26,28 @@ To understand how these ATT(g,t) estimates are constructed, we will manually com
 
 4.  **Aggregate the ATT(g,t)**
 
-We are often interested in a summary of the ATT(g,t)'s. In R, use the `aggte` command with option `type = "dynamic"` to compute "event-study" parameters. These are averages of the ATT(g,t) for cohorts at a given lag from treatment --- for example, the estimate for event-time 3 gives an average of parameters of the form ATT(g,g+3), i.e. treatment effects 3 periods after units were first treated. You can use the `ggdid` command to plot the relevant event-study.
+We are often interested in a summary of the ATT(g,t)'s. 
 
-You can also calculate overall summary parameters. E.g, using the option `type = "simple"` takes a simple weighted average of the ATT(g,t), weighting proportional to cohort sizes.
+In R, use the `aggte` command with option `type = "dynamic"` to compute "event-study" parameters. These are averages of the ATT(g,t) for cohorts at a given lag from treatment --- for example, the estimate for event-time 3 gives an average of parameters of the form ATT(g,g+3), i.e. treatment effects 3 periods after units were first treated. You can use the `ggdid` command to plot the relevant event-study. 
+
+In Stata, use the commands `qui: estat event` followed by `csdid_plot`. 
+
+You can also calculate overall summary parameters. E.g, in R, using `aggte` with the option `type = "simple"` takes a simple weighted average of the ATT(g,t), weighting proportional to cohort sizes. In Stata, you can use `estat simple`.
 
 5.  **Compare to TWFE estimates (part 1)**
 
-Estimate the OLS regression specification $Y_{it} = \alpha_i + \lambda_t + D_{it} \beta +\epsilon_{it}$ where $D_{it}$ is an indicator for whether unit $i$ was treated in period $t$. How does the estimated coefficient $\hat{\beta}$ compare to the simple weighted average you got from Callaway and Sant'Anna? (Don't forget to cluster your SEs at the state level!)
+Estimate the OLS regression specification 
+
+$$
+Y_{it} = \alpha_i + \lambda_t + D_{it} \beta +\epsilon_{it},
+$$
+
+where  $D_{it}$  is an indicator for whether unit $i$ was treated in period $t$. How does the estimate for
+$\hat{\beta}$ compare to the simple weighted average you got from Callaway and Sant'Anna? (Don't forget to cluster your SEs at the state level!)
 
 6.  **Explain this result using the Bacon decomposition**
 
-You probably noticed that the static TWFE estimate and the simple-weighted average from C&S were fairly similar. The reason for that is that in this example, there are a fairly large number of never-treated units, and so TWFE mainly puts weight on "clean comparisons". We can see this by using the `Bacon decomposition`, which shows how much weight static TWFE is putting on clean versus forbidden comparisons. In R, use the `bacon()` command to estimate the weights that TWFE puts on each of the types of comparisons. The first data-frame returned by the command shows how much weight OLS put on the three types of comparisons. How much weight is put on forbidden comparisons here (i.e. comparisons of 'Later vs Earlier')?
+You probably noticed that the static TWFE estimate and the simple-weighted average from C&S were fairly similar. The reason for that is that in this example, there are a fairly large number of never-treated units, and so TWFE mainly puts weight on "clean comparisons". We can see this by using the `Bacon decomposition`, which shows how much weight static TWFE is putting on clean versus forbidden comparisons. In R, use the `bacon()` command to estimate the weights that TWFE puts on each of the types of comparisons. The first data-frame returned by the command shows how much weight OLS put on the three types of comparisons. In Stata, use the command `bacondecomp`. How much weight is put on forbidden comparisons here (i.e. comparisons of 'Later vs Earlier')?
 
 
 
