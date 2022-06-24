@@ -53,7 +53,9 @@ We'll next discuss a very active recent literature on DiD settings with multiple
 
 [Staggered.pdf](Slides/02-staggered.pdf)
 
+<b>Coding Exercise</b>
 
+[Instructions](https://github.com/Mixtape-Sessions/Advanced-DID/blob/main/Exercises/Exercise-1/README.md#introduction)
 
 </details><br />
 
@@ -68,6 +70,11 @@ We'll next discuss the strand of the literature that has considered the possibil
 <b>Slides</b>
 
 [Violations.pdf](Slides/03-violations.pdf)
+
+
+<b>Coding Exercise</b>
+
+[Instructions](https://github.com/Mixtape-Sessions/Advanced-DID/blob/main/Exercises/Exercise-2/README.md#introduction)
 
 
 
