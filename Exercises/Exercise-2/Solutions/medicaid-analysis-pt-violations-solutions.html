@@ -402,7 +402,7 @@ library(did)
 library(haven)
 library(ggplot2)
 library(HonestDiD)
-df &lt;- read_dta(here(&quot;Exercises/Data/ehec_data.dta&quot;))
+df &lt;- read_dta(&quot;https://raw.githubusercontent.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Data/ehec_data.dta&quot;)
 
 #Keep years before 2016. Drop the 2016 cohort
 df_nonstaggered &lt;- df %&gt;% filter(year &lt; 2016 &amp; 
