@@ -10,7 +10,7 @@ For R, you will need the following packages: `did`, `dplyr`, `fixest`, `bacondec
 
 ## Data
 
-The provided datasets `ehec_data.dta` contains a state-level panel dataset on health insurance coverage and Medicaid expansion. The variable `dins` shows the share of low-income childless adults with health insurance in the state. The variable `yexp2` gives the year that a state expanded Medicaid coverage under the Affordable Care Act, and is missing if the state never expanded. The variable `year` gives the year of the observation and the variable `stfips` is a state identifier. (The variable `W` is the sum of person-weights for the state in the ACS; for simplicity, we will treat all states equally and ignore the weights, although if you'd like an additional challenge feel free to re-do everything incorporating the population weights!)
+The provided dataset `ehec_data.dta` contains a state-level panel dataset on health insurance coverage and Medicaid expansion. The variable `dins` shows the share of low-income childless adults with health insurance in the state. The variable `yexp2` gives the year that a state expanded Medicaid coverage under the Affordable Care Act, and is missing if the state never expanded. The variable `year` gives the year of the observation and the variable `stfips` is a state identifier. (The variable `W` is the sum of person-weights for the state in the ACS; for simplicity, we will treat all states equally and ignore the weights, although if you'd like an additional challenge feel free to re-do everything incorporating the population weights!)
 
 ## Questions
 
