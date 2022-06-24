@@ -9,7 +9,7 @@ The provided datasets `ehec_data.dta` (for Stata) and `ehec_data.csv` (for R) co
 
 1.  **Load the data**
 
-  Use the `readRDS()` or `use` commands in R and Stata, respectively, to load the relevant dataset.
+Use the `readRDS()` or `use` commands in R and Stata, respectively, to load the relevant dataset.
 
 
 2.  **Estimate the ATT(g,t) using Callaway and Sant'Anna's estimator**
