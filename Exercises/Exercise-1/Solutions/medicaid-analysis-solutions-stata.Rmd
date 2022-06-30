@@ -14,7 +14,7 @@ This exercise will help you learn about the recent DiD literature on settings wi
 
 ## Package Setup 
 
-For R, you will need the following packages: `did`, `dplyr`, `fixest`, `bacondecomp`, `here`, and `haven`. For Stata, you will need `csdid`, `drdid`, `reghdfe`, and `bacondecomp`.
+For R, you will need the following packages: `did`, `dplyr`, `fixest`, `bacondecomp`, `here`, and `haven`. For Stata, you will need `csdid`, `drdid`, `reghdfe`, and `ddtiming`.
 
 
 ## Data
@@ -32,7 +32,7 @@ Use the `haven::read_dta()` in R or `use` commands in Stata, respectively, to lo
 * ssc install csdid
 * ssc install drdid
 * ssc install reghdfe
-* ssc install bacondecomp
+* net install ddtiming, from(https://tgoldring.com/code/)
 
 use "https://github.com/Mixtape-Sessions/Advanced-DID/raw/main/Exercises/Data/ehec_data.dta", clear
 ```
@@ -118,15 +118,14 @@ reghdfe dins i.postTreated, absorb(stfips year) vce(cluster stfips)
 
 6.  **Explain this result using the Bacon decomposition**
 
-You probably noticed that the static TWFE estimate and the simple-weighted average from C&S were fairly similar. The reason for that is that in this example, there are a fairly large number of never-treated units, and so TWFE mainly puts weight on "clean comparisons". We can see this by using the `Bacon decomposition`, which shows how much weight static TWFE is putting on clean versus forbidden comparisons. In R, use the `bacon()` command to estimate the weights that TWFE puts on each of the types of comparisons. The first data-frame returned by the command shows how much weight OLS put on the three types of comparisons. In Stata, use the command `bacondecomp` (Note that you should use the `ddetail` and `stub()` options in the command but the weights that the Stata version produce are wrong). How much weight is put on forbidden comparisons here (i.e. comparisons of 'Later vs Earlier')?
+You probably noticed that the static TWFE estimate and the simple-weighted average from C&S were fairly similar. The reason for that is that in this example, there are a fairly large number of never-treated units, and so TWFE mainly puts weight on "clean comparisons". We can see this by using the `Bacon decomposition`, which shows how much weight static TWFE is putting on clean versus forbidden comparisons. In R, use the `bacon()` command to estimate the weights that TWFE puts on each of the types of comparisons. The first data-frame returned by the command shows how much weight OLS put on the three types of comparisons. In Stata, use the command `ddtiming`. How much weight is put on forbidden comparisons here (i.e. comparisons of 'Later vs Earlier')?
 
 ```{stata xtset, collectcode = T}
 xtset stfips year
 ```
 ```{stata bacon-decomp, echo = -2}
-bacondecomp dins postTreated, ddetail stub(Bacon_)
+ddtiming dins postTreated, i(stfips) t(year)
 graph export "bacon_decomp.png", replace
-bys Bacon_cgroup: sum Bacon_B
 ```
 
 ![Bacon Decomposition plot](bacon_decomp.png)
@@ -159,9 +158,8 @@ reghdfe dins i.postTreated, absorb(stfips year) vce(cluster stfips)
 Re-run the Bacon decomposition on the modified dataset. How much weight is put on "forbidden comparisons" now?
 
 ```{stata bacon-decomp-no-nevertreated, echo = -2}
-bacondecomp dins postTreated, ddetail stub(Bacon_)
+ddtiming dins postTreated, i(stfips) t(year)
 graph export "bacon_decomp_no_nevertreated.png", replace
-bys Bacon_cgroup: sum Bacon_B
 ```
 
 ![Bacon Decomposition with no never treated](bacon_decomp_no_nevertreated.png)
@@ -188,11 +186,10 @@ graph export "es_plot_dynamic.png", replace
 ![Event study plot with dynamics added](es_plot_dynamic.png)
 
 ```{stata twfe-dynamics}
-reghdfe dins i.postTreated, absorb(stfips year) vce(cluster stfips)
+reghdfe dins2 i.postTreated, absorb(stfips year) vce(cluster stfips)
 ```
 
 ```{stata bacon-dynamics, echo = -2}
-bacondecomp dins postTreated, ddetail stub(Bacon_)
+ddtiming dins2 postTreated, i(stfips) t(year)
 graph export "bacon_decomposition_dynamic.png", replace
-bys Bacon_cgroup: sum Bacon_B
 ```
