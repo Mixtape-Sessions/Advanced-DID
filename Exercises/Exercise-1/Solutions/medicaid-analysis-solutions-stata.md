@@ -15,7 +15,7 @@ although they use confidential data.
 
 For R, you will need the following packages: `did`, `dplyr`, `fixest`,
 `bacondecomp`, `here`, and `haven`. For Stata, you will need `csdid`,
-`drdid`, `reghdfe`, and `bacondecomp`.
+`drdid`, `reghdfe`, and `ddtiming`.
 
 ## Data
 
@@ -43,7 +43,7 @@ respectively, to load the relevant dataset.
 * ssc install csdid
 * ssc install drdid
 * ssc install reghdfe
-* ssc install bacondecomp
+* net install ddtiming, from(https://tgoldring.com/code/)
 
 use "https://github.com/Mixtape-Sessions/Advanced-DID/raw/main/Exercises/Data/ehec_data.dta", clear
 ```
@@ -419,7 +419,18 @@ reghdfe dins i.postTreated, absorb(stfips year) vce(cluster stfips)
 
 6.  **Explain this result using the Bacon decomposition**
 
-You probably noticed that the static TWFE estimate and the simple-weighted average from C&S were fairly similar. The reason for that is that in this example, there are a fairly large number of never-treated units, and so TWFE mainly puts weight on "clean comparisons". We can see this by using the `Bacon decomposition`, which shows how much weight static TWFE is putting on clean versus forbidden comparisons. In R, use the `bacon()` command to estimate the weights that TWFE puts on each of the types of comparisons. The first data-frame returned by the command shows how much weight OLS put on the three types of comparisons. In Stata, use the command `bacondecomp` (Note that you should use the `ddetail` and `stub()` options in the command but the weights that the Stata version produce are wrong). How much weight is put on forbidden comparisons here (i.e. comparisons of 'Later vs Earlier')?
+You probably noticed that the static TWFE estimate and the
+simple-weighted average from C&S were fairly similar. The reason for
+that is that in this example, there are a fairly large number of
+never-treated units, and so TWFE mainly puts weight on “clean
+comparisons”. We can see this by using the `Bacon decomposition`, which
+shows how much weight static TWFE is putting on clean versus forbidden
+comparisons. In R, use the `bacon()` command to estimate the weights
+that TWFE puts on each of the types of comparisons. The first data-frame
+returned by the command shows how much weight OLS put on the three types
+of comparisons. In Stata, use the command `ddtiming`. How much weight is
+put on forbidden comparisons here (i.e. comparisons of ‘Later vs
+Earlier’)?
 
 ``` stata
 xtset stfips year
@@ -430,76 +441,24 @@ xtset stfips year
                     delta:  1 unit
 
 ``` stata
-bacondecomp dins postTreated, ddetail stub(Bacon_)
-bys Bacon_cgroup: sum Bacon_B
+ddtiming dins postTreated, i(stfips) t(year)
 ```
 
-    Computing decomposition across 6 timing groups
-    including a never-treated group
-    ------------------------------------------------------------------------------
-            dins |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
-    -------------+----------------------------------------------------------------
-     postTreated |   .0703207    .003667    19.18   0.000     .0631335    .0775078
-    ------------------------------------------------------------------------------
+    Calculating treatment times...
+    Calculating weights...
+    Estimating 2x2 diff-in-diff regressions...
 
-    Bacon Decomposition
+    Diff-in-diff estimate: 0.070    
 
-    +---------------------------------------------------+
-    |                      |         Beta   TotalWeight |
-    |----------------------+----------------------------|
-    |         Early_v_Late |  .0665692613   .0194231899 |
-    |         Late_v_Early |   .030656578   .0161859919 |
-    |         Early_v_Late |  .0501910485   .0258975877 |
-    |         Late_v_Early |  .0542925298   .0172650585 |
-    |         Early_v_Late |  .0041562277   .0020600354 |
-    |         Late_v_Early |  .0417630635    .001177163 |
-    |         Early_v_Late |  .0487554483   .0194231899 |
-    |         Late_v_Early |  .0770604834    .009711595 |
-    |         Early_v_Late |  .0086271707   .0020600354 |
-    |         Late_v_Early |  .0639935434   .0008828723 |
-    |         Early_v_Late |  .0145186372   .0007847754 |
-    |         Late_v_Early |  .0319756679   .0002942908 |
-    |         Early_v_Late |  .0881708637   .0647439675 |
-    |         Late_v_Early |  .0254834052   .0107906615 |
-    |         Early_v_Late |  .0610973909   .0082401418 |
-    |         Late_v_Early |  .0274704564    .001177163 |
-    |         Early_v_Late |  .0907745361   .0047086521 |
-    |         Late_v_Early |  .0054290197   .0005885815 |
-    |         Early_v_Late |  .1108854711   .0017657446 |
-    |         Late_v_Early |   .033588931   .0001961939 |
-    |       Never_v_timing |  .0722838002   .7926231088 |
-    +---------------------------------------------------+
+    DD Comparison              Weight      Avg DD Est
+    -------------------------------------------------
+    Earlier T vs. Later C       0.149           0.070
+    Later T vs. Earlier C       0.058           0.045
+    T vs. Never treated         0.793           0.072
+    -------------------------------------------------
+    T = Treatment; C = Comparison
 
     (file bacon_decomp.png written in PNG format)
-
-
-    -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    -> Bacon_cgroup = Late vs Early
-
-        Variable |        Obs        Mean    Std. Dev.       Min        Max
-    -------------+---------------------------------------------------------
-         Bacon_B |         10    .0391714    .0208309    .005429   .0770605
-
-    -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    -> Bacon_cgroup = Early vs Late
-
-        Variable |        Obs        Mean    Std. Dev.       Min        Max
-    -------------+---------------------------------------------------------
-         Bacon_B |         10    .0543746     .036677   .0041562   .1108855
-
-    -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    -> Bacon_cgroup = Never treated vs timing
-
-        Variable |        Obs        Mean    Std. Dev.       Min        Max
-    -------------+---------------------------------------------------------
-         Bacon_B |          5    .0675493    .0285422   .0309436   .1022741
-
-    -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    -> Bacon_cgroup = .
-
-        Variable |        Obs        Mean    Std. Dev.       Min        Max
-    -------------+---------------------------------------------------------
-         Bacon_B |          0
 
 ![Bacon Decomposition plot](bacon_decomp.png)
 
@@ -586,60 +545,23 @@ Re-run the Bacon decomposition on the modified dataset. How much weight
 is put on “forbidden comparisons” now?
 
 ``` stata
-bacondecomp dins postTreated, ddetail stub(Bacon_)
-bys Bacon_cgroup: sum Bacon_B
+ddtiming dins postTreated, i(stfips) t(year)
 ```
 
-    Computing decomposition across 5 timing groups
-    ------------------------------------------------------------------------------
-            dins |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
-    -------------+----------------------------------------------------------------
-     postTreated |   .0628173   .0070333     8.93   0.000     .0490324    .0766023
-    ------------------------------------------------------------------------------
+    Calculating treatment times...
+    Calculating weights...
+    Estimating 2x2 diff-in-diff regressions...
 
-    Bacon Decomposition
+    Diff-in-diff estimate: 0.063    
 
-    +---------------------------------------------------+
-    |                      |         Beta   TotalWeight |
-    |----------------------+----------------------------|
-    |         Early_v_Late |  .0665692613   .0997983884 |
-    |         Late_v_Early |   .030656578   .0831653224 |
-    |         Early_v_Late |  .0501910485   .1330645127 |
-    |         Late_v_Early |  .0542925298   .0887096777 |
-    |         Early_v_Late |  .0041562277   .0105846773 |
-    |         Late_v_Early |  .0417630635   .0060483872 |
-    |         Early_v_Late |  .0487554483   .0997983884 |
-    |         Late_v_Early |  .0770604834   .0498991942 |
-    |         Early_v_Late |  .0086271707   .0105846773 |
-    |         Late_v_Early |  .0639935434   .0045362906 |
-    |         Early_v_Late |  .0145186372   .0040322582 |
-    |         Late_v_Early |  .0319756679   .0015120968 |
-    |         Early_v_Late |  .0860223051   .4082661289 |
-    +---------------------------------------------------+
+    DD Comparison              Weight      Avg DD Est
+    -------------------------------------------------
+    Earlier T vs. Later C       0.719           0.070
+    Later T vs. Earlier C       0.281           0.045
+    -------------------------------------------------
+    T = Treatment; C = Comparison
 
     (file bacon_decomp_no_nevertreated.png written in PNG format)
-
-
-    -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    -> Bacon_cgroup = Late vs Early
-
-        Variable |        Obs        Mean    Std. Dev.       Min        Max
-    -------------+---------------------------------------------------------
-         Bacon_B |          6     .049957    .0185116   .0306566   .0770605
-
-    -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    -> Bacon_cgroup = Early vs Late
-
-        Variable |        Obs        Mean    Std. Dev.       Min        Max
-    -------------+---------------------------------------------------------
-         Bacon_B |         10    .0543746     .036677   .0041562   .1108855
-
-    -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    -> Bacon_cgroup = .
-
-        Variable |        Obs        Mean    Std. Dev.       Min        Max
-    -------------+---------------------------------------------------------
-         Bacon_B |          0
 
 ![Bacon Decomposition with no never
 treated](bacon_decomp_no_nevertreated.png)
@@ -700,26 +622,26 @@ csdid_plot
 ![Event study plot with dynamics added](es_plot_dynamic.png)
 
 ``` stata
-reghdfe dins i.postTreated, absorb(stfips year) vce(cluster stfips)
+reghdfe dins2 i.postTreated, absorb(stfips year) vce(cluster stfips)
 ```
 
     (MWFE estimator converged in 2 iterations)
 
     HDFE Linear regression                            Number of obs   =        360
-    Absorbing 2 HDFE groups                           F(   1,     29) =      67.38
+    Absorbing 2 HDFE groups                           F(   1,     29) =      43.26
     Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                      R-squared       =     0.9421
-                                                      Adj R-squared   =     0.9345
-                                                      Within R-sq.    =     0.2005
-    Number of clusters (stfips)  =         30         Root MSE        =     0.0241
+                                                      R-squared       =     0.9479
+                                                      Adj R-squared   =     0.9410
+                                                      Within R-sq.    =     0.2004
+    Number of clusters (stfips)  =         30         Root MSE        =     0.0256
 
                                      (Std. Err. adjusted for 30 clusters in stfips)
     -------------------------------------------------------------------------------
                   |               Robust
-             dins |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+            dins2 |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
     --------------+----------------------------------------------------------------
-    1.postTreated |   .0628173   .0076528     8.21   0.000     .0471656    .0784691
-            _cons |   .6939667   .0034012   204.03   0.000     .6870104     .700923
+    1.postTreated |   .0666631    .010135     6.58   0.000     .0459347    .0873915
+            _cons |   .7026741   .0045044   156.00   0.000     .6934615    .7118867
     -------------------------------------------------------------------------------
 
     Absorbed degrees of freedom:
@@ -732,57 +654,20 @@ reghdfe dins i.postTreated, absorb(stfips year) vce(cluster stfips)
     * = FE nested within cluster; treated as redundant for DoF computation
 
 ``` stata
-bacondecomp dins postTreated, ddetail stub(Bacon_)
-bys Bacon_cgroup: sum Bacon_B
+ddtiming dins2 postTreated, i(stfips) t(year)
 ```
 
-    Computing decomposition across 5 timing groups
-    ------------------------------------------------------------------------------
-            dins |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
-    -------------+----------------------------------------------------------------
-     postTreated |   .0628173   .0070333     8.93   0.000     .0490324    .0766023
-    ------------------------------------------------------------------------------
+    Calculating treatment times...
+    Calculating weights...
+    Estimating 2x2 diff-in-diff regressions...
 
-    Bacon Decomposition
+    Diff-in-diff estimate: 0.067    
 
-    +---------------------------------------------------+
-    |                      |         Beta   TotalWeight |
-    |----------------------+----------------------------|
-    |         Early_v_Late |  .0665692613   .0997983884 |
-    |         Late_v_Early |   .030656578   .0831653224 |
-    |         Early_v_Late |  .0501910485   .1330645127 |
-    |         Late_v_Early |  .0542925298   .0887096777 |
-    |         Early_v_Late |  .0041562277   .0105846773 |
-    |         Late_v_Early |  .0417630635   .0060483872 |
-    |         Early_v_Late |  .0487554483   .0997983884 |
-    |         Late_v_Early |  .0770604834   .0498991942 |
-    |         Early_v_Late |  .0086271707   .0105846773 |
-    |         Late_v_Early |  .0639935434   .0045362906 |
-    |         Early_v_Late |  .0145186372   .0040322582 |
-    |         Late_v_Early |  .0319756679   .0015120968 |
-    |         Early_v_Late |  .0860223051   .4082661289 |
-    +---------------------------------------------------+
+    DD Comparison              Weight      Avg DD Est
+    -------------------------------------------------
+    Earlier T vs. Later C       0.719           0.082
+    Later T vs. Earlier C       0.281           0.028
+    -------------------------------------------------
+    T = Treatment; C = Comparison
 
     (file bacon_decomposition_dynamic.png written in PNG format)
-
-
-    -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    -> Bacon_cgroup = Late vs Early
-
-        Variable |        Obs        Mean    Std. Dev.       Min        Max
-    -------------+---------------------------------------------------------
-         Bacon_B |          6     .049957    .0185116   .0306566   .0770605
-
-    -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    -> Bacon_cgroup = Early vs Late
-
-        Variable |        Obs        Mean    Std. Dev.       Min        Max
-    -------------+---------------------------------------------------------
-         Bacon_B |         10    .0543746     .036677   .0041562   .1108855
-
-    -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    -> Bacon_cgroup = .
-
-        Variable |        Obs        Mean    Std. Dev.       Min        Max
-    -------------+---------------------------------------------------------
-         Bacon_B |          0

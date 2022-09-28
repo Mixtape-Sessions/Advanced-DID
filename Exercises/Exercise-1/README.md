@@ -5,7 +5,7 @@ This exercise will help you learn about the recent DiD literature on settings wi
 
 ## Package Setup 
 
-For R, you will need the following packages: `did`, `dplyr`, `fixest`, `bacondecomp`, `here`, and `haven`. For Stata, you will need `csdid`, `drdid`, `reghdfe`, and `bacondecomp`.
+For R, you will need the following packages: `did`, `dplyr`, `fixest`, `bacondecomp`, `here`, and `haven`. For Stata, you will need `csdid`, `drdid`, `reghdfe`, and `ddtiming`.
 
 
 ## Data
@@ -64,7 +64,7 @@ $\hat{\beta}$ compare to the simple weighted average you got from Callaway and S
 
 6.  **Explain this result using the Bacon decomposition**
 
-You probably noticed that the static TWFE estimate and the simple-weighted average from C&S were fairly similar. The reason for that is that in this example, there are a fairly large number of never-treated units, and so TWFE mainly puts weight on "clean comparisons". We can see this by using the `Bacon decomposition`, which shows how much weight static TWFE is putting on clean versus forbidden comparisons. In R, use the `bacon()` command to estimate the weights that TWFE puts on each of the types of comparisons. The first data-frame returned by the command shows how much weight OLS put on the three types of comparisons. How much weight is put on forbidden comparisons here (i.e. comparisons of 'Later vs Earlier')? In Stata, use the command `bacondecomp`. Unfortunately, Stata does not cleanly report weights by the three types of comparisons, but if you use the `ddetail` and `stub()` options in the command you should be able to see weights by different types of comparison to get a sense for whether there are many forbidden comparisons. (It also appears the weights returned by the Stata package may not be exactly right...another reason to use R!). 
+You probably noticed that the static TWFE estimate and the simple-weighted average from C&S were fairly similar. The reason for that is that in this example, there are a fairly large number of never-treated units, and so TWFE mainly puts weight on "clean comparisons". We can see this by using the `Bacon decomposition`, which shows how much weight static TWFE is putting on clean versus forbidden comparisons. In R, use the `bacon()` command to estimate the weights that TWFE puts on each of the types of comparisons. The first data-frame returned by the command shows how much weight OLS put on the three types of comparisons. How much weight is put on forbidden comparisons here (i.e. comparisons of 'Later vs Earlier')? In Stata, use the command `ddtiming`.
 
 
 
