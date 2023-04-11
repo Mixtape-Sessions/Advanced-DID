@@ -1,12 +1,14 @@
 ---
 title: "Medicaid Analysis Solution in R"
-output: github_document
+output:
+  html_document: default
+  github_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = F)
 # devtools::install_github("Hemken/Statamarkdown")
-#library(Statamarkdown)
+# library(Statamarkdown)
 ```
 
 ## Introduction
@@ -76,8 +78,8 @@ ytable <-
   summarise(dins = mean(dins))
 
 with(ytable, {
-  (dins[year == 2014 & treated == 1] - dins[year == 2013 & treated == 1]) - 
-  (dins[year == 2014 & treated == 0] - dins[year == 2013 & treated == 0])
+  (dins[year == 2014 & treated == 1] - dins[year == 2013 & treated == 1]) -
+    (dins[year == 2014 & treated == 0] - dins[year == 2013 & treated == 0])
 })
 ```
 

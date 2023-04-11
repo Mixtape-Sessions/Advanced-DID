@@ -1,6 +1,8 @@
 ---
 title: "Medicaid Analysis Solution in Stata"
-output: github_document
+output:
+  html_document: default
+  github_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -26,7 +28,6 @@ The provided datasets `ehec_data.dta` (for Stata) and `ehec_data.csv` (for R) co
 1.  **Load the data**
 
 Use the `haven::read_dta()` in R or `use` commands in Stata, respectively, to load the relevant dataset.
-
 
 ```{stata load-data, collectcode = TRUE}
 * ssc install csdid
