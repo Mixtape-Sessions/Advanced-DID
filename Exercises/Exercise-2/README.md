@@ -4,21 +4,13 @@ Exercise 2: Violations of Parallel Trends
 
 ## Introduction
 
-This exercise will walk you through using the HonestDiD R package to
-conduct sensitivity analysis for possible violations of parallel trends,
-using the methods proposed in [Rambachan and Roth
+This exercise will walk you through using the HonestDiD R or Stata
+package to conduct sensitivity analysis for possible violations of
+parallel trends, using the methods proposed in [Rambachan and Roth
 (2022)](https://jonathandroth.github.io/assets/files/HonestParallelTrends_Main.pdf).
-The package is currently only available in R, although there is a Stata
-package being developed as we speak!
-
-If you are not familiar with R, you have two options. First, you can
-download the solutions notebook written in RMarkdown. To do that, [click
-here](https://raw.githubusercontent.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Exercise-2/Solutions/medicaid-analysis-pt-violations-solutions.Rmd),
-then right-click and choose ‘Save as’, then save the file. If you open
-the saved file in RStudio, you can then follow along and run the
-solutions code line-by-line. Alternatively, if you just want to read the
-answers without running the code, you can view the [solutions
-here](https://raw.githack.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Exercise-2/Solutions/medicaid-analysis-pt-violations-solutions.html).
+Here are links to the [Stata
+package](https://github.com/mcaceresb/stata-honestdid) and [R
+package](https://github.com/asheshrambachan/HonestDiD).
 
 ## 0. Install packages if needed
 
@@ -46,24 +38,26 @@ are first treated in 2014 and the remaining units are not treated during
 the sample period.
 
 Start by running the simple TWFE regression
-*Y*<sub>*i**t*</sub> = *α*<sub>*i*</sub> + *λ*<sub>*t*</sub> + ∑<sub>*s* ≠ 2013</sub>1\[*s*=*t*\] × *D*<sub>*i*</sub> × *β*<sub>*s*</sub> + *u*<sub>*i**t*</sub>,
-where *D*<sub>*i*</sub> = 1 if a unit is first treated in 2014 and 0
-otherwise. Note that since we do not have staggered treatment, the
-coefficients *β̂*<sub>*s*</sub> are equivalent to DiD estimates between
-the treated and non-treated units between period *s* and 2013. I
-recommend using the *feols* command from the *fixest* package in R,
-although feel free to use your favorite regression command. Don’t forget
-to cluster your SEs at the state level.
+$Y_{it} = \alpha_i + \lambda_t + \sum_{s \neq 2013} 1[s=t] \times D_i \times \beta_s + u_{it} ,$
+where $D_i =1$ if a unit is first treated in 2014 and 0 otherwise. Note
+that since we do not have staggered treatment, the coefficients
+$\hat{\beta}_s$ are equivalent to DiD estimates between the treated and
+non-treated units between period $s$ and 2013. I recommend using the
+`feols` command from the `fixest` package in R, although feel free to
+use your favorite regression command. Don’t forget to cluster your SEs
+at the state level.
 
 ## 2. Extract the coefficients and standard error from the baseline spec
 
-To conduct sensitivity analysis using the *HonestDiD* package, we need
+*NOTE: R only*
+
+To conduct sensitivity analysis using the `HonestDiD` package, we need
 to extract the event-study coefficients and their variance-covariance
 matrix. (Note: the event-study coefficients are assumed to be in order
 from earliest to latest.) If you estimated the coefficients using
-*feols* from the *fixest* package, it is easy to extract these objects
-from the summary command. In particular, if your *feols* results are
-stored in *twfe_results*, you can use the commands:
+`feols` from the `fixest` package, it is easy to extract these objects
+from the summary command. In particular, if your `feols` results are
+stored in `twfe_results`, you can use the commands:
 
 ``` r
 betahat <- summary(twfe_results)$coefficients
@@ -76,31 +70,53 @@ We are now ready to apply the HonestDiD package to do sensitivity
 analysis. Suppose we’re interested in assessing the sensitivity of the
 estimate for 2014 (the first year of treatment). We will use the
 “relative magnitudes” restriction that allows the violation of parallel
-trends between 2013 and 2014 to be no more than *M̄* times larger than
-the worst pre-treatment violation of parallel trends. To create a
-sensitivity analysis, load the *HonestDiD* package, and call the
-*createSensitivityResults_relativeMagnitudes* function. You will need to
-input the parameters *betahat* and *sigma* calculated above,
-*numPrePeriods* (in this case, 5), and *numPostPeriods* (in this case,
-2). I suggest that you also give the optional parameter *Mbarvec =
-seq(0,2,by=0.5)* to specify the values of *M̄* you wish to use. (Note: it
-may take a couple of minutes to calculate the sensitivity results.)
+trends between 2013 and 2014 to be no more than $\bar{M}$ times larger
+than the worst pre-treatment violation of parallel trends.
+
+*R instructions:*
+
+To create a sensitivity analysis, load the `HonestDiD` package, and call
+the `createSensitivityResults_relativeMagnitudes` function. You will
+need to input the parameters `betahat` and `sigma` calculated above,
+`numPrePeriods` (in this case, 5), and `numPostPeriods` (in this case,
+2). I suggest that you also give the optional parameter
+`Mbarvec = seq(0,2,by=0.5)` to specify the values of $\bar{M}$ you wish
+to use. (Note: it may take a couple of minutes to calculate the
+sensitivity results.)
+
+*Stata instructions:*
+
+To create a sensitivity analysis, use the `honest_did` function. You
+will need to pass the options `pre` and `post` to specify the pre and
+post treatment estimates. I suggest that you also give the optional
+parameter `mvec` a value of `0.5(0.5)2` to specify the values of
+$\bar{M}$ you wish to use. (Note: it may take a couple of minutes to
+calculate the sensitivity results.)
 
 Look at the results of the sensitivity analysis you created. For each
-value of *M̄*, it gives a robust confidence interval that allows for
-violations of parallel trends between 2013 and 2014 to be no more than
-*M̄* times the max pre-treatment violation of parallel trends. What is
-the “breakdown” value of *M̄* at which we can no longer reject a null
-effect? Interpret this parameter.
+value of $\bar{M}$, it gives a robust confidence interval that allows
+for violations of parallel trends between 2013 and 2014 to be no more
+than $\bar{M}$ times the max pre-treatment violation of parallel trends.
+What is the “breakdown” value of $\bar{M}$ at which we can no longer
+reject a null effect? Interpret this parameter.
 
 ## 4. Create a sensitivity analysis plot
 
+*R Instructions:*
+
 We can also visualize the sensitivity analysis using the
-*createSensitivityPlot_relativeMagnitudes*. To do this, we first have to
+`createSensitivityPlot_relativeMagnitudes`. To do this, we first have to
 calculate the CI for the original OLS estimates using the
-*constructOriginalCS* command. We then pass our sensitivity analysis and
-the original results to the *createSensitivityPlot_relativeMagnitudes*
+`constructOriginalCS` command. We then pass our sensitivity analysis and
+the original results to the `createSensitivityPlot_relativeMagnitudes`
 command.
+
+*Stata Instructions:*
+
+We can also visualize the sensitivity analysis using the `honestdid`
+command by adding the `coefplot` option. You can use the `cached` option
+to use the results from the previous `honestdid` call (for speed’s
+sake).
 
 ## 5. Sensitivity Analysis Using Smoothness Bounds
 
@@ -111,45 +127,71 @@ parallel trends, we let treated units be on a different time-trend
 relative to untreated units. Rambachan and Roth consider a sensitivity
 analysis based on this idea – how much would the difference in trends
 need to differ from linearity to violate a particular result?
-Specifically, they introduce a parameter *M* that says that the change
-in the slope of the trend can be no more than *M* between consecutive
+Specifically, they introduce a parameter $M$ that says that the change
+in the slope of the trend can be no more than $M$ between consecutive
 periods.
 
-Use the function *createSensitivityPlot* to run a sensitivity analysis
+*R Instructions:*
+
+Use the function `createSensitivityPlot` to run a sensitivity analysis
 using this smoothness bound. The inputs are similar to those for the
-previous analysis, except instead of inputting *Mbarvec*, set the
-parameter *Mvec = seq(from = 0, to = 0.05, by =0.01)*. (Note: as before
+previous analysis, except instead of inputting `Mbarvec`, set the
+parameter `Mvec = seq(from = 0, to = 0.05, by =0.01)`. (Note: as before
 it may take a couple of minutes for the sensitivity code to run.) What
-is the breakdown value of *M* – that is, how non-linear would the
+is the breakdown value of $M$ – that is, how non-linear would the
+difference in trends have to be for us not to reject a significant
+effect?
+
+*Stata Instructions:*
+
+To create a sensitivity analysis using smoothness bounds, add the
+`delta(sd)` option to your `honestdid` function call. (Note: as before
+it may take a couple of minutes for the sensitivity code to run.) What
+is the breakdown value of $M$ – that is, how non-linear would the
 difference in trends have to be for us not to reject a significant
 effect?
 
 ## 6. Bonus: Sensitivity Analysis for Average Effects
 
-Re-run the sensitivity analyses above using the option *l_vec =
-c(0.5,0.5)* to do sensitivity on the *average* effect between 2014 and
-2015 rather than the effect for 2014 (*l_vec = c(0,1)* would give
-inference on the 2015 effect). How do the breakdown values of *M̄* and
-*M* compare to those for the effect in 2014? \[Hint: breakdown values
-for longer-run effects often tend to be smaller, since this leaves more
-time for the groups’ trends to diverge from each other.\]
+*R Instructions:*
+
+Re-run the sensitivity analyses above using the option
+`l_vec = c(0.5,0.5)` to do sensitivity on the `average` effect between
+2014 and 2015 rather than the effect for 2014 (`l_vec = c(0,1)` would
+give inference on the 2015 effect). How do the breakdown values of
+$\bar{M}$ and $M$ compare to those for the effect in 2014? \[Hint:
+breakdown values for longer-run effects often tend to be smaller, since
+this leaves more time for the groups’ trends to diverge from each
+other.\]
+
+*Stata Instructions:*
 
 ## 7. Bonus 2: HonestDiD + Callaway & Sant’Anna
+
+*R Instructions:*
 
 Look at the instructions [here](https://github.com/pedrohcgs/CS_RR) for
 running an event-study using Callaway and Sant’Anna and passing the
 results to the HonestDiD package for sensitivity analysis. Create a
 Callaway and Sant’Anna event-study using the full Medicaid data, and
-then apply the HonestDiD sensitivity. \[Hint: I recommend using *min_e =
--5* and *max_e = 5* in the *aggte* command, since the earlier pre-trends
-coefficients are very noisy.\]
+then apply the HonestDiD sensitivity. \[Hint: I recommend using
+`min_e = -5` and `max_e = 5` in the `aggte` command, since the earlier
+pre-trends coefficients are very noisy.\]
+
+*Stata Instructions:*
+
+Look at the instructions
+[here](https://github.com/mcaceresb/stata-honestdid) for running an
+event-study using Callaway and Sant’Anna and passing the results to the
+HonestDiD package for sensitivity analysis. Create a Callaway and
+Sant’Anna event-study using the full Medicaid data, and then apply the
+HonestDiD sensitivity. \[Hint: I recommend using `window(-4 5)` in the
+`csdid_estat` command, since the earlier pre-trends coefficients are
+very noisy.\]
 
 ## Solutions
 
-You can view an HTML file with worked out solutions
-[here](https://raw.githack.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Exercise-2/Solutions/medicaid-analysis-pt-violations-solutions.html).
-
-If you want to download an RMarkdown notebook with solutions that you
-can run in RStudio, [click
-here](https://raw.githubusercontent.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Exercise-2/Solutions/medicaid-analysis-pt-violations-solutions.Rmd),
-then right-click and choose ‘Save as’, then save the file.
+You can view an HTML file with worked out solutions [for
+R](https://raw.githack.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Exercise-2/Solutions/medicaid-analysis-pt-violations-solutions-R.html)
+or [for
+Stata](https://raw.githack.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Exercise-2/Solutions/medicaid-analysis-pt-violations-solutions-stata.html).
