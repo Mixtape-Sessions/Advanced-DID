@@ -14,14 +14,19 @@ package](https://github.com/asheshrambachan/HonestDiD).
 
 ## 0. Install packages if needed
 
-``` stata
-* ssc install csdid
-* ssc install drdid
-* ssc install reghdfe
-* net install ddtiming, from(https://tgoldring.com/code/)
+We will use several Stata packages in our analysis, which you can
+install as follows if needed.
 
-* net install honestdid, from(https://raw.githubusercontent.com/mcaceresb/stata-honestdid/main) replace
-* honestdid _plugin_check
+``` stata
+* reghdfe
+ssc install reghdfe
+
+* honestdid
+net install honestdid, from("https://raw.githubusercontent.com/mcaceresb/stata-honestdid/main") replace
+honestdid _plugin_check
+
+* csdid 
+net install csdid, from ("https://raw.githubusercontent.com/friosavila/csdid_drdid/main/code/") replace
 ```
 
 ## 1. Run the baseline DiD
@@ -45,10 +50,6 @@ gen D = (yexp2 == 2014)
 gen Dyear = cond(D, year, 2013)
 ```
 
-    running /Users/kylebutts/Documents/Mixtape-Sessions/Advanced-DID/Exercises/Exercise-2/Solutions/> file.do ...
-
-
-
     (208 observations deleted)
 
 Start by running the simple TWFE regression
@@ -67,9 +68,6 @@ reghdfe dins b2013.Dyear, absorb(stfips year) cluster(stfips) noconstant
 
 coefplot, vertical yline(0) ciopts(recast(rcap)) xlabel(,angle(45)) ytitle("Estimate and 95% Conf. Int.") title("Effect on dins")
 ```
-
-    running /Users/kylebutts/Documents/Mixtape-Sessions/Advanced-DID/Exercises/Exercise-2/Solutions/> file.do ...
-
 
     (MWFE estimator converged in 2 iterations)
 
@@ -119,8 +117,6 @@ estimate for 2014 (the first year of treatment). We will use the
 trends between 2013 and 2014 to be no more than $\bar{M}$ times larger
 than the worst pre-treatment violation of parallel trends.
 
-*Stata instructions:*
-
 To create a sensitivity analysis, use the `honestdid` function. You will
 need to pass the options `pre` and `post` to specify the pre and post
 treatment estimates. I suggest that you also give the optional parameter
@@ -131,10 +127,6 @@ sensitivity results.)
 ``` stata
 honestdid, pre(1/5) post(7/8) mvec(0.5(0.5)2)
 ```
-
-    running /Users/kylebutts/Documents/Mixtape-Sessions/Advanced-DID/Exercises/Exercise-2/Solutions/> file.do ...
-
-
 
     |    M    |   lb   |   ub   |
     | ------- | ------ | ------ |
@@ -154,8 +146,6 @@ reject a null effect? Interpret this parameter.
 
 ## 4. Create a sensitivity analysis plot
 
-*Stata Instructions*
-
 We can also visualize the sensitivity analysis using the `honestdid`
 command by adding the `coefplot` option. You can use the `cached` option
 to use the results from the previous `honestdid` call (for speed’s
@@ -164,9 +154,6 @@ sake).
 ``` stata
 honestdid, cached coefplot xtitle("M") ytitle("95% Robust CI")
 ```
-
-    running /Users/kylebutts/Documents/Mixtape-Sessions/Advanced-DID/Exercises/Exercise-2/Solutions/> file.do ...
-
 
     '.options.relativeMagnitudes' found where almost anything else expected
     r(3000);
@@ -189,8 +176,6 @@ Specifically, they introduce a parameter $M$ that says that the change
 in the slope of the trend can be no more than $M$ between consecutive
 periods.
 
-*Stata Instructions:*
-
 To create a sensitivity analysis using smoothness bounds, add the
 `delta(sd)` option to your `honestdid` function call. (Note: as before
 it may take a couple of minutes for the sensitivity code to run.) What
@@ -201,10 +186,6 @@ effect?
 ``` stata
 honestdid, pre(1/5) post(6/7) mvec(0(0.01)0.05) delta(sd) omit coefplot xtitle("M") ytitle("95% Robust CI")
 ```
-
-    running /Users/kylebutts/Documents/Mixtape-Sessions/Advanced-DID/Exercises/Exercise-2/Solutions/> file.do ...
-
-
 
     |    M    |   lb   |   ub   |
     | ------- | ------ | ------ |
@@ -226,25 +207,21 @@ the Smoothness of Pre-trends</figcaption>
 
 ## 6. Bonus: Sensitivity Analysis for Average Effects
 
-Re-run the sensitivity analyses above using the option
-`l_vec = c(0.5,0.5)` to do sensitivity on the `average` effect between
-2014 and 2015 rather than the effect for 2014 (`l_vec = c(0,1)` would
-give inference on the 2015 effect). How do the breakdown values of
-$\bar{M}$ and $M$ compare to those for the effect in 2014? \[Hint:
-breakdown values for longer-run effects often tend to be smaller, since
-this leaves more time for the groups’ trends to diverge from each
-other.\]
+Re-run the sensitivity analyses above using the option `l_vec` to do
+sensitivity on the `average` effect between 2014 and 2015 rather than
+the effect for 2014. To do so, run the following
+`matrix l_vec = 0.5 \ 0.5` and then add `l_vec(l_vec)` to the
+`honestdid` call (`matrix l_vec = 0 \ 1` would give inference on the
+2015 effect). How do the breakdown values of $\bar{M}$ and $M$ compare
+to those for the effect in 2014? \[Hint: breakdown values for longer-run
+effects often tend to be smaller, since this leaves more time for the
+groups’ trends to diverge from each other.\]
 
 ``` stata
 matrix l_vec = 0.5 \ 0.5
 local plotopts xtitle(Mbar) ytitle(95% Robust CI)
 honestdid, l_vec(l_vec) pre(1/5) post(6/7) mvec(0(0.5)2) omit coefplot xtitle("M") ytitle("95% Robust CI")
 ```
-
-    running /Users/kylebutts/Documents/Mixtape-Sessions/Advanced-DID/Exercises/Exercise-2/Solutions/> file.do ...
-
-
-
 
     Warning: M = 0 with Delta^RM imposes exact parallel trends in the
     post-treatment period, even if pre-treatment parallel trends is violated
@@ -268,16 +245,14 @@ Effects</figcaption>
 
 ## 7. Bonus 2: HonestDiD + Callaway & Sant’Anna
 
-*Stata Instructions:*
-
 Look at the instructions
-[here](https://github.com/mcaceresb/stata-honestdid) for running an
-event-study using Callaway and Sant’Anna and passing the results to the
-HonestDiD package for sensitivity analysis. Create a Callaway and
-Sant’Anna event-study using the full Medicaid data, and then apply the
-HonestDiD sensitivity. \[Hint: I recommend using `window(-4 5)` in the
-`csdid_estat` command, since the earlier pre-trends coefficients are
-very noisy.\]
+[here](https://github.com/mcaceresb/stata-honestdid#staggered-timing)
+for running an event-study using Callaway and Sant’Anna and passing the
+results to the HonestDiD package for sensitivity analysis. Create a
+Callaway and Sant’Anna event-study using the full Medicaid data, and
+then apply the HonestDiD sensitivity. \[Hint: I recommend using
+`window(-4 5)` in the `csdid_estat` command, since the earlier
+pre-trends coefficients are very noisy.\]
 
 ``` stata
 use "https://raw.githubusercontent.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Data/ehec_data.dta", clear
@@ -290,11 +265,6 @@ estimates restore csdid
 local plotopts xtitle(Mbar) ytitle(95% Robust CI)
 honestdid, pre(3/6) post(7/12) mvec(0.5(0.5)2) coefplot xtitle(Mbar) ytitle(95% Robust CI)
 ```
-
-    running /Users/kylebutts/Documents/Mixtape-Sessions/Advanced-DID/Exercises/Exercise-2/Solutions/> file.do ...
-
-
-
 
     (192 real changes made)
 

@@ -14,12 +14,12 @@ package](https://github.com/asheshrambachan/HonestDiD).
 
 ## 0. Install packages if needed
 
-We will use several R Packages in our analysis, which you can install as
+We will use several R packages in our analysis, which you can install as
 follows if needed.
 
 ``` r
 # Install here, dplyr, did, haven, ggplot2, remotes packages from CRAN
-install.packages(c("here", "dplyr", "did", "haven", "ggplot2", "remotes"))
+install.packages(c("here", "dplyr", "did", "haven", "ggplot2", "remotes", "fixest"))
 
 # Turn off warning-error-conversion, because the tiniest warning stops installation
 Sys.setenv("R_REMOTES_NO_ERRORS_FROM_WARNINGS" = "true")
@@ -107,8 +107,6 @@ estimate for 2014 (the first year of treatment). We will use the
 trends between 2013 and 2014 to be no more than $\bar{M}$ times larger
 than the worst pre-treatment violation of parallel trends.
 
-*R instructions:*
-
 To create a sensitivity analysis, load the `HonestDiD` package, and call
 the `createSensitivityResults_relativeMagnitudes` function. You will
 need to input the parameters `betahat` and `sigma` calculated above,
@@ -149,8 +147,6 @@ reject a null effect? Interpret this parameter.
 
 ## 4. Create a sensitivity analysis plot
 
-*R Instructions:*
-
 We can also visualize the sensitivity analysis using the
 `createSensitivityPlot_relativeMagnitudes`. To do this, we first have to
 calculate the CI for the original OLS estimates using the
@@ -183,8 +179,6 @@ need to differ from linearity to violate a particular result?
 Specifically, they introduce a parameter $M$ that says that the change
 in the slope of the trend can be no more than $M$ between consecutive
 periods.
-
-*R Instructions:*
 
 Use the function `createSensitivityPlot` to run a sensitivity analysis
 using this smoothness bound. The inputs are similar to those for the
@@ -225,8 +219,6 @@ createSensitivityPlot(delta_sd_results, originalResults)
 ![](medicaid-analysis-pt-violations-solutions-R_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ## 6. Bonus: Sensitivity Analysis for Average Effects
-
-*R Instructions:*
 
 Re-run the sensitivity analyses above using the option
 `l_vec = c(0.5,0.5)` to do sensitivity on the `average` effect between
@@ -277,10 +269,9 @@ createSensitivityPlot(delta_sd_results_avg, originalResults_avg)
 
 ## 7. Bonus 2: HonestDiD + Callaway & Sant’Anna
 
-*R Instructions:*
-
-Look at the instructions [here](https://github.com/pedrohcgs/CS_RR) for
-running an event-study using Callaway and Sant’Anna and passing the
+Look at the instructions
+[here](https://github.com/asheshrambachan/HonestDiD#staggered-timing)
+for running an event-study using Callaway and Sant’Anna and passing the
 results to the HonestDiD package for sensitivity analysis. Create a
 Callaway and Sant’Anna event-study using the full Medicaid data, and
 then apply the HonestDiD sensitivity. \[Hint: I recommend using

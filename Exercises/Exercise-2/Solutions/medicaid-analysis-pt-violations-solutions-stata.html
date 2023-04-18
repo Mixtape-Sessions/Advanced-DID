@@ -647,13 +647,17 @@ and <a href="https://github.com/asheshrambachan/HonestDiD">R
 package</a>.</p>
 <h2 id="id_0-install-packages-if-needed">0. Install packages if
 needed</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>* <span class="kw">ssc</span> install csdid</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>* <span class="kw">ssc</span> install drdid</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>* <span class="kw">ssc</span> install reghdfe</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>* net install ddtiming, from(https:<span class="co">//tgoldring.com/code/)</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>* net install honestdid, from(https:<span class="co">//raw.githubusercontent.com/mcaceresb/stata-honestdid/main) replace</span></span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>* honestdid _plugin_check</span></code></pre></div>
+<p>We will use several Stata packages in our analysis, which you can
+install as follows if needed.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>* reghdfe</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="kw">ssc</span> install reghdfe</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>* honestdid</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>net install honestdid, from(<span class="st">&quot;https://raw.githubusercontent.com/mcaceresb/stata-honestdid/main&quot;</span>) <span class="kw">replace</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>honestdid _plugin_check</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>* csdid </span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>net install csdid, from (<span class="st">&quot;https://raw.githubusercontent.com/friosavila/csdid_drdid/main/code/&quot;</span>) <span class="kw">replace</span></span></code></pre></div>
 <h2 id="id_1-run-the-baseline-did">1. Run the baseline DiD</h2>
 <p>For simplicity, we will first focus on assessing sensitivity to
 violations of parallel trends in a non-staggered DiD. Load the same
@@ -670,11 +674,7 @@ the sample period.</p>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>* Create a treatment dummy</span>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="kw">gen</span> D = (yexp2 == 2014)</span>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="kw">gen</span> Dyear = <span class="fu">cond</span>(D, <span class="fu">year</span>, 2013)</span></code></pre></div>
-<pre><code>running /Users/kylebutts/Documents/Mixtape-Sessions/Advanced-DID/Exercises/Exercise-2/Solutions/&gt; file.do ...
-
-
-
-(208 observations deleted)</code></pre>
+<pre><code>(208 observations deleted)</code></pre>
 <p>Start by running the simple TWFE regression <span class="math inline">\(Y_{it} = \alpha_i + \lambda_t + \sum_{s \neq 2013}
 1[s=t] \times D_i \times \beta_s + u_{it} ,\)</span> where <span class="math inline">\(D_i =1\)</span> if a unit is first treated in 2014
 and 0 otherwise. Note that since we do not have staggered treatment, the
@@ -689,10 +689,7 @@ forget to cluster your SEs at the state level.</p>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>reghdfe dins b2013.Dyear, absorb(stfips <span class="fu">year</span>) <span class="kw">cluster</span>(stfips) <span class="kw">noconstant</span></span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>coefplot, vertical <span class="kw">yline</span>(0) ciopts(<span class="kw">recast</span>(rcap)) <span class="kw">xlabel</span>(,angle(45)) <span class="bn">ytitle</span>(<span class="st">&quot;Estimate and 95% Conf. Int.&quot;</span>) <span class="bn">title</span>(<span class="st">&quot;Effect on dins&quot;</span>)</span></code></pre></div>
-<pre><code>running /Users/kylebutts/Documents/Mixtape-Sessions/Advanced-DID/Exercises/Exercise-2/Solutions/&gt; file.do ...
-
-
-(MWFE estimator converged in 2 iterations)
+<pre><code>(MWFE estimator converged in 2 iterations)
 
 HDFE Linear regression                            Number of obs   =        344
 Absorbing 2 HDFE groups                           F(   7,     42) =      10.15
@@ -738,7 +735,6 @@ estimate for 2014 (the first year of treatment). We will use the
 “relative magnitudes” restriction that allows the violation of parallel
 trends between 2013 and 2014 to be no more than <span class="math inline">\(\bar{M}\)</span> times larger than the worst
 pre-treatment violation of parallel trends.</p>
-<p><em>Stata instructions:</em></p>
 <p>To create a sensitivity analysis, use the <code>honestdid</code>
 function. You will need to pass the options <code>pre</code> and
 <code>post</code> to specify the pre and post treatment estimates. I
@@ -746,11 +742,7 @@ suggest that you also give the optional parameter <code>mvec</code> a
 value of <code>0.5(0.5)2</code> to specify the values of <span class="math inline">\(\bar{M}\)</span> you wish to use. (Note: it may
 take a couple of minutes to calculate the sensitivity results.)</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>honestdid, pre(1/5) <span class="kw">post</span>(7/8) mvec(0.5(0.5)2)</span></code></pre></div>
-<pre><code>running /Users/kylebutts/Documents/Mixtape-Sessions/Advanced-DID/Exercises/Exercise-2/Solutions/&gt; file.do ...
-
-
-
-|    M    |   lb   |   ub   |
+<pre><code>|    M    |   lb   |   ub   |
 | ------- | ------ | ------ |
 |       . |  0.029 |  0.064 | (Original)
 |  0.5000 |  0.024 |  0.067 | 
@@ -766,16 +758,12 @@ violation of parallel trends. What is the “breakdown” value of <span class="
 a null effect? Interpret this parameter.</p>
 <h2 id="id_4-create-a-sensitivity-analysis-plot">4. Create a sensitivity
 analysis plot</h2>
-<p><em>Stata Instructions</em></p>
 <p>We can also visualize the sensitivity analysis using the
 <code>honestdid</code> command by adding the <code>coefplot</code>
 option. You can use the <code>cached</code> option to use the results
 from the previous <code>honestdid</code> call (for speed’s sake).</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>honestdid, cached coefplot <span class="bn">xtitle</span>(<span class="st">&quot;M&quot;</span>) <span class="bn">ytitle</span>(<span class="st">&quot;95% Robust CI&quot;</span>)</span></code></pre></div>
-<pre><code>running /Users/kylebutts/Documents/Mixtape-Sessions/Advanced-DID/Exercises/Exercise-2/Solutions/&gt; file.do ...
-
-
-&#39;.options.relativeMagnitudes&#39; found where almost anything else expected
+<pre><code>&#39;.options.relativeMagnitudes&#39; found where almost anything else expected
 r(3000);
 
 end of do-file
@@ -794,7 +782,6 @@ need to differ from linearity to violate a particular result?
 Specifically, they introduce a parameter <span class="math inline">\(M\)</span> that says that the change in the slope
 of the trend can be no more than <span class="math inline">\(M\)</span>
 between consecutive periods.</p>
-<p><em>Stata Instructions:</em></p>
 <p>To create a sensitivity analysis using smoothness bounds, add the
 <code>delta(sd)</code> option to your <code>honestdid</code> function
 call. (Note: as before it may take a couple of minutes for the
@@ -802,11 +789,7 @@ sensitivity code to run.) What is the breakdown value of <span class="math inlin
 difference in trends have to be for us not to reject a significant
 effect?</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>honestdid, pre(1/5) <span class="kw">post</span>(6/7) mvec(0(0.01)0.05) delta(<span class="fu">sd</span>) omit coefplot <span class="bn">xtitle</span>(<span class="st">&quot;M&quot;</span>) <span class="bn">ytitle</span>(<span class="st">&quot;95% Robust CI&quot;</span>)</span></code></pre></div>
-<pre><code>running /Users/kylebutts/Documents/Mixtape-Sessions/Advanced-DID/Exercises/Exercise-2/Solutions/&gt; file.do ...
-
-
-
-|    M    |   lb   |   ub   |
+<pre><code>|    M    |   lb   |   ub   |
 | ------- | ------ | ------ |
 |       . |  0.029 |  0.064 | (Original)
 |  0.0000 |  0.026 |  0.061 | 
@@ -825,9 +808,11 @@ the Smoothness of Pre-trends</figcaption>
 <h2 id="id_6-bonus-sensitivity-analysis-for-average-effects">6. Bonus:
 Sensitivity Analysis for Average Effects</h2>
 <p>Re-run the sensitivity analyses above using the option
-<code>l_vec = c(0.5,0.5)</code> to do sensitivity on the
-<code>average</code> effect between 2014 and 2015 rather than the effect
-for 2014 (<code>l_vec = c(0,1)</code> would give inference on the 2015
+<code>l_vec</code> to do sensitivity on the <code>average</code> effect
+between 2014 and 2015 rather than the effect for 2014. To do so, run the
+following <code>matrix l_vec = 0.5 \ 0.5</code> and then add
+<code>l_vec(l_vec)</code> to the <code>honestdid</code> call
+(<code>matrix l_vec = 0 \ 1</code> would give inference on the 2015
 effect). How do the breakdown values of <span class="math inline">\(\bar{M}\)</span> and <span class="math inline">\(M\)</span> compare to those for the effect in
 2014? [Hint: breakdown values for longer-run effects often tend to be
 smaller, since this leaves more time for the groups’ trends to diverge
@@ -835,12 +820,7 @@ from each other.]</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">matrix</span> l_vec = 0.5 \ 0.5</span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="kw">local</span> plotopts <span class="bn">xtitle</span>(Mbar) <span class="bn">ytitle</span>(95% Robust CI)</span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>honestdid, l_vec(l_vec) pre(1/5) <span class="kw">post</span>(6/7) mvec(0(0.5)2) omit coefplot <span class="bn">xtitle</span>(<span class="st">&quot;M&quot;</span>) <span class="bn">ytitle</span>(<span class="st">&quot;95% Robust CI&quot;</span>)</span></code></pre></div>
-<pre><code>running /Users/kylebutts/Documents/Mixtape-Sessions/Advanced-DID/Exercises/Exercise-2/Solutions/&gt; file.do ...
-
-
-
-
-Warning: M = 0 with Delta^RM imposes exact parallel trends in the
+<pre><code>Warning: M = 0 with Delta^RM imposes exact parallel trends in the
 post-treatment period, even if pre-treatment parallel trends is violated
 
 |    M    |   lb   |   ub   |
@@ -860,12 +840,11 @@ Effects</figcaption>
 
 <h2 id="id_7-bonus-2-honestdid--callaway--santanna">7. Bonus 2:
 HonestDiD + Callaway &amp; Sant’Anna</h2>
-<p><em>Stata Instructions:</em></p>
-<p>Look at the instructions <a href="https://github.com/mcaceresb/stata-honestdid">here</a> for running
-an event-study using Callaway and Sant’Anna and passing the results to
-the HonestDiD package for sensitivity analysis. Create a Callaway and
-Sant’Anna event-study using the full Medicaid data, and then apply the
-HonestDiD sensitivity. [Hint: I recommend using
+<p>Look at the instructions <a href="https://github.com/mcaceresb/stata-honestdid#staggered-timing">here</a>
+for running an event-study using Callaway and Sant’Anna and passing the
+results to the HonestDiD package for sensitivity analysis. Create a
+Callaway and Sant’Anna event-study using the full Medicaid data, and
+then apply the HonestDiD sensitivity. [Hint: I recommend using
 <code>window(-4 5)</code> in the <code>csdid_estat</code> command, since
 the earlier pre-trends coefficients are very noisy.]</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="kw">use</span> <span class="st">&quot;https://raw.githubusercontent.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Data/ehec_data.dta&quot;</span>, <span class="kw">clear</span></span>
@@ -877,12 +856,7 @@ the earlier pre-trends coefficients are very noisy.]</p>
 <span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a></span>
 <span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="kw">local</span> plotopts <span class="bn">xtitle</span>(Mbar) <span class="bn">ytitle</span>(95% Robust CI)</span>
 <span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>honestdid, pre(3/6) <span class="kw">post</span>(7/12) mvec(0.5(0.5)2) coefplot <span class="bn">xtitle</span>(Mbar) <span class="bn">ytitle</span>(95% Robust CI)</span></code></pre></div>
-<pre><code>running /Users/kylebutts/Documents/Mixtape-Sessions/Advanced-DID/Exercises/Exercise-2/Solutions/&gt; file.do ...
-
-
-
-
-(192 real changes made)
+<pre><code>(192 real changes made)
 
 Program DRDID is outdated, or not installed. 
 Please install ssc install drdid

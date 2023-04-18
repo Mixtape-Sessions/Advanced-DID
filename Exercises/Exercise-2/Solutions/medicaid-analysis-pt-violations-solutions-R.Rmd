@@ -1,8 +1,8 @@
 ---
 title: "Mixtape-Exercises-Violations of PT"
 output:
-  html_document: default
   github_document: default
+  html_document: default
 date: '2022-06-23'
 ---
 
@@ -16,10 +16,10 @@ This exercise will walk you through using the HonestDiD R or Stata package to co
 
 ## 0. Install packages if needed 
 
-We will use several R Packages in our analysis, which you can install as follows if needed.
+We will use several R packages in our analysis, which you can install as follows if needed.
 ```{r, eval=FALSE}
 # Install here, dplyr, did, haven, ggplot2, remotes packages from CRAN
-install.packages(c("here", "dplyr", "did", "haven", "ggplot2", "remotes"))
+install.packages(c("here", "dplyr", "did", "haven", "ggplot2", "remotes", "fixest"))
 
 # Turn off warning-error-conversion, because the tiniest warning stops installation
 Sys.setenv("R_REMOTES_NO_ERRORS_FROM_WARNINGS" = "true")
@@ -75,8 +75,6 @@ sigma <- summary(twfe_results)$cov.scaled
 
 We are now ready to apply the HonestDiD package to do sensitivity analysis. Suppose we're interested in assessing the sensitivity of the estimate for 2014 (the first year of treatment). We will use the "relative magnitudes" restriction that allows the violation of parallel trends between 2013 and 2014 to be no more than $\bar{M}$ times larger than the worst pre-treatment violation of parallel trends. 
 
-*R instructions:*
-
 To create a sensitivity analysis, load the `HonestDiD` package, and call the `createSensitivityResults_relativeMagnitudes` function. You will need to input the parameters `betahat` and `sigma` calculated above, `numPrePeriods` (in this case, 5), and `numPostPeriods` (in this case, 2). I suggest that you also give the optional parameter `Mbarvec = seq(0,2,by=0.5)` to specify the values of $\bar{M}$ you wish to use. (Note: it may take a couple of minutes to calculate the sensitivity results.)
 
 ```{r, cache = TRUE, warning=FALSE}
@@ -96,8 +94,6 @@ Look at the results of the sensitivity analysis you created. For each value of $
 
 ## 4. Create a sensitivity analysis plot
 
-*R Instructions:* 
-
 We can also visualize the sensitivity analysis using the `createSensitivityPlot_relativeMagnitudes`. To do this, we first have to calculate the CI for the original OLS estimates using the `constructOriginalCS` command. We then pass our sensitivity analysis and the original results to the `createSensitivityPlot_relativeMagnitudes` command. 
 
 ```{r}
@@ -114,8 +110,6 @@ HonestDiD::createSensitivityPlot_relativeMagnitudes(delta_rm_results, originalRe
 ## 5. Sensitivity Analysis Using Smoothness Bounds
 
 We can also do a sensitivity analysis based on different restrictions on what violations of parallel trends might look like. The starting point for this analysis is that often if we're worried about violations of parallel trends, we let treated units be on a different time-trend relative to untreated units. Rambachan and Roth consider a sensitivity analysis based on this idea -- how much would the difference in trends need to differ from linearity to violate a particular result? Specifically, they introduce a parameter $M$ that says that the change in the slope of the trend can be no more than $M$ between consecutive periods. 
-
-*R Instructions:*
 
 Use the function `createSensitivityPlot` to run a sensitivity analysis using this smoothness bound. The inputs are similar to those for the previous analysis, except instead of inputting `Mbarvec`, set the parameter `Mvec = seq(from = 0, to = 0.05, by =0.01)`. (Note: as before it may take a couple of minutes for the sensitivity code to run.) What is the breakdown value of $M$ -- that is, how non-linear would the difference in trends have to be for us not to reject a significant effect? 
 
@@ -134,8 +128,6 @@ createSensitivityPlot(delta_sd_results, originalResults)
 ```
 
 ## 6. Bonus: Sensitivity Analysis for Average Effects
-
-*R Instructions:*
 
 Re-run the sensitivity analyses above using the option `l_vec = c(0.5,0.5)` to do sensitivity on the `average` effect between 2014 and 2015 rather than the effect for 2014 (`l_vec = c(0,1)` would give inference on the 2015 effect). How do the breakdown values of $\bar{M}$ and $M$ compare to those for the effect in 2014? [Hint: breakdown values for longer-run effects often tend to be smaller, since this leaves more time for the groups' trends to diverge from each other.] 
 
@@ -173,9 +165,7 @@ createSensitivityPlot(delta_sd_results_avg, originalResults_avg)
 
 ## 7. Bonus 2: HonestDiD + Callaway & Sant'Anna
 
-*R Instructions:*
-
-Look at the instructions [here](https://github.com/pedrohcgs/CS_RR) for running an event-study using Callaway and Sant'Anna and passing the results to the HonestDiD package for sensitivity analysis. Create a Callaway and Sant'Anna event-study using the full Medicaid data, and then apply the HonestDiD sensitivity. [Hint: I recommend using `min_e = -5` and `max_e = 5` in the `aggte` command, since the earlier pre-trends coefficients are very noisy.]
+Look at the instructions [here](https://github.com/asheshrambachan/HonestDiD#staggered-timing) for running an event-study using Callaway and Sant'Anna and passing the results to the HonestDiD package for sensitivity analysis. Create a Callaway and Sant'Anna event-study using the full Medicaid data, and then apply the HonestDiD sensitivity. [Hint: I recommend using `min_e = -5` and `max_e = 5` in the `aggte` command, since the earlier pre-trends coefficients are very noisy.]
 
 ```{r, cache = TRUE}
 
