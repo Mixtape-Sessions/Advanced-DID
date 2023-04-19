@@ -104,8 +104,9 @@
 % Button 
 \setbeamercolor{button}{bg = accent}
 
-% Remove navigation symbols
+% Footnotes in Navigation Symbols
 \setbeamertemplate{navigation symbols}{}
+\addtobeamertemplate{navigation symbols}{}{\hspace{1em}\usebeamerfont{footline} \alice{\insertframenumber/\inserttotalframenumber}}
 
 % Table and Figure captions
 \setbeamercolor{caption}{fg=jet!70!white}
