@@ -65,9 +65,9 @@
 		I will focus on the latter two, (somewhat selfishly) focusing mainly on my own work
 		\begin{wideitemize}
 			\item
-			Roth (Forthcoming, ``Pre-test with Caution: Event-study Estimates After Testing for Parallel Trends") 
+			Roth (2022 AER:I, ``Pre-test with Caution: Event-study Estimates After Testing for Parallel Trends") 
 			\item
-			Rambachan and Roth (2022, ``A More Credible Approach to Parallel Trends'') 
+			Rambachan and Roth (Forthcoming RESTUD, ``A More Credible Approach to Parallel Trends'') 
 		\end{wideitemize}
 		
 		
@@ -149,7 +149,7 @@
 	\begin{wideitemize}
 		
 		\item
-		Roth (forthcoming): simulations calibrated to papers published in \textit{AER}, \textit{AEJ: Applied}, and \textit{AEJ: Policy} between 2014 and mid-2018  
+		Roth (2022): simulations calibrated to papers published in \textit{AER}, \textit{AEJ: Applied}, and \textit{AEJ: Policy} between 2014 and mid-2018  
 		\begin{itemize}
 			\item
 			      70 total papers contain an event-study plot; focus on 12 w/available data
@@ -197,7 +197,7 @@
 		          
     \bigskip
 		\item
-    No causal effect of treatment: $\tau = 0$
+    No causal effect of treatment: $Y_{it}(0) = Y_{it}(1)$ in all periods
 		          
     \bigskip
 		\item
@@ -206,30 +206,17 @@
     \begin{itemize}
       {\normalsize
         \item
-        Control group mean in period $t$: $\mu_t^C = 0 $
+        Control group mean in period $t$: $E[ Y_{it}(0) \mid \text{Control group} ] = 0 $
 		      		            
         \item
-        Treatment group mean in period $t$: $\mu_t^T = \delta t$
+        Treatment group mean in period $t$: $E[ Y_{it}(0) \mid \text{Treated group} ] = \delta \cdot t$
       }
     \end{itemize}
-		          
-    \bigskip
-		          
-		          
-		\item
-    Realized outcomes:
-    \begin{itemize}
-      {\normalsize
-        \item
-        $\bar{Y}_t^C = \mu_t^C + \epsilon_t^C$
-        \medskip
-        \item
-        $\bar{Y}_t^T =  \mu_t^T + \epsilon_t^T $
-        \medskip
-        \item
-        Independent normal errors: $\epsilon \sim \normnot{0}{\sigma^2 I}$
-      }
-    \end{itemize}
+	\medskip		          
+  
+			\item
+		Simulate from this model with $Y_{it}$ equal to the group mean plus independent normal errors
+      
 		      
 	\end{itemize}
 \end{frame}
@@ -305,10 +292,10 @@
 	\textbf{What Can We Do About It?}
 	\begin{enumerate}
 		\item 
-		      Diagnostics of power and distortions from pre-testing (Roth, Forthcoming, ``Pre-Test with Caution..."). See \texttt{pretrends} package. \hyperlink{power_analysis}{\beamerbutton{Details}}
+		      Diagnostics of power and distortions from pre-testing (Roth, 2022, ``Pre-Test with Caution..."). See \texttt{pretrends} package. \hyperlink{power_analysis}{\beamerbutton{Details}}
 		          
 		\item
-		      Formal sensitivity analysis that avoids pre-testing (Rambachan and Roth, ``A More Credible Approach...''). See \texttt{HonestDiD} package.
+		      Formal sensitivity analysis that avoids pre-testing (Rambachan and Roth, Forthcoming, ``A More Credible Approach...''). See \texttt{HonestDiD} package.
 		          
 	\end{enumerate}
 	

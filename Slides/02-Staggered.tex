@@ -108,7 +108,7 @@
     \pause
     \vspace{-3mm}
     \item
-    Bad news: if treatment effects are not constant across time/units, then $\beta$ may put negative weights on treatment effects for some units and time periods
+    Bad news: if treatment effects are heterogeneous, then $\beta$ may put negative weights on treatment effects for some units and time periods
     \begin{itemize}
       \item
             E.g., if treatment effect depends on time since treatment, $Y_{it}(t-r) - Y_{it}(\infty) = \tau_{r}$, then some $\tau_r$s may get negative weight
@@ -160,6 +160,29 @@
     \item
     With multiple periods/staggered timing, $\hat\beta$ includes both this type of comparisons and clean comparisons
   \end{wideitemize}
+\end{frame}
+
+\begin{frame}{Second Intuition for Negative Weights}
+	\begin{wideitemize}
+		\item
+		The Frisch-Waugh-Lovell theorem says that we can obtain the coefficient $\beta$ in 	
+		$Y_{it} = \alpha_i + \phi_t + D_{it} \beta  + \epsilon_{it}$ by the following two-step procedure. 
+		
+		\item
+		First, regress the treatment indicator $D_{it}$ on the FEs (a linear probability model): $D_{it} = \tilde{\alpha}_i + \tilde{\phi}_t + \tilde{\epsilon_{it}} $
+		
+		\item
+		
+		\noindent Then run a univariate regression of $Y_{it}$ on $D_{it}-\hat{D}_{it}$ to obtain $\beta$.
+		
+		\begin{itemize}
+			\item 
+			Thus, $\beta = \frac{Cov( Y_{it}, D_{it} - \hat{D}_{it} )}{ Var(D_{it} - \hat{D}_{it})  } =  \frac{E( Y_{it} (D_{it} - \hat{D}_{it})) }{ Var(D_{it} - \hat{D}_{it})  }$
+		\end{itemize}
+		
+		\item
+		However, it's well known that the linear probability model for $D_{it}$ may have predictions outside the unit interval. If $\hat{D}_{it}>1$ even though unit $i$ is treated in period $t$, then $D_{it}- \hat{D}_{it} <0$, and thus $Y_{it}$ gets negative weight. 
+	\end{wideitemize}
 \end{frame}
 
 \begin{frame}{Not just negative but weird...}
