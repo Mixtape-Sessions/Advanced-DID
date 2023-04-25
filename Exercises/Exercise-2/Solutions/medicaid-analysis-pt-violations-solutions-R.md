@@ -48,10 +48,14 @@ df <- read_dta("https://raw.githubusercontent.com/Mixtape-Sessions/Advanced-DID/
 
 # Keep years before 2016. Drop the 2016 cohort
 df_nonstaggered <- df %>%
-  filter(year < 2016 & (is.na(yexp2) | yexp2 != 2015))
+  filter(year <= 2015) %>%
+  filter(is.na(yexp2) | yexp2 < 2015)
 
 # Create a treatment dummy
-df_nonstaggered$D <- as.numeric(df_nonstaggered$yexp2 == 2014)
+df_nonstaggered <- df_nonstaggered %>%
+  mutate(
+    D = ifelse(is.na(yexp2), 0, 1)
+  )
 ```
 
 Start by running the simple TWFE regression
@@ -70,11 +74,6 @@ twfe_results <- feols(dins ~ i(year, D, ref = 2013) | stfips + year,
   cluster = "stfips",
   data = df_nonstaggered
 )
-```
-
-    ## NOTE: 128 observations removed because of NA values (RHS: 128).
-
-``` r
 twfe_results_summary <- summary(twfe_results)
 iplot(twfe_results)
 ```

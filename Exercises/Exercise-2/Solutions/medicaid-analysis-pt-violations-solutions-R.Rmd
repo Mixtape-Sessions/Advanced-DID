@@ -41,10 +41,14 @@ df <- read_dta("https://raw.githubusercontent.com/Mixtape-Sessions/Advanced-DID/
 
 # Keep years before 2016. Drop the 2016 cohort
 df_nonstaggered <- df %>%
-  filter(year < 2016 & (is.na(yexp2) | yexp2 != 2015))
+  filter(year <= 2015) %>%
+  filter(is.na(yexp2) | yexp2 < 2015)
 
 # Create a treatment dummy
-df_nonstaggered$D <- as.numeric(df_nonstaggered$yexp2 == 2014)
+df_nonstaggered <- df_nonstaggered %>%
+  mutate(
+    D = ifelse(is.na(yexp2), 0, 1)
+  )
 ```
 
 Start by running the simple TWFE regression $Y_{it} = \alpha_i + \lambda_t + \sum_{s \neq 2013} 1[s=t] \times D_i \times \beta_s + u_{it} ,$ where $D_i =1$ if a unit is first treated in 2014 and 0 otherwise. Note that since we do not have staggered treatment, the coefficients $\hat{\beta}_s$ are equivalent to DiD estimates between the treated and non-treated units between period $s$ and 2013. I recommend using the `feols` command from the `fixest` package in R and `reghdfe` command in Stata; although feel free to use your favorite regression command. Don't forget to cluster your SEs at the state level. 
