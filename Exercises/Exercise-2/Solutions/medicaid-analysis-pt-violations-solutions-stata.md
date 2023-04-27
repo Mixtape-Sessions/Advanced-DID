@@ -152,16 +152,24 @@ to use the results from the previous `honestdid` call (for speed’s
 sake).
 
 ``` stata
-honestdid, cached coefplot xtitle("M") ytitle("95% Robust CI")
+honestdid, pre(1/5) post(7/8) mvec(0.5(0.5)2) coefplot xtitle("M") ytitle("95% Robust CI")
 ```
 
-    '.options.relativeMagnitudes' found where almost anything else expected
-    r(3000);
+    |    M    |   lb   |   ub   |
+    | ------- | ------ | ------ |
+    |       . |  0.029 |  0.064 | (Original)
+    |  0.5000 |  0.024 |  0.067 | 
+    |  1.0000 |  0.017 |  0.072 | 
+    |  1.5000 |  0.008 |  0.080 | 
+    |  2.0000 | -0.001 |  0.088 | 
+    (method = C-LF, Delta = DeltaRM, alpha = 0.050)
 
-    end of do-file
-    r(3000);
-
-    Error in knitr::include_graphics("sensitivity_1.svg"): Cannot find the file(s): "sensitivity_1.svg"
+<figure>
+<img src="sensitivity_1.svg"
+alt="Sensitivity Analysis using Assumptions on the Relative Magnitude" />
+<figcaption aria-hidden="true">Sensitivity Analysis using Assumptions on
+the Relative Magnitude</figcaption>
+</figure>
 
 ## 5. Sensitivity Analysis Using Smoothness Bounds
 

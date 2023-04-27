@@ -1,8 +1,8 @@
 ---
 title: "Mixtape-Exercises-Violations of PT"
 output: 
-  github_document: default
   html_document: default
+  github_document: default
 date: '2022-06-23'
 ---
 
@@ -79,7 +79,7 @@ Look at the results of the sensitivity analysis you created. For each value of $
 We can also visualize the sensitivity analysis using the `honestdid` command by adding the `coefplot` option. You can use the `cached` option to use the results from the previous `honestdid` call (for speed's sake). 
 
 ```{stata sensitivity-relative-magnitudes-plot, echo = 1}
-honestdid, cached coefplot xtitle("M") ytitle("95% Robust CI")
+honestdid, pre(1/5) post(7/8) mvec(0.5(0.5)2) coefplot xtitle("M") ytitle("95% Robust CI")
 quietly graph export sensitivity_1.svg, replace
 ```
 
