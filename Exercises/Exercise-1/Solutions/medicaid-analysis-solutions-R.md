@@ -41,23 +41,9 @@ respectively, to load the relevant dataset.
 
 ``` r
 library(dplyr)
-```
-
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
-``` r
 library(did)
 library(haven)
-df <- read_dta("https://raw.githubusercontent.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Data/ehec_data.dta")
+df <- haven::read_dta("https://raw.githubusercontent.com/Mixtape-Sessions/Advanced-DID/main/Exercises/Data/ehec_data.dta")
 ```
 
 2.  **Estimate the ATT(g,t) using Callaway and Sant’Anna’s estimator**
@@ -105,61 +91,61 @@ summary(cs_results)
     ## 
     ## Group-Time Average Treatment Effects:
     ##  Group Time ATT(g,t) Std. Error [95% Simult.  Conf. Band]  
-    ##   2014 2009  -0.0065     0.0053       -0.0436      0.0306  
-    ##   2014 2010   0.0111     0.0064       -0.0341      0.0563  
-    ##   2014 2011   0.0015     0.0058       -0.0391      0.0421  
-    ##   2014 2012   0.0016     0.0063       -0.0425      0.0457  
-    ##   2014 2013   0.0009     0.0073       -0.0505      0.0524  
-    ##   2014 2014   0.0467     0.0093       -0.0188      0.1122  
-    ##   2014 2015   0.0692     0.0098        0.0002      0.1382 *
-    ##   2014 2016   0.0785     0.0106        0.0043      0.1527 *
-    ##   2014 2017   0.0725     0.0112       -0.0064      0.1514  
-    ##   2014 2018   0.0738     0.0126       -0.0146      0.1622  
-    ##   2014 2019   0.0803     0.0107        0.0052      0.1554 *
-    ##   2015 2009   0.0071     0.0119       -0.0762      0.0904  
-    ##   2015 2010  -0.0245     0.0109       -0.1009      0.0519  
-    ##   2015 2011  -0.0027     0.0057       -0.0426      0.0373  
-    ##   2015 2012   0.0003     0.0038       -0.0262      0.0268  
-    ##   2015 2013  -0.0100     0.0108       -0.0856      0.0656  
-    ##   2015 2014  -0.0020     0.0072       -0.0529      0.0488  
-    ##   2015 2015   0.0491     0.0238       -0.1184      0.2166  
-    ##   2015 2016   0.0526     0.0157       -0.0575      0.1627  
-    ##   2015 2017   0.0682     0.0108       -0.0080      0.1443  
-    ##   2015 2018   0.0663     0.0130       -0.0253      0.1579  
-    ##   2015 2019   0.0738     0.0122       -0.0119      0.1595  
-    ##   2016 2009   0.0022     0.0061       -0.0404      0.0448  
-    ##   2016 2010   0.0511     0.0081       -0.0058      0.1079  
-    ##   2016 2011  -0.0262     0.0079       -0.0815      0.0292  
-    ##   2016 2012  -0.0276     0.0089       -0.0899      0.0348  
-    ##   2016 2013   0.0440     0.0091       -0.0201      0.1081  
-    ##   2016 2014  -0.0322     0.0119       -0.1157      0.0514  
-    ##   2016 2015   0.0409     0.0175       -0.0819      0.1636  
-    ##   2016 2016   0.0317     0.0101       -0.0391      0.1025  
-    ##   2016 2017   0.0368     0.0085       -0.0226      0.0962  
-    ##   2016 2018   0.0645     0.0131       -0.0275      0.1565  
-    ##   2016 2019   0.0825     0.0094        0.0165      0.1485 *
-    ##   2017 2009   0.0102     0.0026       -0.0080      0.0285  
-    ##   2017 2010  -0.0161     0.0035       -0.0409      0.0086  
-    ##   2017 2011   0.0019     0.0030       -0.0193      0.0230  
-    ##   2017 2012   0.0177     0.0034       -0.0060      0.0414  
-    ##   2017 2013   0.0012     0.0038       -0.0256      0.0280  
-    ##   2017 2014  -0.0063     0.0061       -0.0490      0.0364  
-    ##   2017 2015   0.0036     0.0071       -0.0462      0.0534  
-    ##   2017 2016   0.0398     0.0060       -0.0026      0.0823  
-    ##   2017 2017   0.0471     0.0054        0.0089      0.0853 *
-    ##   2017 2018   0.0681     0.0045        0.0365      0.0996 *
-    ##   2017 2019   0.0650     0.0039        0.0376      0.0924 *
-    ##   2019 2009   0.0189     0.0053       -0.0187      0.0565  
-    ##   2019 2010  -0.0269     0.0090       -0.0904      0.0366  
-    ##   2019 2011  -0.0244     0.0030       -0.0458     -0.0030 *
-    ##   2019 2012   0.0024     0.0171       -0.1178      0.1225  
-    ##   2019 2013   0.0129     0.0073       -0.0385      0.0644  
-    ##   2019 2014   0.0003     0.0071       -0.0493      0.0500  
-    ##   2019 2015  -0.0108     0.0092       -0.0753      0.0537  
-    ##   2019 2016  -0.0182     0.0233       -0.1822      0.1457  
-    ##   2019 2017   0.0093     0.0185       -0.1206      0.1392  
-    ##   2019 2018   0.0062     0.0066       -0.0400      0.0524  
-    ##   2019 2019   0.0365     0.0057       -0.0037      0.0768  
+    ##   2014 2009  -0.0065     0.0048       -0.0199      0.0069  
+    ##   2014 2010   0.0111     0.0063       -0.0065      0.0288  
+    ##   2014 2011   0.0015     0.0058       -0.0146      0.0176  
+    ##   2014 2012   0.0016     0.0062       -0.0158      0.0191  
+    ##   2014 2013   0.0009     0.0072       -0.0193      0.0212  
+    ##   2014 2014   0.0467     0.0086        0.0226      0.0708 *
+    ##   2014 2015   0.0692     0.0099        0.0414      0.0970 *
+    ##   2014 2016   0.0785     0.0105        0.0493      0.1078 *
+    ##   2014 2017   0.0725     0.0105        0.0433      0.1017 *
+    ##   2014 2018   0.0738     0.0127        0.0383      0.1094 *
+    ##   2014 2019   0.0803     0.0103        0.0516      0.1090 *
+    ##   2015 2009   0.0071     0.0141       -0.0322      0.0464  
+    ##   2015 2010  -0.0245     0.0118       -0.0575      0.0086  
+    ##   2015 2011  -0.0027     0.0062       -0.0199      0.0146  
+    ##   2015 2012   0.0003     0.0035       -0.0094      0.0100  
+    ##   2015 2013  -0.0100     0.0112       -0.0413      0.0214  
+    ##   2015 2014  -0.0020     0.0074       -0.0228      0.0187  
+    ##   2015 2015   0.0491     0.0259       -0.0234      0.1216  
+    ##   2015 2016   0.0526     0.0164        0.0068      0.0985 *
+    ##   2015 2017   0.0682     0.0107        0.0382      0.0981 *
+    ##   2015 2018   0.0663     0.0134        0.0288      0.1038 *
+    ##   2015 2019   0.0738     0.0127        0.0384      0.1092 *
+    ##   2016 2009   0.0022     0.0061       -0.0150      0.0194  
+    ##   2016 2010   0.0511     0.0080        0.0287      0.0734 *
+    ##   2016 2011  -0.0262     0.0382       -0.1329      0.0806  
+    ##   2016 2012  -0.0276     0.0439       -0.1503      0.0952  
+    ##   2016 2013   0.0440     0.0439       -0.0787      0.1667  
+    ##   2016 2014  -0.0322     0.0467       -0.1629      0.0985  
+    ##   2016 2015   0.0409     0.0167       -0.0058      0.0875  
+    ##   2016 2016   0.0317     0.0102        0.0032      0.0602 *
+    ##   2016 2017   0.0368     0.0085        0.0131      0.0605 *
+    ##   2016 2018   0.0645     0.0130        0.0282      0.1008 *
+    ##   2016 2019   0.0825     0.0095        0.0558      0.1092 *
+    ##   2017 2009   0.0102     0.0025        0.0032      0.0172 *
+    ##   2017 2010  -0.0161     0.0035       -0.0258     -0.0065 *
+    ##   2017 2011   0.0019     0.0029       -0.0064      0.0101  
+    ##   2017 2012   0.0177     0.0032        0.0089      0.0265 *
+    ##   2017 2013   0.0012     0.0037       -0.0091      0.0116  
+    ##   2017 2014  -0.0063     0.0061       -0.0234      0.0108  
+    ##   2017 2015   0.0036     0.0068       -0.0153      0.0226  
+    ##   2017 2016   0.0398     0.0057        0.0240      0.0557 *
+    ##   2017 2017   0.0471     0.0055        0.0318      0.0624 *
+    ##   2017 2018   0.0681     0.0046        0.0551      0.0810 *
+    ##   2017 2019   0.0650     0.0039        0.0540      0.0760 *
+    ##   2019 2009   0.0189     0.0049        0.0053      0.0325 *
+    ##   2019 2010  -0.0269     0.0085       -0.0506     -0.0032 *
+    ##   2019 2011  -0.0244     0.0029       -0.0324     -0.0164 *
+    ##   2019 2012   0.0024     0.0180       -0.0480      0.0527  
+    ##   2019 2013   0.0129     0.0071       -0.0068      0.0327  
+    ##   2019 2014   0.0003     0.0074       -0.0204      0.0210  
+    ##   2019 2015  -0.0108     0.0088       -0.0354      0.0137  
+    ##   2019 2016  -0.0182     0.0241       -0.0856      0.0491  
+    ##   2019 2017   0.0093     0.0196       -0.0455      0.0641  
+    ##   2019 2018   0.0062     0.0065       -0.0121      0.0245  
+    ##   2019 2019   0.0365     0.0051        0.0222      0.0509 *
     ## ---
     ## Signif. codes: `*' confidence band does not cover 0
     ## 
@@ -195,19 +181,18 @@ ytable <-
   summarise(dins = mean(dins))
 ```
 
-    ## `summarise()` has grouped output by 'treated'. You can override using the
-    ## `.groups` argument.
+    ## `summarise()` has grouped output by 'treated'. You can override using the `.groups` argument.
 
 ``` r
 with(ytable, {
-  (dins[year == 2014 & treated == 1] - dins[year == 2013 & treated == 1]) - 
-  (dins[year == 2014 & treated == 0] - dins[year == 2013 & treated == 0])
+  (dins[year == 2014 & treated == 1] - dins[year == 2013 & treated == 1]) -
+    (dins[year == 2014 & treated == 0] - dins[year == 2013 & treated == 0])
 })
 ```
 
     ## [1] 0.04670243
 
-4.  **Aggregate the *A**T**T*(*g*,*t*)**
+4.  **Aggregate the $ATT(g,t)$**
 
 We are often interested in a summary of the ATT(g,t)’s.
 
@@ -248,7 +233,7 @@ aggte(cs_results, type = "simple")
     ## 
     ## 
     ##    ATT    Std. Error     [ 95%  Conf. Int.]  
-    ##  0.068        0.0081      0.052      0.0839 *
+    ##  0.068        0.0077     0.0529      0.0831 *
     ## 
     ## 
     ## ---
@@ -261,10 +246,12 @@ aggte(cs_results, type = "simple")
 
 Estimate the OLS regression specification
 
-*Y*<sub>*i**t*</sub> = *α*<sub>*i*</sub> + *λ*<sub>*t*</sub> + *D*<sub>*i**t*</sub>*β* + *ϵ*<sub>*i**t*</sub>,
+$$
+Y_{it} = \alpha_i + \lambda_t + D_{it} \beta +\epsilon_{it},
+$$
 
-where *D*<sub>*i**t*</sub> is an indicator for whether unit *i* was
-treated in period *t*. How does the estimate for *β̂* compare to the
+where $D_{it}$ is an indicator for whether unit $i$ was treated in
+period $t$. How does the estimate for $\hat{\beta}$ compare to the
 simple weighted average you got from Callaway and Sant’Anna? (Don’t
 forget to cluster your SEs at the state level!)
 
@@ -378,7 +365,7 @@ aggte(cs_results, type = "simple")
     ## 
     ## 
     ##     ATT    Std. Error     [ 95%  Conf. Int.]  
-    ##  0.0728        0.0096     0.0541      0.0916 *
+    ##  0.0728        0.0101      0.053      0.0927 *
     ## 
     ## 
     ## ---
@@ -498,7 +485,7 @@ aggte(cs_results, type = "simple")
     ## 
     ## 
     ##     ATT    Std. Error     [ 95%  Conf. Int.]  
-    ##  0.0917        0.0096     0.0729      0.1105 *
+    ##  0.0917        0.0097     0.0727      0.1106 *
     ## 
     ## 
     ## ---
@@ -520,7 +507,7 @@ ggdid(es)
 
 ``` r
 # Re-run TWFE dropping the never-treated units and adding dynamic TEs
-twfe_static <- feols(dins ~ postTreated | stfips + year,
+twfe_static <- feols(dins2 ~ postTreated | stfips + year,
   data = df %>%
     filter(!is.na(yexp2)) %>%
     mutate(relativeTime = year - yexp2) %>%
@@ -530,19 +517,19 @@ twfe_static <- feols(dins ~ postTreated | stfips + year,
 summary(twfe_static)
 ```
 
-    ## OLS estimation, Dep. Var.: dins
+    ## OLS estimation, Dep. Var.: dins2
     ## Observations: 360 
     ## Fixed-effects: stfips: 30,  year: 12
     ## Standard-errors: Clustered (stfips) 
     ##                 Estimate Std. Error t value   Pr(>|t|)    
-    ## postTreatedTRUE 0.062817   0.007653  8.2084 4.7423e-09 ***
+    ## postTreatedTRUE 0.066663   0.010135 6.57752 3.3102e-07 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## RMSE: 0.022654     Adj. R2: 0.934671
-    ##                  Within R2: 0.200545
+    ## RMSE: 0.024051     Adj. R2: 0.941205
+    ##                  Within R2: 0.200399
 
 ``` r
-bacon(dins ~ postTreated,
+bacon(dins2 ~ postTreated,
   data = df %>%
     filter(!is.na(yexp2)) %>%
     mutate(relativeTime = year - yexp2) %>%
@@ -553,27 +540,27 @@ bacon(dins ~ postTreated,
 ```
 
     ##                       type  weight avg_est
-    ## 1 Earlier vs Later Treated 0.71902 0.06983
-    ## 2 Later vs Earlier Treated 0.28098 0.04486
+    ## 1 Earlier vs Later Treated 0.71902 0.08196
+    ## 2 Later vs Earlier Treated 0.28098 0.02751
 
-    ##    treated untreated    estimate       weight                     type
-    ## 2     2014      2016 0.050191048 0.1248817408 Earlier vs Later Treated
-    ## 3     2015      2016 0.004156228 0.0099337748 Earlier vs Later Treated
-    ## 4     2017      2016 0.031975667 0.0014191107 Later vs Earlier Treated
-    ## 5     2019      2016 0.005429020 0.0028382214 Later vs Earlier Treated
-    ## 6     2016      2014 0.054292531 0.0832544939 Later vs Earlier Treated
-    ## 8     2015      2014 0.030656579 0.0780510880 Later vs Earlier Treated
-    ## 9     2017      2014 0.077060485 0.0468306528 Later vs Earlier Treated
-    ## 10    2019      2014 0.025483405 0.0520340587 Later vs Earlier Treated
-    ## 11    2016      2015 0.041763062 0.0056764428 Later vs Earlier Treated
-    ## 12    2014      2015 0.066569262 0.0936613056 Earlier vs Later Treated
-    ## 14    2017      2015 0.063993540 0.0042573321 Later vs Earlier Treated
-    ## 15    2019      2015 0.027470457 0.0056764428 Later vs Earlier Treated
-    ## 16    2016      2017 0.014518637 0.0037842952 Earlier vs Later Treated
-    ## 17    2014      2017 0.048755447 0.0936613056 Earlier vs Later Treated
-    ## 18    2015      2017 0.008627171 0.0099337748 Earlier vs Later Treated
-    ## 20    2019      2017 0.033588931 0.0009460738 Later vs Earlier Treated
-    ## 21    2016      2019 0.090774537 0.0227057711 Earlier vs Later Treated
-    ## 22    2014      2019 0.088170864 0.3122043519 Earlier vs Later Treated
-    ## 23    2015      2019 0.061097391 0.0397350993 Earlier vs Later Treated
-    ## 24    2017      2019 0.110885473 0.0085146641 Earlier vs Later Treated
+    ##    treated untreated     estimate       weight                     type
+    ## 2     2014      2016  0.055191048 0.1248817408 Earlier vs Later Treated
+    ## 3     2015      2016  0.004156228 0.0099337748 Earlier vs Later Treated
+    ## 4     2017      2016  0.021975667 0.0014191107 Later vs Earlier Treated
+    ## 5     2019      2016 -0.014570980 0.0028382214 Later vs Earlier Treated
+    ## 6     2016      2014  0.039292531 0.0832544939 Later vs Earlier Treated
+    ## 8     2015      2014  0.020656579 0.0780510880 Later vs Earlier Treated
+    ## 9     2017      2014  0.057060485 0.0468306528 Later vs Earlier Treated
+    ## 10    2019      2014 -0.004516595 0.0520340587 Later vs Earlier Treated
+    ## 11    2016      2015  0.031763062 0.0056764428 Later vs Earlier Treated
+    ## 12    2014      2015  0.066569262 0.0936613056 Earlier vs Later Treated
+    ## 14    2017      2015  0.048993540 0.0042573321 Later vs Earlier Treated
+    ## 15    2019      2015  0.002470457 0.0056764428 Later vs Earlier Treated
+    ## 16    2016      2017  0.014518637 0.0037842952 Earlier vs Later Treated
+    ## 17    2014      2017  0.058755447 0.0936613056 Earlier vs Later Treated
+    ## 18    2015      2017  0.013627171 0.0099337748 Earlier vs Later Treated
+    ## 20    2019      2017  0.018588931 0.0009460738 Later vs Earlier Treated
+    ## 21    2016      2019  0.100774537 0.0227057711 Earlier vs Later Treated
+    ## 22    2014      2019  0.108170864 0.3122043519 Earlier vs Later Treated
+    ## 23    2015      2019  0.076097391 0.0397350993 Earlier vs Later Treated
+    ## 24    2017      2019  0.115885473 0.0085146641 Earlier vs Later Treated

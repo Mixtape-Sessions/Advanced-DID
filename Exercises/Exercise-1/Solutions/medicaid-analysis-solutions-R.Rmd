@@ -1,8 +1,8 @@
 ---
 title: "Medicaid Analysis Solution in R"
 output:
-  html_document: default
   github_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -216,7 +216,7 @@ ggdid(es)
 
 ```{r}
 # Re-run TWFE dropping the never-treated units and adding dynamic TEs
-twfe_static <- feols(dins ~ postTreated | stfips + year,
+twfe_static <- feols(dins2 ~ postTreated | stfips + year,
   data = df %>%
     filter(!is.na(yexp2)) %>%
     mutate(relativeTime = year - yexp2) %>%
@@ -227,7 +227,7 @@ summary(twfe_static)
 ```
 
 ```{r}
-bacon(dins ~ postTreated,
+bacon(dins2 ~ postTreated,
   data = df %>%
     filter(!is.na(yexp2)) %>%
     mutate(relativeTime = year - yexp2) %>%
