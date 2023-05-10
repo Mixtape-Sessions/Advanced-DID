@@ -50,21 +50,23 @@ net install csdid, from ("https://raw.githubusercontent.com/friosavila/csdid_drd
 
 For simplicity, we will first focus on assessing sensitivity to
 violations of parallel trends in a non-staggered DiD. Load the same
-dataset on Medicaid as in the previous exercise. Restrict the sample to
-the years 2015 and earlier, drop the small number of units who are first
-treated in 2015. We are now left with a panel dataset where some units
-are first treated in 2014 and the remaining units are not treated during
-the sample period.
+[dataset](https://github.com/Mixtape-Sessions/Advanced-DID/tree/main/Exercises/Exercise-1#data)
+on Medicaid as in the previous exercise. For simplicity, restrict the
+sample to the years 2015 and earlier, drop the the three states who
+expand Medicaid in 2015 (this ensures states are either first-treated in
+2014 or never-treated over our sample). We are now left with a panel
+dataset where some units are first treated in 2014 and the remaining
+units are not treated during the sample period.
 
 Start by running the simple TWFE regression
-$Y_{it} = \alpha_i + \lambda_t + \sum_{s \neq 2013} 1[s=t] \times D_i \times \beta_s + u_{it} ,$
-where $D_i =1$ if a unit is first treated in 2014 and 0 otherwise. Note
-that since we do not have staggered treatment, the coefficients
-$\hat{\beta}_s$ are equivalent to DiD estimates between the treated and
-non-treated units between period $s$ and 2013. I recommend using the
-`feols` command from the `fixest` package in R and `reghdfe` command in
-Stata; although feel free to use your favorite regression command. Don’t
-forget to cluster your SEs at the state level.
+*Y*<sub>*i**t*</sub> = *α*<sub>*i*</sub> + *λ*<sub>*t*</sub> + ∑<sub>*s* ≠ 2013</sub>1\[*s*=*t*\] × *D*<sub>*i*</sub> × *β*<sub>*s*</sub> + *u*<sub>*i**t*</sub>,
+where *D*<sub>*i*</sub> = 1 if a unit is first treated in 2014 and 0
+otherwise. Note that since we do not have staggered treatment, the
+coefficients *β̂*<sub>*s*</sub> are equivalent to DiD estimates between
+the treated and non-treated units between period *s* and 2013. I
+recommend using the `feols` command from the `fixest` package in R and
+`reghdfe` command in Stata; although feel free to use your favorite
+regression command. Don’t forget to cluster your SEs at the state level.
 
 ## 2. Extract the coefficients and standard error from the baseline spec
 
@@ -89,8 +91,8 @@ We are now ready to apply the HonestDiD package to do sensitivity
 analysis. Suppose we’re interested in assessing the sensitivity of the
 estimate for 2014 (the first year of treatment). We will use the
 “relative magnitudes” restriction that allows the violation of parallel
-trends between 2013 and 2014 to be no more than $\bar{M}$ times larger
-than the worst pre-treatment violation of parallel trends.
+trends between 2013 and 2014 to be no more than *M̄* times larger than
+the worst pre-treatment violation of parallel trends.
 
 *R instructions:*
 
@@ -99,32 +101,32 @@ the `createSensitivityResults_relativeMagnitudes` function. You will
 need to input the parameters `betahat` and `sigma` calculated above,
 `numPrePeriods` (in this case, 5), and `numPostPeriods` (in this case,
 2). I suggest that you also give the optional parameter
-`Mbarvec = seq(0,2,by=0.5)` to specify the values of $\bar{M}$ you wish
-to use. (Note: it may take a couple of minutes to calculate the
-sensitivity results.)
+`Mbarvec = seq(0,2,by=0.5)` to specify the values of *M̄* you wish to
+use. (Note: it may take a couple of minutes to calculate the sensitivity
+results.)
 
 Look at the results of the sensitivity analysis you created. For each
-value of $\bar{M}$, it gives a robust confidence interval that allows
-for violations of parallel trends between 2013 and 2014 to be no more
-than $\bar{M}$ times the max pre-treatment violation of parallel trends.
-What is the “breakdown” value of $\bar{M}$ at which we can no longer
-reject a null effect? Interpret this parameter.
+value of *M̄*, it gives a robust confidence interval that allows for
+violations of parallel trends between 2013 and 2014 to be no more than
+*M̄* times the max pre-treatment violation of parallel trends. What is
+the “breakdown” value of *M̄* at which we can no longer reject a null
+effect? Interpret this parameter.
 
 *Stata instructions:*
 
 To create a sensitivity analysis, use the `honest_did` function. You
 will need to pass the options `pre` and `post` to specify the pre and
 post treatment estimates. I suggest that you also give the optional
-parameter `mvec` a value of `0.5(0.5)2` to specify the values of
-$\bar{M}$ you wish to use. (Note: it may take a couple of minutes to
-calculate the sensitivity results.)
+parameter `mvec` a value of `0.5(0.5)2` to specify the values of *M̄* you
+wish to use. (Note: it may take a couple of minutes to calculate the
+sensitivity results.)
 
 Look at the results of the sensitivity analysis you created. For each
-value of $\bar{M}$, it gives a robust confidence interval that allows
-for violations of parallel trends between 2013 and 2014 to be no more
-than $\bar{M}$ times the max pre-treatment violation of parallel trends.
-What is the “breakdown” value of $\bar{M}$ at which we can no longer
-reject a null effect? Interpret this parameter.
+value of *M̄*, it gives a robust confidence interval that allows for
+violations of parallel trends between 2013 and 2014 to be no more than
+*M̄* times the max pre-treatment violation of parallel trends. What is
+the “breakdown” value of *M̄* at which we can no longer reject a null
+effect? Interpret this parameter.
 
 ## 4. Create a sensitivity analysis plot
 
@@ -153,8 +155,8 @@ parallel trends, we let treated units be on a different time-trend
 relative to untreated units. Rambachan and Roth consider a sensitivity
 analysis based on this idea – how much would the difference in trends
 need to differ from linearity to violate a particular result?
-Specifically, they introduce a parameter $M$ that says that the change
-in the slope of the trend can be no more than $M$ between consecutive
+Specifically, they introduce a parameter *M* that says that the change
+in the slope of the trend can be no more than *M* between consecutive
 periods.
 
 *R Instructions:*
@@ -164,7 +166,7 @@ using this smoothness bound. The inputs are similar to those for the
 previous analysis, except instead of inputting `Mbarvec`, set the
 parameter `Mvec = seq(from = 0, to = 0.05, by =0.01)`. (Note: as before
 it may take a couple of minutes for the sensitivity code to run.) What
-is the breakdown value of $M$ – that is, how non-linear would the
+is the breakdown value of *M* – that is, how non-linear would the
 difference in trends have to be for us not to reject a significant
 effect?
 
@@ -173,7 +175,7 @@ effect?
 To create a sensitivity analysis using smoothness bounds, add the
 `delta(sd)` option to your `honestdid` function call. (Note: as before
 it may take a couple of minutes for the sensitivity code to run.) What
-is the breakdown value of $M$ – that is, how non-linear would the
+is the breakdown value of *M* – that is, how non-linear would the
 difference in trends have to be for us not to reject a significant
 effect?
 
@@ -184,11 +186,10 @@ effect?
 Re-run the sensitivity analyses above using the option
 `l_vec = c(0.5,0.5)` to do sensitivity on the `average` effect between
 2014 and 2015 rather than the effect for 2014 (`l_vec = c(0,1)` would
-give inference on the 2015 effect). How do the breakdown values of
-$\bar{M}$ and $M$ compare to those for the effect in 2014? \[Hint:
-breakdown values for longer-run effects often tend to be smaller, since
-this leaves more time for the groups’ trends to diverge from each
-other.\]
+give inference on the 2015 effect). How do the breakdown values of *M̄*
+and *M* compare to those for the effect in 2014? \[Hint: breakdown
+values for longer-run effects often tend to be smaller, since this
+leaves more time for the groups’ trends to diverge from each other.\]
 
 *Stata Instructions:*
 
@@ -197,8 +198,8 @@ sensitivity on the `average` effect between 2014 and 2015 rather than
 the effect for 2014. To do so, run the following
 `matrix l_vec = 0.5 \ 0.5` and then add `l_vec(l_vec)` to the
 `honestdid` call (`matrix l_vec = 0 \ 1` would give inference on the
-2015 effect). How do the breakdown values of $\bar{M}$ and $M$ compare
-to those for the effect in 2014? \[Hint: breakdown values for longer-run
+2015 effect). How do the breakdown values of *M̄* and *M* compare to
+those for the effect in 2014? \[Hint: breakdown values for longer-run
 effects often tend to be smaller, since this leaves more time for the
 groups’ trends to diverge from each other.\]
 
