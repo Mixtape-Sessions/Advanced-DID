@@ -5,7 +5,7 @@ This exercise will help you learn about the recent DiD literature on settings wi
 
 ## Package Setup 
 
-For R, you will need the following packages: `did`, `dplyr`, `fixest`, `bacondecomp`, `here`, and `haven`. For Stata, you will need `csdid`, `drdid`, `reghdfe`, and `ddtiming`.
+For R, you will need the following packages: `did`, `dplyr`, `fixest`, `bacondecomp`, `here`, and `haven`. For Stata, you will need `csdid`, `drdid`, `reghdfe`, and `ddtiming`. Note that `ddtiming` is not on SSC, but can installed with `net install ddtiming, from(https://tgoldring.com/code)`. 
 
 
 ## Data
