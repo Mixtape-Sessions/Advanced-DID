@@ -17,14 +17,14 @@ You can join the class Discord [here](https://discord.gg/euSHza8w)
 
 All times Eastern Time.
 
-- 9-10 **Preliminaries & The Canonical DiD Model**
-- 10-10:15 **Break**
-- 10:15-11:30 **Staggered treatment timing and heterogeneous treatment effects**
-- 11:30-12:30 **Coding Exercise**
+- 10-11 **Preliminaries & The Canonical DiD Model**
+- 11-11:15 **Break**
+- 11:15-12:30 **Staggered treatment timing and heterogeneous treatment effects**
 - 12:30-1 **Lunch break**
-- 1-2:15 **Violations of Parallel Trends**
-- 2:15-3:15 **Coding Exercise**
-- 3:15-4:15 **Open "Office Hour" for your DiD questions**
+- 1-2 **Coding Exercise**
+- 2-3:15 **Violations of Parallel Trends**
+- 3:15-4:15 **Coding Exercise**
+- 4:15-5 **Open "Office Hour" for your DiD questions**
 
 <details><summary><b>Preliminaries & The Canonical DiD Model</b></summary><br/>
 
