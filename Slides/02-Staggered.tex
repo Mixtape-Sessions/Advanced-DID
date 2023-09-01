@@ -77,7 +77,7 @@
     \item
     \textbf{Parallel trends:} Intuitively, says that if treatment hadn't happened, all ``adoption cohorts'' would have parallel average outcomes in all periods
 
-    $$ E[ Y_{it}(\infty) - Y_{i,t-1}(\infty) | G_i = g ] = E[ Y_{it}(\infty) - Y_{i,t-1}(\infty) | G_i = g' ] \text{ for all } g,g',t,t' $$
+    $$ E[ Y_{it}(\infty) - Y_{i,t-1}(\infty) | G_i = g ] = E[ Y_{it}(\infty) - Y_{i,t-1}(\infty) | G_i = g' ] \text{ for all } g,g',t$$
 
 
     Note: can impose slightly weaker versions (e.g. only require PT post-treatment)
@@ -147,7 +147,7 @@
     Consider the two period model, except suppose now that our two groups are \textbf{always-treated} units (treated in both periods) and \textbf{switchers} (treated only in period 2)
 
     \item
-    With two periods, the coefficient  $\beta$ from $ Y_{it} = \alpha_i + \phi_t + D_{it} \beta  + \epsilon_{it}$ is the same as from the first-differenced regression  $\Delta Y_i = \Delta D_i \beta + u_i$
+    With two periods, the coefficient  $\beta$ from $ Y_{it} = \alpha_i + \phi_t + D_{it} \beta  + \epsilon_{it}$ is the same as from the first-differenced regression  $\Delta Y_i = \alpha + \Delta D_i \beta + u_i$
    
    \item
    Observe that $\Delta D_i$ is one for switchers and zero for stayers. \\ That is, the stayers are the control group! Thus,
@@ -414,7 +414,7 @@
     In most cases, using the ``new'' DiD methods will not lead to a big change in your results (empirically, TE heterogeneity is not \textit{that} large in most cases)
     \begin{itemize}
       \item
-            The exceptions are cases where there are many periods with very few treated units -- this is when ``forbidden comparisons'' get the most weight
+            The exceptions are cases where there are periods where almost all units are treated -- this is when ``forbidden comparisons'' get the most weight
     \end{itemize}
 
     \pause

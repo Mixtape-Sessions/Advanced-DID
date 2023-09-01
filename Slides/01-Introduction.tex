@@ -225,8 +225,8 @@
 		\draw[->] (0,0) -- (2.5,0) node[right] {Time};
 		\draw (0,-0.1) -- (0,0.1);
 		\draw (2,-0.1) -- (2,0.1);
-		\node[below] at (0,-0.1) {0};
-		\node[below] at (2,-0.1) {1};
+		\node[below] at (0,-0.1) {1};
+		\node[below] at (2,-0.1) {2};
 		
 		% Draw red dotted line
 		\draw[red,dotted] (0,2) -- (2,2.5) node[above] {$E[Y(0) | Treated]$};
@@ -280,7 +280,7 @@
           \pause
     \vspace{-3mm}
     \item
-          Use No Anticipation to substitute $Y_{i2}(0)$ for $Y_{i2}(1)$:
+          Use No Anticipation to substitute $Y_{i1}(0)$ for $Y_{i1}(1)$:
           \vspace{-3mm}
           $$E[Y_{i2}(1) - Y_{i1}(0)| D_i =1] - E[Y_{i2}(0) - Y_{i1}(0)| D_i =0]$$
           
@@ -313,8 +313,8 @@
 			\draw[->] (0,0) -- (2.5,0) node[right] {Time};
 			\draw (0,-0.1) -- (0,0.1);
 			\draw (2,-0.1) -- (2,0.1);
-			\node[below] at (0,-0.1) {0};
-			\node[below] at (2,-0.1) {1};
+			\node[below] at (0,-0.1) {1};
+			\node[below] at (2,-0.1) {2};
 			
 			% Draw red dotted line
 			\draw[red,dotted] (0,2) -- (2,2.5);
@@ -351,7 +351,7 @@
     \begin{equation}
       Y_{it} = \alpha_i + \phi_t + D_{it} \beta  + \epsilon_{it}, \label{eqn: TWFE-2-periods}
     \end{equation}
-    \noindent where $D_{it} = D_i * 1[t=2]$. Also equivalent to $\beta$ from $\Delta Y_{i} = \Delta D_i \beta + u_{it}$.
+    \noindent where $D_{it} = D_i * 1[t=2]$. Also equivalent to $\beta$ from $\Delta Y_{i} = \alpha +  \Delta D_i \beta + u_{it}$.
     \pause
     \item
     \textbf{Inference:} And clustered standard errors are valid as number of clusters grows large
