@@ -147,11 +147,10 @@
     Consider the two period model, except suppose now that our two groups are \textbf{always-treated} units (treated in both periods) and \textbf{switchers} (treated only in period 2)
 
     \item
-    The TWFE OLS specification
-
-    $$ Y_{it} = \alpha_i + \phi_t + D_{it} \beta  + \epsilon_{it},$$
-
-    is still identified, with
+    With two periods, the coefficient  $\beta$ from $ Y_{it} = \alpha_i + \phi_t + D_{it} \beta  + \epsilon_{it}$ is the same as from the first-differenced regression  $\Delta Y_i = \Delta D_i \beta + u_i$
+   
+   \item
+   Observe that $\Delta D_i$ is one for switchers and zero for stayers. \\ That is, the stayers are the control group! Thus,
 
     $$\hat\beta =  \underbrace{ \left(\bar{Y}_{Switchers, 2} - \bar{Y}_{Switchers, 1} \right) }_{\text{Change for switchers}} - \underbrace{ \left(\bar{Y}_{AT, 2} - \bar{Y}_{AT, 1} \right) }_{\text{Change for always treated}}  $$
 
