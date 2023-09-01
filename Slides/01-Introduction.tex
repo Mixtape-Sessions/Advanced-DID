@@ -88,15 +88,14 @@
 
 \begin{frame}{(Approximate) Schedule for the day}
 \begin{itemize}
-	\item 9-10 Preliminaries \& The Canonical DiD Model
-	\item 10-101:5 Break
-	\item 10:15-11:130 Staggered treatment timing and heterogeneous treatment effects
-	\item 11:30-12:30 Coding Exercise
+	\item 10-11 Preliminaries \& The Canonical DiD Model
+	\item 11-11:15 Break
+	\item 11:15-12:30 Staggered treatment timing and heterogeneous treatment effects
 	\item 12:30-1 Lunch
-	\item 1-2:15 Violations of Parallel Trends
-	\item 2:45-3 Break
-	\item 2:15-3:15 Coding Exercise
-	\item 3:15-4:15 Open "Office Hour" for your DiD questions
+	\item 1-2 Coding Exercise
+	\item 2-3:15 Violations of Parallel Trends
+	\item 3:15-4:15 Coding Exercise
+	\item 4:15-5:00 Open "Office Hour" for your DiD questions
 \end{itemize}
 \end{frame}
 
@@ -220,6 +219,33 @@
 \end{frame}
 
 
+\begin{frame}{Visualizing PT}
+	\begin{tikzpicture}[scale = 1.5]
+		% Draw x-axis
+		\draw[->] (0,0) -- (2.5,0) node[right] {Time};
+		\draw (0,-0.1) -- (0,0.1);
+		\draw (2,-0.1) -- (2,0.1);
+		\node[below] at (0,-0.1) {0};
+		\node[below] at (2,-0.1) {1};
+		
+		% Draw red dotted line
+		\draw[red,dotted] (0,2) -- (2,2.5) node[above] {$E[Y(0) | Treated]$};
+		
+		% Draw blue solid line
+		\draw[blue] (0,0.5) -- (2,1) node[midway,below=10pt] {$E[Y(0) | Control]$};
+		
+		% Add curly brace
+		\draw[decorate,decoration={brace,amplitude=10pt}] (-0.2,0.5) -- (-0.2,2) node[midway,left=12pt] {Selection bias in period 0};
+		
+		% Add curly brace
+		\draw[decorate,decoration={brace,amplitude=10pt,mirror}] (2.2,1) -- (2.2,2.5) node[midway,right=12pt] {Selection bias in period 1};
+		
+	\end{tikzpicture}
+\end{frame}
+
+
+
+
 \begin{frame}{Identification}
   \begin{wideitemize}
     \item
@@ -274,8 +300,43 @@
       Cancel the \sun{last terms} using PT to get $\electricViolet{E[Y_{i2}(1) - Y_{i2}(0) | D_i = 1] = \tau_{ATT}}$
   \end{itemize}
 
-
 \end{frame}
+
+
+\begin{frame}{Visualizing Identification}
+	
+	\medskip	
+	
+	\begin{center}
+		\begin{tikzpicture}[scale = 1.5]
+			% Draw x-axis
+			\draw[->] (0,0) -- (2.5,0) node[right] {Time};
+			\draw (0,-0.1) -- (0,0.1);
+			\draw (2,-0.1) -- (2,0.1);
+			\node[below] at (0,-0.1) {0};
+			\node[below] at (2,-0.1) {1};
+			
+			% Draw red dotted line
+			\draw[red,dotted] (0,2) -- (2,2.5);
+			
+			\node[below,red] at (1.5,2) {$E[Y(0) | Treated]$};
+			
+			% Draw red dotted line
+			\draw[red] (0,2) -- (2,3.5) node[above] {$E[Y | Treated]$};
+			
+			% Draw blue solid line
+			\draw[blue] (0,0.5) -- (2,1) node[midway,below=10pt] {$E[Y | Control]$};
+			
+			% Add curly brace
+			\draw[decorate,decoration={brace,amplitude=10pt,mirror}] (2.2,2.5) -- (2.2,3.5) node[midway,right=12pt] {ATT};			
+		\end{tikzpicture}			
+	\end{center}%
+
+	
+	
+\end{frame}
+
+
 
 \begin{frame}{Estimation and Inference}
   \begin{wideitemize}
@@ -290,7 +351,7 @@
     \begin{equation}
       Y_{it} = \alpha_i + \phi_t + D_{it} \beta  + \epsilon_{it}, \label{eqn: TWFE-2-periods}
     \end{equation}
-    \noindent where $D_{it} = D_i * 1[t=2]$.
+    \noindent where $D_{it} = D_i * 1[t=2]$. Also equivalent to $\beta$ from $\Delta Y_{i} = \Delta D_i \beta + u_{it}$.
     \pause
     \item
     \textbf{Inference:} And clustered standard errors are valid as number of clusters grows large
