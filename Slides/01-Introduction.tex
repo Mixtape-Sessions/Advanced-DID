@@ -140,7 +140,7 @@
     The last few years have seen an explosion of econometrics on DiD, making it hard to keep up (sorry!)
 
     \item
-    In Roth, Sant'Anna, Bilinski, and Poe (Forthcoming JOE), we attempted to synthesize the recent literature and provide concrete recommendations for practitioners
+    In Roth, Sant'Anna, Bilinski, and Poe (JOE, 2023), we attempted to synthesize the recent literature and provide concrete recommendations for practitioners
 
 
     \item
@@ -280,6 +280,40 @@
 	\end{wideitemize}
 \end{frame}
 
+\begin{frame}{Visualizing Identification}
+	
+	\medskip	
+	
+	\begin{center}
+		\begin{tikzpicture}[scale = 1.5]
+			% Draw x-axis
+			\draw[->] (0,0) -- (2.5,0) node[right] {Time};
+			\draw (0,-0.1) -- (0,0.1);
+			\draw (2,-0.1) -- (2,0.1);
+			\node[below] at (0,-0.1) {1};
+			\node[below] at (2,-0.1) {2};
+			
+			% Draw red dotted line
+			\draw[red,dotted] (0,2) -- (2,2.5);
+			
+			\node[below,red] at (1.5,2) {$E[Y(0) | Treated]$};
+			
+			% Draw red dotted line
+			\draw[red] (0,2) -- (2,3.5) node[above] {$E[Y | Treated]$};
+			
+			% Draw blue solid line
+			\draw[blue] (0,0.5) -- (2,1) node[midway,below=10pt] {$E[Y | Control]$};
+			
+			% Add curly brace
+			\draw[decorate,decoration={brace,amplitude=10pt,mirror}] (2.2,2.5) -- (2.2,3.5) node[midway,right=12pt] {ATT};			
+		\end{tikzpicture}			
+	\end{center}%
+	
+	
+	
+\end{frame}
+
+
 \begin{frame}{Proof of Identification Argument}
 	\begin{itemize}
 		\item
@@ -320,38 +354,6 @@
 \end{frame}
 
 
-\begin{frame}{Visualizing Identification}
-	
-	\medskip	
-	
-	\begin{center}
-		\begin{tikzpicture}[scale = 1.5]
-			% Draw x-axis
-			\draw[->] (0,0) -- (2.5,0) node[right] {Time};
-			\draw (0,-0.1) -- (0,0.1);
-			\draw (2,-0.1) -- (2,0.1);
-			\node[below] at (0,-0.1) {1};
-			\node[below] at (2,-0.1) {2};
-			
-			% Draw red dotted line
-			\draw[red,dotted] (0,2) -- (2,2.5);
-			
-			\node[below,red] at (1.5,2) {$E[Y(0) | Treated]$};
-			
-			% Draw red dotted line
-			\draw[red] (0,2) -- (2,3.5) node[above] {$E[Y | Treated]$};
-			
-			% Draw blue solid line
-			\draw[blue] (0,0.5) -- (2,1) node[midway,below=10pt] {$E[Y | Control]$};
-			
-			% Add curly brace
-			\draw[decorate,decoration={brace,amplitude=10pt,mirror}] (2.2,2.5) -- (2.2,3.5) node[midway,right=12pt] {ATT};			
-		\end{tikzpicture}			
-	\end{center}%
-	
-	
-	
-\end{frame}
 
 
 
@@ -394,6 +396,7 @@
 	Will focus today on the first two
 \end{frame}
 
+\nocite{roth_whats_2023}
 
 \backupbegin
 \begin{frame}[allowframebreaks,noframenumbering,plain]{References}

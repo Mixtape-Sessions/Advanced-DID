@@ -10,28 +10,28 @@
 \imageframe{figures/cover_violations.png}
 
 \begin{frame}{Violations of PT}
-  \addtocounter{framenumber}{-1}
+	\addtocounter{framenumber}{-1}
 	\begin{wideitemize}
 		\item
 		Remember that in the canonical DiD model we had:
-		    
+		
 		\begin{itemize}
 			\item 
-			      Two periods and a common treatment date
-			              
+			Two periods and a common treatment date
+			
 			\item
-			      Identification from parallel trends and no anticipation
-			              
+			Identification from parallel trends and no anticipation
+			
 			\item
-			      A large number of clusters for inference
+			A large number of clusters for inference
 		\end{itemize}
-		    
+		
 		\item
 		A second literature has focused on relaxing the second assumption: \textbf{what if parallel trends may be violated?}
-		    
+		
 		\item
-		The ideas from this literature apply even if there is non-staggered timing, although as we'll see, many of the tools can be applied with staggered timing as well. Large clusters is maintained throughout. 
-		    
+		The ideas from this literature apply even if there is non-staggered timing, although as we'll see, many of the tools can be applied with staggered timing as well. Large number of clusters is maintained throughout. 
+		
 	\end{wideitemize}
 	
 \end{frame}
@@ -69,7 +69,6 @@
 
 
 
-
 \begin{frame}{Why might we be skeptical of PT?}
 	\begin{wideitemize}
 		\item
@@ -104,7 +103,7 @@
 \begin{frame}{Why might we be skeptical of PT? Part 2}
 	\begin{wideitemize}
 		\item
-		Another reason to be skeptical of parallel trends is that its validity will often be \textbf{functional form} dependent
+		Another reason to be skeptical of parallel trends is ``selection bias being constant'' depends on the \textbf{functional form} chosen for the outcome
 		
 		\item
 		Consider an example: 
@@ -203,7 +202,7 @@
 			\item
 			Roth (2022 AER:I, ``Pre-test with Caution: Event-study Estimates After Testing for Parallel Trends") 
 			\item
-			Rambachan and Roth (Forthcoming RESTUD, ``A More Credible Approach to Parallel Trends'') 
+			Rambachan and Roth (2023 RESTUD, ``A More Credible Approach to Parallel Trends'') 
 		\end{wideitemize}
 		
 		
@@ -243,48 +242,48 @@
 
 
 \begin{frame}{Issue 1 - Low Power}
-  \begin{center}
+	\begin{center}
 		\includegraphics<1>[width = .6\textwidth]{figures/HeAndWangAnimations/HeAndWang-base.png}
-  \end{center}
+	\end{center}
 	
 	\begin{itemize}
 		\item 
-    He \& Wang (2017) study impacts of placing college grads as village officials in China
-		          
+		He \& Wang (2017) study impacts of placing college grads as village officials in China
+		
 		\item
-    Use an ``event-study'' approach comparing treated and untreated villages
-    \vspace{-2mm}
-    $$
-    Y_{it} = \sum_{k \neq -1} D_{it}^k \beta_k + \alpha_i + \phi_t + \epsilon_{it}
-    $$
+		Use an ``event-study'' approach comparing treated and untreated villages
+		\vspace{-2mm}
+		$$
+		Y_{it} = \sum_{k \neq -1} D_{it}^k \beta_k + \alpha_i + \phi_t + \epsilon_{it}
+		$$
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Issue 1 - Low Power}
-  \begin{center}
+	\begin{center}
 		\includegraphics<1>[width = .6\textwidth]{figures/HeAndWangAnimations/HeAndWang-base.png}   
 		\includegraphics<2>[width = .6\textwidth]{figures/HeAndWangAnimations/HeAndWang-ZeroDots.png} 
 		\includegraphics<3>[width = .6\textwidth]{figures/HeAndWangAnimations/HeAndWang-RedDots.png} 
 		\includegraphics<4>[width = .6\textwidth]{figures/HeAndWangAnimations/HeAndWang-RedTrend.png} 
 		\includegraphics<5>[width = .6\textwidth]{figures/HeAndWangAnimations/HeAndWang-BlueDots.png}
 		\includegraphics<6->[width = .6\textwidth]{figures/HeAndWangAnimations/HeAndWang-BlueTrend.png}
-  \end{center}  
+	\end{center}  
 	
 	\begin{onlyenv}<1>
 		\begin{quote}
 			``The estimated coefficients on the leads of treatment ... are \textit{statistically indifferent from 0}. ... We conclude that \textit{the pretreatment trends in the outcomes in both groups of villages are similar}, and villages without CGVOs \textit{can serve as a suitable control group} for villages with CGVOs in the treatment period.'' (He and Wang, 2017)
-			    
+			
 		\end{quote}
 	\end{onlyenv}
 	{\footnotesize
-	\begin{itemize}
-		\item<2-> P-value for $H_0: \betapre = $ {\color{green} green dots} (no pre-trend): 0.81
-		\item<3-> P-value for $H_0: \betapre = $ {\color{red} red dots}: 0.81
-		\item<5-> P-value for $H_0: \betapre = $ {\color{blue} blue dots}: 0.81
-		    
-		\item<7-> We can't reject zero pre-trend, but we also can't reject pre-trends that under smooth extrapolations to the post-treatment period would produce substantial bias
-	\end{itemize}
-  }
+		\begin{itemize}
+			\item<2-> P-value for $H_0: \betapre = $ {\color{green} green dots} (no pre-trend): 0.81
+			\item<3-> P-value for $H_0: \betapre = $ {\color{red} red dots}: 0.81
+			\item<5-> P-value for $H_0: \betapre = $ {\color{blue} blue dots}: 0.81
+			
+			\item<7-> We can't reject zero pre-trend, but we also can't reject pre-trends that under smooth extrapolations to the post-treatment period would produce substantial bias
+		\end{itemize}
+	}
 	
 \end{frame}
 
@@ -298,7 +297,7 @@
 		Roth (2022): simulations calibrated to papers published in \textit{AER}, \textit{AEJ: Applied}, and \textit{AEJ: Policy} between 2014 and mid-2018  
 		\begin{itemize}
 			\item
-			      70 total papers contain an event-study plot; focus on 12 w/available data
+			70 total papers contain an event-study plot; focus on 12 w/available data
 		\end{itemize}
 		
 		\item
@@ -308,10 +307,10 @@
 			\normalsize{
 				\item
 				Bias often of magnitude similar to estimated treatment effect
-				    
+				
 				\item
 				Confidence intervals substantially undercover in many cases
-				    
+				
 				\item
 				Distortions from pre-testing can further exacerbate these issues
 			}
@@ -338,32 +337,32 @@
 	
 	\begin{itemize}
 		\item 
-    Consider a 3-period model ($t=-1,0,1$) where treatment occurs in last period
-		      
-		          
-    \bigskip
+		Consider a 3-period model ($t=-1,0,1$) where treatment occurs in last period
+		
+		
+		\bigskip
 		\item
-    No causal effect of treatment: $Y_{it}(0) = Y_{it}(1)$ in all periods
-		          
-    \bigskip
+		No causal effect of treatment: $Y_{it}(0) = Y_{it}(1)$ in all periods
+		
+		\bigskip
 		\item
-    In population, treatment group is on a linear trend relative to the control group with slope $\delta$
-    \medskip
-    \begin{itemize}
-      {\normalsize
-        \item
-        Control group mean in period $t$: $E[ Y_{it}(0) \mid \text{Control group} ] = 0 $
-		      		            
-        \item
-        Treatment group mean in period $t$: $E[ Y_{it}(0) \mid \text{Treated group} ] = \delta \cdot t$
-      }
-    \end{itemize}
-	\medskip		          
-  
-			\item
+		In population, treatment group is on a linear trend relative to the control group with slope $\delta$
+		\medskip
+		\begin{itemize}
+			{\normalsize
+				\item
+				Control group mean in period $t$: $E[ Y_{it}(0) \mid \text{Control group} ] = 0 $
+				
+				\item
+				Treatment group mean in period $t$: $E[ Y_{it}(0) \mid \text{Treated group} ] = \delta \cdot t$
+			}
+		\end{itemize}
+		\medskip		          
+		
+		\item
 		Simulate from this model with $Y_{it}$ equal to the group mean plus independent normal errors
-      
-		      
+		
+		
 	\end{itemize}
 \end{frame}
 
@@ -423,13 +422,16 @@
 	\textbf{What are the Limitations of Pre-trends Testing?}
 	\begin{enumerate}
 		\item
-		      Low Power -- May not find significant pre-trend even if PT is violated
-		          
+		Parallel pre-trends do not necessarily imply parallel counterfactual post-treatment trends
+		
 		\item
-		      Pre-testing Issues -- Selection bias from only analyzing cases with insignificant pre-trend
-		          
+		Low Power -- May not find significant pre-trend even if PT is violated
+		
 		\item
-		      If reject pre-trends test, what comes next? 
+		Pre-testing Issues -- Selection bias from only analyzing cases with insignificant pre-trend
+		
+		\item
+		If reject pre-trends test, what comes next? 
 	\end{enumerate}
 	
 	\bigskip
@@ -438,11 +440,11 @@
 	\textbf{What Can We Do About It?}
 	\begin{enumerate}
 		\item 
-		      Diagnostics of power and distortions from pre-testing (Roth, 2022, ``Pre-Test with Caution..."). See \texttt{pretrends} package. \hyperlink{power_analysis}{\beamerbutton{Details}}
-		          
+		Diagnostics of power and distortions from pre-testing (Roth, 2022, ``Pre-Test with Caution..."). See \texttt{pretrends} package. \hyperlink{power_analysis}{\beamerbutton{Details}}
+		
 		\item
-		      Formal sensitivity analysis that avoids pre-testing (Rambachan and Roth, Forthcoming, ``A More Credible Approach...''). See \texttt{HonestDiD} package.
-		          
+		Formal sensitivity analysis that avoids pre-testing (Rambachan and Roth, 2023, ``A More Credible Approach...''). See \texttt{HonestDiD} package.
+		
 	\end{enumerate}
 	
 \end{frame}
@@ -454,9 +456,10 @@
 	\begin{wideitemize}
 		
 		
-		\item The intuition motivating pre-trends testing is that the pre-trends are informative about counterfactual post-treatment trends
+		\item The intuition motivating pre-trends testing is that if we knew the true pre-trends, that would be informative about the counterfactual post-treatment diffs in trends
 		
-		\item Formalize this by imposing the restriction that the counterfactual difference in trends can't be ``too different'' than the pre-trend
+		\item 
+		Formalize this by imposing restrictions that allow us to learn from the pre-trends --- intuitively, the counterfactual difference in trends can't be ``too different'' than the pre-trend
 		
 		
 		\item This allows us to bound the treatment effect and obtain uniformly valid (``honest'') confidence sets under the imposed restrictions
@@ -477,12 +480,12 @@
 		\item
 		Let $\delta_1$ be the violation of PT:
 		
-		$$\delta_1 = \expe{ Y_{i,t=1}(0) - Y_{i,t=0}(0) \,|\, D_i = 1} - \expe{ Y_{i,t=1}(0) - Y_{i,t=0}(0) \,|\, D_i = 0} $$
+		$$\delta_1 = \expe{ Y_{i1}(0) - Y_{i0}(0) \,|\, D_i = 1} - \expe{ Y_{i1}(0) - Y_{i0}(0) \,|\, D_i = 0} $$
 		
 		\item
 		We don't directly identify $\delta_1$, but we do identify its pre-treatment analog, $\delta_{-1}$:
 		
-		$$\delta_{-1} = \expe{ Y_{i,t=-1}(0) - Y_{i,t=0}(0) \,|\, D_i = 1} - \expe{ Y_{i,t=-1}(0) - Y_{i,t=0}(0) \,|\, D_i = 0} $$
+		$$\delta_{-1} = \expe{ Y_{i,-1}(0) - Y_{i0}(0) \,|\, D_i = 1} - \expe{ Y_{i,-1}(0) - Y_{i0}(0) \,|\, D_i = 0} $$
 		
 		\item
 		Key idea: restrict possible values of $\delta_1$ given $\delta_{-1}$ \\
@@ -505,8 +508,13 @@
 	\end{wideitemize}
 	
 	\centering
-	\includegraphics[width = 0.7\textwidth]{figures/IntuitionPlots/Delta-Examples/deltaSD.png}
+	\includegraphics[width = 0.5\textwidth]{figures/IntuitionPlots/Delta-Examples/deltaSD.png}
 	
+	\begin{wideitemize}
+		\item
+		Which to choose depends on what types of violations we're worried about \\(e.g. differential shocks vs long-run secular trends)
+	\end{wideitemize}
+	\pause 
 \end{frame}
 
 
@@ -514,6 +522,10 @@
 	\begin{wideitemize}
 		\item
 		In the paper, we develop confidence intervals for the treatment effect of interest under the assumptions on $\delta$ discussed above
+		\begin{itemize}
+			\item 
+			Building on tools in partial ID literature \citep{andrews_inference_2023, armstrong_optimal_2018}
+		\end{itemize}
 		
 		\item
 		The CIs account for the fact that we don't observe the true (population) pre-trend $\deltapre$, only our estimate $\betahatpre$. 
@@ -542,10 +554,10 @@
 		\end{equation}
 		\vspace{-3mm}
 		\noindent 
-    \begin{itemize}
-      \item $Y_{irt}$ = outcome of interest for firm $i$ in region $r$
-      \item $D_{ir}$ = indicator if firm $i$ in region $r$ is a restaurant
-      \item $\Phi_i, \lambda_t$ = firm and year FEs
+		\begin{itemize}
+			\item $Y_{irt}$ = outcome of interest for firm $i$ in region $r$
+			\item $D_{ir}$ = indicator if firm $i$ in region $r$ is a restaurant
+			\item $\Phi_i, \lambda_t$ = firm and year FEs
 		\end{itemize}
 		
 		\item Outcomes of interest include firm profits, prices, wage bill \& employment.\\
@@ -559,19 +571,42 @@
 \end{frame}
 
 \begin{frame}
-	{\centering
-		\includegraphics[width = 0.4\linewidth]{figures/Benzarti-Carloni/sensitivity-MB-profits.png}
-	}
+	\begin{minipage}{0.5 \linewidth}
+		
+		{\centering
+			\includegraphics[width = \linewidth]{figures/Benzarti-Carloni/sensitivity-MB-profits.png}}
+	\end{minipage}%
+	\begin{minipage}{0.5 \linewidth}
+		\begin{wideitemize}
+			\item
+			``Breakdown'' $\bar{M}$ for null effect is $\sim 2$
+			
+			\item
+			Can rule out a null effect unless allow for violations of PT 2x larger than the max in pre-period
+			
+		\end{wideitemize}
+	\end{minipage}	
 	
-	\begin{itemize}
+\end{frame}
+
+\begin{frame}{More complicated settings}
+	\begin{wideitemize}
 		\item
-		      ``Breakdown'' $\bar{M}$ for null effect is $\sim 2$
-		          
+		So far, we have focused on DiD settings with common timing
+		
 		\item
-		      Can rule out a null effect unless allow for violations of PT 2x larger than the max in pre-period
-		      
-	\end{itemize}
-	
+		But same basic idea works whenever you have ``event-study'' estimates $(\betahatpre, \betahatpost)$ and are willing to bound the biases of $\betahatpost$ using $\betapre$.
+		
+		\item
+		The theory only relies on asymptotic normality of $\betahat$ (and consistent estimation of its variance)
+		
+		\item
+		The sensitivity analysis described above can thus be applied to new estimators for staggered treatment timing, IV event-studies, DDD, etc.
+		\begin{itemize}
+			\item 
+			See the HonestDiD package README for examples!
+		\end{itemize}	
+	\end{wideitemize}	
 \end{frame}
 
 
@@ -579,55 +614,57 @@
 	\begin{wideitemize}
 		\item
 		Tests of pre-trends are intuitive but not a panacea!
-		    
+		
 		\item
 		In particular, they may suffer from low power and introduce pre-test bias
-		    
+		
 		\item
-		Roth (2022) and Rambachan and Roth (Forthcoming) provide tools for diagnostics and sensitivity analysis
-		    
+		Roth (2022) and Rambachan and Roth (2023) provide tools for diagnostics and sensitivity analysis
+		
 		\item
-		And these tools play nicely with recent estimators developed for heterogeneous treatment effects; see the bonus question in Exercise 2 for an example!
-		    
+		And these tools play nicely with recent estimators developed for heterogeneous treatment effects; see the HonestDiD package README for examples!
+		
 	\end{wideitemize}
 \end{frame}
 
-\begin{frame}{Other Related Papers}
+\begin{frame}[label = relatedpapers]{Other Related Papers}
 	
 	\begin{wideitemize}
+		\item
+		Bayesian version of HonestDiD \citep{kwon_empirical_2024}
 		
 		\item
-		Other bounding exercises \citep{manski_how_2017, ye_negative_2021}
+		Other bounding exercises \citep{manski_how_2017, ye_negative_2021} \beamerbutton{\hyperlink{yeetal}{Ye et al}}
 		
 		\item
-		Non-inferiority approaches to pre-testing \citep{bilinski_no_2018, dette_difference--differences_2020}
+		Non-inferiority approaches to pre-testing \citep{bilinski_seeking_2018, dette_difference--differences_2020}
 		
 		\item
 		Impose structure on the confounds \citep{freyaldenhoven_pre-event_2019}
 	\end{wideitemize}
-	    
+	
 \end{frame}
 
 
 % \begin{frame}{Wrapping Up}
-
-% \begin{wideitemize}
-
-% \item
-% Tests of pre-trends are intuitive but not a panacea!
-
-% \item
-% Roth (2021) and Rambachan and Roth (2021) provide tools for diagnostics and sensitivity analysis
-
-% \item
-% It's important to incorporate \textit{context-specific} knowledge when using these tools.
-
-% \item
-% \textbf{Think about how parallel trends may be violated in your context!}\\
-% This puts the ``econ'' back into ``econometrics''
-% \end{wideitemize}
-    
-% \end{frame}
+	
+	% \begin{wideitemize}
+		
+		% \item
+		% Tests of pre-trends are intuitive but not a panacea!
+		
+		% \item
+		% Roth (2021) and Rambachan and Roth (2021) provide tools for diagnostics and sensitivity analysis
+		
+		% \item
+		% It's important to incorporate \textit{context-specific} knowledge when using these tools.
+		
+		% \item
+		% \textbf{Think about how parallel trends may be violated in your context!}\\
+		% This puts the ``econ'' back into ``econometrics''
+		% \end{wideitemize}
+	
+	% \end{frame}
 
 
 
@@ -643,17 +680,17 @@
 \begin{frame}{Additional Resources}
 	\begin{wideitemize}
 		\item
-		Roth (2021), ``Pre-test with Caution: Event-study Estimates After Testing for Parallel Trends''
+		Roth (2022), ``Pre-test with Caution: Event-study Estimates After Testing for Parallel Trends''
 		\begin{itemize}
 			\item 
-			      \href{https://jonathandroth.github.io/assets/files/roth_pretrends_testing.pdf}{Paper}; \href{https://github.com/jonathandroth/pretrends}{\texttt{staggered} package} ; \href{https://github.com/jonathandroth/PretrendsPower\#pretrendspower}{Shiny app}
+			\href{https://jonathandroth.github.io/assets/files/roth_pretrends_testing.pdf}{Paper}; \href{https://github.com/jonathandroth/pretrends}{\texttt{staggered} package} ; \href{https://github.com/jonathandroth/PretrendsPower\#pretrendspower}{Shiny app}
 		\end{itemize}
-		    
+		
 		\item
-		Rambachan and Roth (2022), ``A More Credible Approach to Parallel Trends'''
+		Rambachan and Roth (2023), ``A More Credible Approach to Parallel Trends'''
 		\begin{itemize}
 			\item 
-			      \href{https://jonathandroth.github.io/assets/files/HonestParallelTrends_Main.pdf}{Paper}; \href{https://github.com/asheshrambachan/HonestDiD}{\texttt{HonestDiD} package} ; \href{https://github.com/asheshrambachan/HonestDiD/blob/master/doc/HonestDiD_Example.pdf}{Vignette}
+			\href{https://jonathandroth.github.io/assets/files/HonestParallelTrends_Main.pdf}{Paper}; \href{https://github.com/asheshrambachan/HonestDiD}{\texttt{HonestDiD} package} ; \href{https://github.com/asheshrambachan/HonestDiD/blob/master/doc/HonestDiD_Example.pdf}{Vignette}
 		\end{itemize}
 	\end{wideitemize}
 \end{frame}
@@ -693,7 +730,7 @@
 		
 		\item
 		Helps identify when pre-testing may be least effective
-		    
+		
 		\item
 		Requires minimal changes from standard practice
 	\end{wideitemize}
@@ -703,15 +740,58 @@
 	\begin{wideitemize}
 		\item
 		Power will always be $<1$, so no guarantee of unbiasedness/correct inference
-		    
+		
 		\item
 		Need to specify the hypothesized trend. Will sometimes be difficult to summarize over many of these.
-		    
+		
 		\item
 		Still not clear what to do when reject the pre-test.
 	\end{wideitemize}
-	    
+	
 \end{frame}
+
+
+\begin{frame}[label = yeetal]{Ye, Keele, Hasegawa, and Small \beamerbutton{\hyperlink{relatedpapers}{Back}}}
+	\begin{wideitemize}
+		\item
+		Consider DiD settings with a \textbf{treated group} ($G=trt$) and \textbf{two imperfect control groups} $G = a,b$. 
+		
+		\item
+		Key assumption: counterfactual trends for the treated group are \textbf{bracketed} by counterfactual trends for the control group:
+		$$\Delta_{trt} \in [\min\{\Delta_a, \Delta_b\}, \max\{ \Delta_a, \Delta_b  \}]$$
+		
+		\noindent where $\Delta_g = E[ \Delta Y(0) \mid G = g]$ is the average trend in $Y(0)$ for group $g$.
+		
+		\item
+		Motivating example --- expansion of Fair Labor Standards Act (FLSA):
+		\begin{itemize}
+			\item
+			Treated group is gov't workers, whose employment is expected to be weakly procyclical
+			
+			\item
+			Set control groups to be industries whose employment is known to be strongly procyclical (e.g. construction, retail) or countercylical (e.g. agriculture, medical)
+		\end{itemize}
+		
+		
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ye, Keele, Hasegawa, and Small \beamerbutton{\hyperlink{relatedpapers}{Back}}}
+	\begin{wideitemize}
+		\item
+		Let $DiD_a$, $DiD_b$ denote the DiD estimand using groups $a$, $b$ as the control group
+		
+		\item
+		Then with two periods, it is straighforward to show that 
+		
+		$$\min\{DiD_a, DiD_b \} \leq ATT \leq \max\{DiD_a, DiD_b \} $$
+		
+		\item
+		The paper extends this approach to settings with more than 2 periods, and provides methods for doing inference
+	\end{wideitemize}
+\end{frame}
+
+\nocite{rambachan_more_2023}
 
 \begin{frame}[allowframebreaks,noframenumbering,plain]{References}
 	\bibliography{Bibliography.bib}
