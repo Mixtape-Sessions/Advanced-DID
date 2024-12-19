@@ -7,10 +7,6 @@ This one-day workshop will cover advanced topics from the recent difference-in-d
 
 You can join the class Discord [here](https://discord.gg/euSHza8w)
 
-
-
-
-
 ## Schedule
 
 All times Eastern Time.
@@ -30,14 +26,7 @@ All times Eastern Time.
 
 I'll start by telling you a little about myself and the logistics of the course. We'll then cover the key assumptions in the "canonical" two-period DiD model, where the econometrics are well-understood. This will give us a common baseline to understand how the various ways that recent innovations in the DiD literature have deviated from the baseline model. The discussion of the basic model will be based on Section 2 of [my review paper](https://jonathandroth.github.io/assets/files/DiD_Review_Paper.pdf) 
 
-
-#### Slides
-
-[Introduction.pdf](Slides/01-introduction.pdf)
-
-
-
-
+[Introduction Slides](https://nbviewer.org/github/Mixtape-Sessions/Causal-Inference-1/blob/main/Slides/01-introduction.pdf)
 
 
 ### Staggered treatment timing
@@ -46,17 +35,9 @@ I'll start by telling you a little about myself and the logistics of the course.
 
 We'll next discuss a very active recent literature on DiD settings with multiple periods and staggered treatment timing. We'll first discuss issues with two-way fixed effects estimators in these settings. We'll then discuss recently-introduced estimators that have been developed to fix these problems. The discussion will be based on Section 3 of [my review paper](https://jonathandroth.github.io/assets/files/DiD_Review_Paper.pdf) 
 
+[Staggered Slides](https://nbviewer.org/github/Mixtape-Sessions/Causal-Inference-1/blob/main/Slides/02-staggered.pdf)
 
-#### Slides
-
-[Staggered.pdf](Slides/02-staggered.pdf)
-
-#### Coding Exercise
-
-[Instructions](https://github.com/Mixtape-Sessions/Advanced-DID/blob/main/Exercises/Exercise-1/README.md#introduction)
-
-
-
+[Coding Exercise 1](https://github.com/Mixtape-Sessions/Advanced-DID/blob/main/Exercises/Exercise-1/README.md#introduction)
 
 ### Violations of parallel trends
 
@@ -64,15 +45,9 @@ We'll next discuss a very active recent literature on DiD settings with multiple
 
 We'll next discuss the strand of the literature that has considered the possibility that the parallel trends assumption may not hold exactly. We'll discuss the intuitive practice of testing for "pre-trends," as well as its limitations. We'll also discuss solutions to these issues, including power analyses and the sensitivity analysis proposed by [Rambachan and Roth (2022)](https://jonathandroth.github.io/assets/files/HonestParallelTrends_Main.pdf). The discussion will be based on Section 4 of [my review paper](https://jonathandroth.github.io/assets/files/DiD_Review_Paper.pdf) 
 
+[Violations Slides](https://nbviewer.org/github/Mixtape-Sessions/Causal-Inference-1/blob/main/Slides/03-violations.pdf)
 
-#### Slides
-
-[Violations.pdf](Slides/03-violations.pdf)
-
-
-#### Coding Exercise
-
-[Instructions](https://github.com/Mixtape-Sessions/Advanced-DID/blob/main/Exercises/Exercise-2/README.md#introduction)
+[Coding Exercise 2](https://github.com/Mixtape-Sessions/Advanced-DID/blob/main/Exercises/Exercise-2/README.md#introduction)
 
 
 
