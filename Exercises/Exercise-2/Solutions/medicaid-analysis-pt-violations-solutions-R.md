@@ -129,13 +129,13 @@ delta_rm_results
 ```
 
     ## # A tibble: 5 × 5
-    ##         lb    ub method Delta    Mbar
-    ##      <dbl> <dbl> <chr>  <chr>   <dbl>
-    ## 1  0.0190  0.100 C-LF   DeltaRM   0  
-    ## 2  0.00296 0.120 C-LF   DeltaRM   0.5
-    ## 3 -0.0190  0.148 C-LF   DeltaRM   1  
-    ## 4 -0.0410  0.175 C-LF   DeltaRM   1.5
-    ## 5 -0.0647  0.202 C-LF   DeltaRM   2
+    ##         lb     ub method Delta    Mbar
+    ##      <dbl>  <dbl> <chr>  <chr>   <dbl>
+    ## 1  0.0261  0.0584 C-LF   DeltaRM   0  
+    ## 2  0.0208  0.0634 C-LF   DeltaRM   0.5
+    ## 3  0.0125  0.0714 C-LF   DeltaRM   1  
+    ## 4  0.00283 0.0810 C-LF   DeltaRM   1.5
+    ## 5 -0.00782 0.0917 C-LF   DeltaRM   2
 
 Look at the results of the sensitivity analysis you created. For each
 value of $\bar{M}$, it gives a robust confidence interval that allows
@@ -202,14 +202,14 @@ delta_sd_results
 ```
 
     ## # A tibble: 6 × 5
-    ##           lb     ub method Delta       M
-    ##        <dbl>  <dbl> <chr>  <chr>   <dbl>
-    ## 1  0.0436    0.0844 FLCI   DeltaSD  0   
-    ## 2  0.0225    0.100  FLCI   DeltaSD  0.01
-    ## 3 -0.0000675 0.116  FLCI   DeltaSD  0.02
-    ## 4 -0.0179    0.135  FLCI   DeltaSD  0.03
-    ## 5 -0.0334    0.154  FLCI   DeltaSD  0.04
-    ## 6 -0.0467    0.174  FLCI   DeltaSD  0.05
+    ##         lb     ub method Delta       M
+    ##      <dbl>  <dbl> <chr>  <chr>   <dbl>
+    ## 1  0.0262  0.0583 FLCI   DeltaSD  0   
+    ## 2  0.00724 0.0649 FLCI   DeltaSD  0.01
+    ## 3 -0.00273 0.0748 FLCI   DeltaSD  0.02
+    ## 4 -0.0127  0.0848 FLCI   DeltaSD  0.03
+    ## 5 -0.0227  0.0948 FLCI   DeltaSD  0.04
+    ## 6 -0.0327  0.105  FLCI   DeltaSD  0.05
 
 ``` r
 createSensitivityPlot(delta_sd_results, originalResults)
@@ -321,47 +321,47 @@ honest_did.AGGTEobj <- function(es,
                                 grid.ub=NA,
                                 grid.lb=NA,
                                 ...) {
-  
-  
+
+
   type <- type[1]
-  
+
   # make sure that user is passing in an event study
   if (es$type != "dynamic") {
     stop("need to pass in an event study")
   }
-  
+
   # check if used universal base period and warn otherwise
   if (es$DIDparams$base_period != "universal") {
     stop("Use a universal base period for honest_did")
   }
-  
+
   # recover influence function for event study estimates
   es_inf_func <- es$inf.function$dynamic.inf.func.e
-  
+
   # recover variance-covariance matrix
   n <- nrow(es_inf_func)
-  V <- t(es_inf_func) %*% es_inf_func / (n*n) 
-  
+  V <- t(es_inf_func) %*% es_inf_func / (n*n)
+
   #Remove the coefficient normalized to zero
   referencePeriodIndex <- which(es$egt == -1)
   V <- V[-referencePeriodIndex,-referencePeriodIndex]
   beta <- es$att.egt[-referencePeriodIndex]
-  
-  nperiods <- nrow(V) 
+
+  nperiods <- nrow(V)
   npre <- sum(1*(es$egt < -1))
   npost <- nperiods - npre
-  
+
   baseVec1 <- basisVector(index=(e+1),size=npost)
-  
+
   orig_ci <- constructOriginalCS(betahat = beta,
                                  sigma = V, numPrePeriods = npre,
                                  numPostPeriods = npost,
                                  l_vec = baseVec1)
-  
+
   if (type=="relative_magnitude") {
     if (is.null(method)) method <- "C-LF"
-    robust_ci <- createSensitivityResults_relativeMagnitudes(betahat = beta, sigma = V, 
-                                                             numPrePeriods = npre, 
+    robust_ci <- createSensitivityResults_relativeMagnitudes(betahat = beta, sigma = V,
+                                                             numPrePeriods = npre,
                                                              numPostPeriods = npost,
                                                              bound=bound,
                                                              method=method,
@@ -372,11 +372,11 @@ honest_did.AGGTEobj <- function(es,
                                                              alpha=alpha,
                                                              gridPoints=100,
                                                              parallel=parallel)
-    
+
   } else if (type=="smoothness") {
     robust_ci <- createSensitivityResults(betahat = beta,
-                                          sigma = V, 
-                                          numPrePeriods = npre, 
+                                          sigma = V,
+                                          numPrePeriods = npre,
                                           numPostPeriods = npost,
                                           method=method,
                                           l_vec = baseVec1,
@@ -385,7 +385,7 @@ honest_did.AGGTEobj <- function(es,
                                           alpha=alpha,
                                           parallel=parallel)
   }
-  
+
   return(list(robust_ci=robust_ci, orig_ci=orig_ci, type=type))
 }
 
@@ -394,16 +394,16 @@ honest_did.AGGTEobj <- function(es,
 # Run the CS event-study with 'universal' base-period
 cs_results <- att_gt(yname = "dins",
                      tname = "year",
-                     idname = "stfips", 
-                     gname = "yexp2", 
+                     idname = "stfips",
+                     gname = "yexp2",
                      data = df %>% mutate(yexp2 = ifelse(is.na(yexp2), 3000, yexp2)),
                      control_group = "notyettreated",
                      base_period = "universal")
 
-es <- aggte(cs_results, type = "dynamic", 
+es <- aggte(cs_results, type = "dynamic",
             min_e = -5, max_e = 5)
 
-# Run sensitivity analysis for relative magnitudes 
+# Run sensitivity analysis for relative magnitudes
 sensitivity_results <-
   honest_did.AGGTEobj(es,
                       e =0,
